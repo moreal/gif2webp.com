@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "declaration": true,
+        "outDir": "dist",
+        "strict": true,
+        "lib": [
+            "ESNext",
+            "DOM"
+        ],
+        "target": "ESNext",
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
+        "allowSyntheticDefaultImports": true
+    }
+}

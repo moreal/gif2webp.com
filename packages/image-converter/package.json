@@ -1,0 +1,24 @@
+{
+    "name": "@gif2webp/image-converter",
+    "private": true,
+    "version": "0.0.0",
+    "type": "module",
+    "exports": {
+        ".": {
+            "default": "./dist/index.js",
+            "import": "./dist/index.js"
+        }
+    },
+    "scripts": {
+        "build": "tsc"
+    },
+    "dependencies": {
+        "wasm-vips": "^0.0.10"
+    },
+    "devDependencies": {
+        "@rollup/plugin-node-resolve": "^15.3.0",
+        "@rollup/plugin-typescript": "^12.1.0",
+        "rollup": "^4.24.0",
+        "typescript": "^5.5.3"
+    }
+}
