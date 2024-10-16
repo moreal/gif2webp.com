@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 import { useDropzone } from 'react-dropzone'
 
-interface LoadedFile {
+export interface LoadedFile {
     file: File;
     data: ArrayBuffer;
 }
@@ -24,23 +24,23 @@ function readAsync(file: File): Promise<LoadedFile> {
 }
 
 export interface DropzoneProps {
-  onChange: (files: LoadedFile[]) => Promise<void>;
+  onUpload: (files: LoadedFile[]) => Promise<void>;
 }
 
-export function Dropzone({ onChange }: DropzoneProps) {
+export function Dropzone({ onUpload }: DropzoneProps) {
   const onDrop = useCallback((acceptedFiles: File[]) => {
     (async () => {
       const results = await Promise.all(acceptedFiles.map(readAsync));
-      await onChange(results);
+      await onUpload(results);
     })();
   }, []);
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
   return (
-    <div {...getRootProps()}>
+    <div {...getRootProps()} style={{border: 'black solid 1px', maxWidth: '25vw', minWidth: '200px', fontWeight: "bold", padding: '5px', minHeight: '5vh'}}>
       <input {...getInputProps()} />
-      <p>Drag 'n' drop some files here, or click to select files</p>
+      <p>Drag and drop some files here, or click to select files</p>
     </div>
   )
 }

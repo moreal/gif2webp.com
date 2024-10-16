@@ -1,39 +1,37 @@
 import { useState } from 'react'
-import { convertImage } from "@gif2webp/image-converter";
 import './App.css'
-import { Dropzone } from './components/Dropzone';
-
-type Phase = "NO-FILES" | "IN-PROGRESS" | "CONVERTED";
+import { Dropzone, type LoadedFile } from './components/Dropzone';
+import { ImagePreview } from './components/ImagePreview';
 
 function App() {
-  const [progress, setProgress] = useState<Phase>("NO-FILES");
-  const [converted, setConverted] = useState<Uint8Array | null>(null);
+  const [files, setFiles] = useState<LoadedFile[]>([]);
 
-  if (progress === "NO-FILES") {
-    return (
-      <Dropzone onChange={async files => {
-        setProgress("IN-PROGRESS");
-        setConverted(await convertImage(files[0].data));
-        setProgress("CONVERTED");
+  return (
+    // @ts-ignore
+    <div align="center">
+      <header>
+        <p className="title">Convert your GIF to WebP <ins className='title-highlight'><b>on your browser</b></ins></p>
+        <p className='subtitle'>Don't sacrifice your image for convenience.</p>
+      </header>
+      <main>
+        <p style={{
+          'fontStyle': 'italic',
+          'fontSize': '20px'
+        }}>Choose files..</p>
+      </main>
+      <Dropzone onUpload={async uploadedFiles => {
+        setFiles(prevFiles => [...prevFiles, ...uploadedFiles]);
+        // setProgress("IN-PROGRESS");
+        // setConverted(await convertImage(files[0].data));
+        // setProgress("CONVERTED");
       }} />
-    )
-  }
-
-  if (progress === "IN-PROGRESS")
-    return <p>Processing...</p>
-
-  if (progress === "CONVERTED") {
-    if (converted === null) {
-      return <p>Unexpected situation.</p>
-    }
-
-    const blob = new Blob([converted], { type: 'image/webp' });
-    return <div>
-        <p>Converted!: {converted.length}</p>
-        <button><a href={URL.createObjectURL(blob)} download="converted.webp">Download</a></button>
-        <img src={URL.createObjectURL(blob)}/>
+      <div style={{ marginTop: "5vh" }}>
+        {...files.map((x, index) => <ImagePreview file={x} onDelete={() => {
+          setFiles(prevFiles => [...prevFiles.slice(0, index), ...prevFiles.slice(index + 1)]);
+        }} />)}
       </div>
-  }
+    </div>
+  )
 }
 
 export default App
