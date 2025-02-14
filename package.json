@@ -8,5 +8,5 @@
     "@yarnpkg/types": "^4.0.0",
     "typescript": "^5.5.3"
   },
-  "packageManager": "yarn@4.5.0"
+  "packageManager": "yarn@4.6.0"
 }
