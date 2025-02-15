@@ -1,19 +1,67 @@
+import { useEffect, useState, useCallback } from "react";
 import { Converter } from "./Converter";
-import type { LoadedFile } from "./Dropzone";
+import type { LoadedFile } from "../utils/fileUtils";
+import {
+	PreviewContainer,
+	DeleteButton,
+	PreviewImage,
+	FileName,
+	ErrorText,
+} from "./StyledComponents";
 
 interface ImagePreviewProps {
-    file: LoadedFile;
-    onDelete: () => void;
+	file: LoadedFile;
+	onDelete: () => void;
 }
 
-export function ImagePreview({ file: loadedFile, onDelete }: ImagePreviewProps) {
-    const {file, data} = loadedFile;
-    const blob = new Blob([data], { type: file.type });
-    const filename = file.name.length > 16 ? `${file.name.substring(0, 13)}...` : file.name;
-    return <div style={{display: "inline-block", position: 'relative', margin: "0 1vw"}}>
-        <button style={{position: 'absolute', top: "-10px", right: "-10px", textAlign: "center", lineHeight: "25px", height: "25px", width: "25px", borderRadius: "50%", border: "black solid 2px", backgroundColor: "white"}} onClick={_ => onDelete()}>X</button>
-        <img style={{ margin: 0 }} width="100px" height="100px" src={URL.createObjectURL(blob)}/>
-        <p style={{ margin: 0 }}>{filename}</p>
-        <Converter file={loadedFile}/>
-    </div>
+export function ImagePreview({
+	file: loadedFile,
+	onDelete,
+}: ImagePreviewProps) {
+	const [blobUrl, setBlobUrl] = useState<string | null>(null);
+	const [error, setError] = useState<string | null>(null);
+	const { file, data } = loadedFile;
+
+	useEffect(() => {
+		try {
+			const blob = new Blob([data], { type: file.type });
+			const url = URL.createObjectURL(blob);
+			setBlobUrl(url);
+			return () => {
+				URL.revokeObjectURL(url);
+			};
+		} catch (err) {
+			setError("Failed to load image preview");
+			return undefined;
+		}
+	}, [data, file.type]);
+
+	const filename =
+		file.name.length > 16 ? `${file.name.substring(0, 13)}...` : file.name;
+
+	const handleImageError = useCallback(() => {
+		setError("Failed to load image preview");
+	}, []);
+
+	if (error) {
+		return (
+			<PreviewContainer>
+				<DeleteButton onClick={onDelete} />
+				<ErrorText>{error}</ErrorText>
+				<FileName>{filename}</FileName>
+				<Converter file={loadedFile} />
+			</PreviewContainer>
+		);
+	}
+
+	return (
+		<PreviewContainer>
+			<DeleteButton onClick={onDelete} />
+			{blobUrl && (
+				<PreviewImage src={blobUrl} onError={handleImageError} alt={filename} />
+			)}
+			<FileName>{filename}</FileName>
+			<Converter file={loadedFile} />
+		</PreviewContainer>
+	);
 }

@@ -1,46 +1,138 @@
-import { useEffect, useState } from "react";
-import { LoadedFile } from "./Dropzone";
-import { convertImage } from "@gif2webp/image-converter";
+import { useCallback } from "react";
+import type { LoadedFile } from "../utils/fileUtils";
+import {
+	ConversionButton,
+	ConversionErrorContainer,
+	ErrorText,
+	OptionsContainer,
+	MemoryWarning,
+} from "./StyledComponents";
+import { ProgressIndicator } from "./ProgressIndicator";
+import {
+	type ConversionStatus,
+	useImageConversion,
+} from "../hooks/useImageConversion";
 
-type Phase = "INSTANTIATED" | "IN-PROGRESS" | "CONVERTED";
+interface ConversionControlsProps {
+	status: ConversionStatus;
+	fileSize: number;
+	progress: string;
+	onConvert: () => void;
+}
+
+const ConversionControls = ({
+	status,
+	fileSize,
+	progress,
+	onConvert,
+}: ConversionControlsProps) => (
+	<>
+		<MemoryWarning fileSize={fileSize} />
+		<OptionsContainer>
+			{status === "converting" ? (
+				<ProgressIndicator
+					phase={progress}
+					fileSize={fileSize}
+					isComplete={false}
+				/>
+			) : (
+				<ConversionButton onClick={onConvert}>Convert to WebP</ConversionButton>
+			)}
+		</OptionsContainer>
+	</>
+);
+
+interface CompletedConversionProps {
+	fileSize: number;
+	onDownload: () => void;
+}
+
+const CompletedConversion = ({
+	fileSize,
+	onDownload,
+}: CompletedConversionProps) => (
+	<>
+		<ProgressIndicator
+			phase="Conversion Complete"
+			fileSize={fileSize}
+			isComplete={true}
+		/>
+		<ConversionButton onClick={onDownload}>Download WebP</ConversionButton>
+	</>
+);
+
+interface ConversionErrorProps {
+	error: string | null;
+	onRetry: () => void;
+}
+
+const ConversionError = ({ error, onRetry }: ConversionErrorProps) => (
+	<ConversionErrorContainer>
+		<ErrorText>{error || "Conversion failed"}</ErrorText>
+		<ConversionButton onClick={onRetry}>Retry</ConversionButton>
+	</ConversionErrorContainer>
+);
 
 interface ConverterProps {
-    file: LoadedFile,
+	file: LoadedFile;
 }
 
-function replaceExtension(filename: string, extension: string) {
-    const split = filename.split(".");
-    if (split.length < 2) {
-        throw new Error();
-    }
+export function Converter({ file: { file, data, size } }: ConverterProps) {
+	const { status, error, convertedData, progress, retry, startConversion } =
+		useImageConversion(new Uint8Array(data));
 
-    return split.slice(0, split.length - 1).join(".") + "." + extension;
-}
+	const handleDownload = useCallback(() => {
+		if (convertedData) {
+			const blob = new Blob([convertedData], { type: "image/webp" });
+			const url = URL.createObjectURL(blob);
+			const a = document.createElement("a");
+			a.href = url;
+			a.download = file.name.replace(/\.[^/.]+$/, ".webp");
+			document.body.appendChild(a);
+			a.click();
+			document.body.removeChild(a);
+			URL.revokeObjectURL(url);
+		}
+	}, [convertedData, file.name]);
 
-export function Converter({file: {file, data}}: ConverterProps) {
-    const [progress, setProgress] = useState<Phase>("INSTANTIATED");
-    const [converted, setConverted] = useState<Uint8Array | null>(null);
+	const renderContent = () => {
+		switch (status) {
+			case "idle":
+			case "converting":
+				return (
+					<ConversionControls
+						status={status}
+						fileSize={size}
+						progress={progress}
+						onConvert={startConversion}
+					/>
+				);
 
-    useEffect(() => {
-        if (progress === "INSTANTIATED") {
-            (async() => {
-                setProgress("IN-PROGRESS");
-                setConverted(await convertImage(data));
-                setProgress("CONVERTED");
-            })();
-        }
-    }, [progress]);
+			case "converted":
+				return (
+					<CompletedConversion fileSize={size} onDownload={handleDownload} />
+				);
 
-    if (progress === "IN-PROGRESS") {
-        return <button>Converting...</button>
-    }
+			case "error":
+				return <ConversionError error={error} onRetry={retry} />;
 
-    if (progress === "CONVERTED") {
-        if (converted === null) {
-            return <strong>Unexpected situation.</strong>
-        }
+			default:
+				return null;
+		}
+	};
 
-        const blob = new Blob([converted], { type: "image/webp" });
-        return <a href={URL.createObjectURL(blob)} download={replaceExtension(file.name, "webp")}><button>Download</button></a>;
-    }
+	return (
+		<div
+			style={{
+				padding: "16px",
+				backgroundColor: "rgba(0, 0, 0, 0.1)",
+				borderRadius: "8px",
+				display: "flex",
+				flexDirection: "column",
+				gap: "16px",
+			}}
+		>
+			{renderContent()}
+		</div>
+	);
 }

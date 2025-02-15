@@ -1,46 +1,79 @@
-import { useCallback } from 'react'
-import { useDropzone } from 'react-dropzone'
+import { useCallback, useState, useMemo } from "react";
+import { useDropzone, type FileRejection } from "react-dropzone";
+import { DropzoneContainer, DropzoneText } from "./StyledComponents";
+import { readFileAsArrayBuffer, type LoadedFile } from "../utils/fileUtils";
+import { DROPZONE_MESSAGES } from "../constants/messages";
 
-export interface LoadedFile {
-    file: File;
-    data: ArrayBuffer;
-}
+const MAX_FILE_SIZE = 20 * 1024 * 1024; // 20MB
 
-function readAsync(file: File): Promise<LoadedFile> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader()
-
-    reader.onabort = () => reject("onabort");
-    reader.onerror = () => reject("onerror");
-    reader.onload = () => {
-      resolve({
-        file,
-        data: reader.result as ArrayBuffer
-      })
-    };
-
-    reader.readAsArrayBuffer(file);
-  })
-}
+export type { LoadedFile };
 
 export interface DropzoneProps {
-  onUpload: (files: LoadedFile[]) => Promise<void>;
+	onUpload: (files: LoadedFile[]) => Promise<void>;
 }
 
 export function Dropzone({ onUpload }: DropzoneProps) {
-  const onDrop = useCallback((acceptedFiles: File[]) => {
-    (async () => {
-      const results = await Promise.all(acceptedFiles.map(readAsync));
-      await onUpload(results);
-    })();
-  }, []);
+	const [isLoading, setIsLoading] = useState(false);
+	const [error, setError] = useState<string | null>(null);
 
-  const { getRootProps, getInputProps } = useDropzone({ onDrop });
+	const onDrop = useCallback(
+		async (acceptedFiles: File[], rejectedFiles: FileRejection[]) => {
+			setError(null);
 
-  return (
-    <div {...getRootProps()} style={{border: 'black solid 1px', maxWidth: '25vw', minWidth: '200px', fontWeight: "bold", padding: '5px', minHeight: '5vh'}}>
-      <input {...getInputProps()} />
-      <p>Drag and drop some files here, or click to select files</p>
-    </div>
-  )
+			if (rejectedFiles.length > 0) {
+				const sizeError = rejectedFiles.some(
+					(f) => f.file.size > MAX_FILE_SIZE,
+				);
+				setError(
+					sizeError
+						? DROPZONE_MESSAGES.FILE_SIZE_ERROR
+						: DROPZONE_MESSAGES.FILE_TYPE_ERROR,
+				);
+				return;
+			}
+
+			try {
+				setIsLoading(true);
+				const results = await Promise.all(
+					acceptedFiles.map((file) =>
+						readFileAsArrayBuffer(file).catch(() => {
+							throw new Error(DROPZONE_MESSAGES.READ_ERROR);
+						}),
+					),
+				);
+				await onUpload(results);
+			} catch (err) {
+				setError(
+					err instanceof Error
+						? err.message
+						: DROPZONE_MESSAGES.PROCESSING_ERROR,
+				);
+			} finally {
+				setIsLoading(false);
+			}
+		},
+		[onUpload],
+	);
+
+	const { getRootProps, getInputProps, isDragActive } = useDropzone({
+		onDrop,
+		accept: {
+			"image/gif": [".gif"],
+		},
+		maxSize: MAX_FILE_SIZE,
+	});
+
+	const message = useMemo(() => {
+		if (isLoading) return DROPZONE_MESSAGES.PROCESSING;
+		if (error) return error;
+		if (isDragActive) return DROPZONE_MESSAGES.DRAG_ACTIVE;
+		return DROPZONE_MESSAGES.DEFAULT;
+	}, [isLoading, error, isDragActive]);
+
+	return (
+		<DropzoneContainer {...getRootProps()}>
+			<input {...getInputProps()} />
+			<DropzoneText>{message}</DropzoneText>
+		</DropzoneContainer>
+	);
 }
