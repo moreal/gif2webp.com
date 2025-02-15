@@ -3,6 +3,8 @@
 
 gif2webp.com is a simple webapp to convert GIF to WebP easily in user's browser without sending file to server.
 
+![screenshot](docs/resources/screenshot.png)
+
 ## Build
 
 First, you have to install dependencies:
