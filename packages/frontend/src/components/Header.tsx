@@ -4,12 +4,18 @@ import {
 	HeaderContainer,
 	EmphasisText,
 } from "./StyledComponents";
+import { useLanguage } from "../contexts/LanguageContext";
 
-export const Header = () => (
-	<HeaderContainer>
-		<HeaderTitle>
-			Convert your GIF to WebP <EmphasisText>on your browser</EmphasisText>
-		</HeaderTitle>
-		<HeaderSubtitle>Don't sacrifice your image for convenience.</HeaderSubtitle>
-	</HeaderContainer>
-);
+export const Header = () => {
+	const { t } = useLanguage();
+
+	return (
+		<HeaderContainer>
+			<HeaderTitle>
+				{t("header.title")}{" "}
+				<EmphasisText>{t("header.titleEmphasis")}</EmphasisText>
+			</HeaderTitle>
+			<HeaderSubtitle>{t("header.subtitle")}</HeaderSubtitle>
+		</HeaderContainer>
+	);
+};

@@ -12,6 +12,7 @@ import {
 	type ConversionStatus,
 	useImageConversion,
 } from "../hooks/useImageConversion";
+import { useLanguage } from "../contexts/LanguageContext";
 
 interface ConversionControlsProps {
 	status: ConversionStatus;
@@ -25,22 +26,28 @@ const ConversionControls = ({
 	fileSize,
 	progress,
 	onConvert,
-}: ConversionControlsProps) => (
-	<>
-		<MemoryWarning fileSize={fileSize} />
-		<OptionsContainer>
-			{status === "converting" ? (
-				<ProgressIndicator
-					phase={progress}
-					fileSize={fileSize}
-					isComplete={false}
-				/>
-			) : (
-				<ConversionButton onClick={onConvert}>Convert to WebP</ConversionButton>
-			)}
-		</OptionsContainer>
-	</>
-);
+}: ConversionControlsProps) => {
+	const { t } = useLanguage();
+
+	return (
+		<>
+			<MemoryWarning fileSize={fileSize} />
+			<OptionsContainer>
+				{status === "converting" ? (
+					<ProgressIndicator
+						phase={t("conversion.converting")}
+						fileSize={fileSize}
+						isComplete={false}
+					/>
+				) : (
+					<ConversionButton onClick={onConvert}>
+						{t("conversion.button")}
+					</ConversionButton>
+				)}
+			</OptionsContainer>
+		</>
+	);
+};
 
 interface CompletedConversionProps {
 	fileSize: number;
@@ -50,28 +57,40 @@ interface CompletedConversionProps {
 const CompletedConversion = ({
 	fileSize,
 	onDownload,
-}: CompletedConversionProps) => (
-	<>
-		<ProgressIndicator
-			phase="Conversion Complete"
-			fileSize={fileSize}
-			isComplete={true}
-		/>
-		<ConversionButton onClick={onDownload}>Download WebP</ConversionButton>
-	</>
-);
+}: CompletedConversionProps) => {
+	const { t } = useLanguage();
+
+	return (
+		<>
+			<ProgressIndicator
+				phase={t("conversion.complete")}
+				fileSize={fileSize}
+				isComplete={true}
+			/>
+			<ConversionButton onClick={onDownload}>
+				{t("conversion.download")}
+			</ConversionButton>
+		</>
+	);
+};
 
 interface ConversionErrorProps {
 	error: string | null;
 	onRetry: () => void;
 }
 
-const ConversionError = ({ error, onRetry }: ConversionErrorProps) => (
-	<ConversionErrorContainer>
-		<ErrorText>{error || "Conversion failed"}</ErrorText>
-		<ConversionButton onClick={onRetry}>Retry</ConversionButton>
-	</ConversionErrorContainer>
-);
+const ConversionError = ({ error, onRetry }: ConversionErrorProps) => {
+	const { t } = useLanguage();
+
+	return (
+		<ConversionErrorContainer>
+			<ErrorText>{error || t("conversion.error")}</ErrorText>
+			<ConversionButton onClick={onRetry}>
+				{t("conversion.retry")}
+			</ConversionButton>
+		</ConversionErrorContainer>
+	);
+};
 
 interface ConverterProps {
 	file: LoadedFile;

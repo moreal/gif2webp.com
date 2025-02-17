@@ -1,13 +1,19 @@
 import type React from "react";
-import { Component, type ErrorInfo } from "react"
+import { Component, type ErrorInfo } from "react";
 import { ErrorText } from "./StyledComponents";
+import { type Language } from "../config/i18n";
+import { getTranslation } from "../config/translations";
 
 interface State {
 	hasError: boolean;
 	error?: Error;
 }
 
-export class ErrorBoundary extends Component<React.PropsWithChildren, State> {
+interface Props extends React.PropsWithChildren {
+	language?: Language;
+}
+
+export class ErrorBoundary extends Component<Props, State> {
 	public state: State = {
 		hasError: false,
 	};
@@ -23,10 +29,12 @@ export class ErrorBoundary extends Component<React.PropsWithChildren, State> {
 
 	render() {
 		if (this.state.hasError) {
+			// Using getTranslation directly since we can't use hooks in class components
+			const lang = this.props.language || "en";
 			return (
 				<div style={{ padding: "20px", textAlign: "center" }}>
 					<ErrorText>
-						Something went wrong. Please refresh the page and try again.
+						{getTranslation(lang, "errors.general", undefined)}
 					</ErrorText>
 					<button
 						onClick={() => {
@@ -43,7 +51,7 @@ export class ErrorBoundary extends Component<React.PropsWithChildren, State> {
 							cursor: "pointer",
 						}}
 					>
-						Refresh Page
+						{getTranslation(lang, "errors.refresh", undefined)}
 					</button>
 				</div>
 			);

@@ -5,9 +5,11 @@ import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 import { ErrorBoundary } from "../components/ErrorBoundary";
 import { config } from "../config/conversion";
+import { useLanguage } from "../contexts/LanguageContext";
 
 function Main() {
 	const [files, setFiles] = useState<LoadedFile[]>([]);
+	const { t } = useLanguage();
 
 	const handleUpload = async (uploadedFiles: LoadedFile[]) => {
 		const validFiles = uploadedFiles.filter(
@@ -60,7 +62,7 @@ function Main() {
 							}}
 						>
 							<p style={{ fontStyle: "italic", fontSize: "20px", margin: 0 }}>
-								Choose files..
+								{t("common.chooseFiles")}
 							</p>
 							<Dropzone onUpload={handleUpload} />
 							<div style={{ width: "100%" }}>

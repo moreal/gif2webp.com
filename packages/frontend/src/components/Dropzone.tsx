@@ -2,7 +2,7 @@ import { useCallback, useState, useMemo } from "react";
 import { useDropzone, type FileRejection } from "react-dropzone";
 import { DropzoneContainer, DropzoneText } from "./StyledComponents";
 import { readFileAsArrayBuffer, type LoadedFile } from "../utils/fileUtils";
-import { DROPZONE_MESSAGES } from "../constants/messages";
+import { useLanguage } from "../contexts/LanguageContext";
 
 const MAX_FILE_SIZE = 20 * 1024 * 1024; // 20MB
 
@@ -15,6 +15,7 @@ export interface DropzoneProps {
 export function Dropzone({ onUpload }: DropzoneProps) {
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
+	const { t } = useLanguage();
 
 	const onDrop = useCallback(
 		async (acceptedFiles: File[], rejectedFiles: FileRejection[]) => {
@@ -25,9 +26,7 @@ export function Dropzone({ onUpload }: DropzoneProps) {
 					(f) => f.file.size > MAX_FILE_SIZE,
 				);
 				setError(
-					sizeError
-						? DROPZONE_MESSAGES.FILE_SIZE_ERROR
-						: DROPZONE_MESSAGES.FILE_TYPE_ERROR,
+					sizeError ? t("dropzone.fileSizeError") : t("dropzone.fileTypeError"),
 				);
 				return;
 			}
@@ -37,22 +36,20 @@ export function Dropzone({ onUpload }: DropzoneProps) {
 				const results = await Promise.all(
 					acceptedFiles.map((file) =>
 						readFileAsArrayBuffer(file).catch(() => {
-							throw new Error(DROPZONE_MESSAGES.READ_ERROR);
+							throw new Error(t("dropzone.readError"));
 						}),
 					),
 				);
 				await onUpload(results);
 			} catch (err) {
 				setError(
-					err instanceof Error
-						? err.message
-						: DROPZONE_MESSAGES.PROCESSING_ERROR,
+					err instanceof Error ? err.message : t("dropzone.processingError"),
 				);
 			} finally {
 				setIsLoading(false);
 			}
 		},
-		[onUpload],
+		[onUpload, t],
 	);
 
 	const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -64,11 +61,11 @@ export function Dropzone({ onUpload }: DropzoneProps) {
 	});
 
 	const message = useMemo(() => {
-		if (isLoading) return DROPZONE_MESSAGES.PROCESSING;
+		if (isLoading) return t("dropzone.processing");
 		if (error) return error;
-		if (isDragActive) return DROPZONE_MESSAGES.DRAG_ACTIVE;
-		return DROPZONE_MESSAGES.DEFAULT;
-	}, [isLoading, error, isDragActive]);
+		if (isDragActive) return t("dropzone.dragActive");
+		return t("dropzone.default");
+	}, [isLoading, error, isDragActive, t]);
 
 	return (
 		<DropzoneContainer {...getRootProps()}>

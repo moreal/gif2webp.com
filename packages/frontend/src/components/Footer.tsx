@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { ThemeToggle } from "./ThemeToggle";
+import { LanguageSelect } from "./LanguageSelect";
+import { useLanguage } from "../contexts/LanguageContext";
 
 interface AboutModalProps {
 	isOpen: boolean;
@@ -7,6 +9,7 @@ interface AboutModalProps {
 }
 
 function AboutModal({ isOpen, onClose }: AboutModalProps) {
+	const { t } = useLanguage();
 	if (!isOpen) return null;
 
 	const modalRef = useRef<HTMLDivElement>(null);
@@ -39,6 +42,8 @@ function AboutModal({ isOpen, onClose }: AboutModalProps) {
 		document.addEventListener("keydown", handleEscape);
 		return () => document.removeEventListener("keydown", handleEscape);
 	}, [onClose]);
+
+	const aboutContent = t("footer.aboutContent") as unknown as string[];
 
 	return (
 		<div
@@ -75,7 +80,7 @@ function AboutModal({ isOpen, onClose }: AboutModalProps) {
 			>
 				<button
 					onClick={onClose}
-					aria-label="Close modal"
+					aria-label={t("common.close")}
 					style={{
 						position: "absolute",
 						top: "10px",
@@ -93,36 +98,20 @@ function AboutModal({ isOpen, onClose }: AboutModalProps) {
 					id="modal-title"
 					style={{ marginTop: 0, color: "var(--text-primary)" }}
 				>
-					About gif2webp.com
+					{t("footer.aboutTitle")}
 				</h2>
-				<p style={{ lineHeight: 1.6, color: "var(--text-primary)" }}>
-					gif2webp.com is a service that{" "}
-					<strong>converts GIF to WebP in your browser</strong>. The motivation
-					for creating this service came when a certain design portfolio hosting
-					service discontinued GIF support and decided to only support WebP, but
-					there weren't any suitable conversion tools available. More
-					specifically, I couldn't find any implementation that worked directly
-					in the browser.
-				</p>
-				<p style={{ lineHeight: 1.6, color: "var(--text-primary)" }}>
-					Recently, I've observed many cases where images provided through
-					various services are being used as training data for artificial
-					intelligence. This has made me somewhat distrustful of sending images
-					to servers. While other converter services mention in their
-					descriptions that they delete images after a certain period, it's
-					still better not to send them at all if we can avoid it.
-				</p>
-				<p style={{ lineHeight: 1.6, color: "var(--text-primary)" }}>
-					That's why I developed gif2webp.com.{" "}
-					<strong>
-						This service uses WASM technology to convert GIF to WebP without
-						sending images to the server.
-					</strong>{" "}
-					Really! If you don't trust the deployed code, this service is{" "}
-					<strong>open source</strong>, so you can access the source code
-					through the link at the bottom and even{" "}
-					<strong>host it yourself.</strong>
-				</p>
+				{aboutContent.map((paragraph, index) => (
+					<p
+						key={index}
+						style={{
+							lineHeight: 1.6,
+							color: "var(--text-primary)",
+							wordBreak: "keep-all",
+						}}
+					>
+						{paragraph}
+					</p>
+				))}
 			</div>
 		</div>
 	);
@@ -130,6 +119,7 @@ function AboutModal({ isOpen, onClose }: AboutModalProps) {
 
 export function Footer() {
 	const [isAboutOpen, setIsAboutOpen] = useState(false);
+	const { t } = useLanguage();
 
 	return (
 		<footer
@@ -158,9 +148,9 @@ export function Footer() {
 				onMouseOver={(e) => (e.currentTarget.style.opacity = "1")}
 				onMouseOut={(e) => (e.currentTarget.style.opacity = "0.8")}
 			>
-				About
+				{t("footer.about")}
 			</button>
-            <a
+			<a
 				href="https://github.com/moreal/gif2webp.com"
 				target="_blank"
 				rel="noopener noreferrer"
@@ -173,9 +163,10 @@ export function Footer() {
 				onMouseOver={(e) => (e.currentTarget.style.opacity = "1")}
 				onMouseOut={(e) => (e.currentTarget.style.opacity = "0.8")}
 			>
-				Source code
+				{t("footer.sourceCode")}
 			</a>
 			<ThemeToggle />
+			<LanguageSelect />
 			<AboutModal isOpen={isAboutOpen} onClose={() => setIsAboutOpen(false)} />
 		</footer>
 	);

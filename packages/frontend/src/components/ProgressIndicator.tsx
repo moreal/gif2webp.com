@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { formatFileSize } from "../utils/fileUtils";
+import { useLanguage } from "../contexts/LanguageContext";
 
 interface ProgressIndicatorProps {
 	phase: string;
@@ -13,6 +14,7 @@ export function ProgressIndicator({
 	isComplete,
 }: ProgressIndicatorProps) {
 	const formattedSize = useMemo(() => formatFileSize(fileSize), [fileSize]);
+	const { t } = useLanguage();
 
 	return (
 		<div
@@ -53,14 +55,14 @@ export function ProgressIndicator({
 					opacity: 0.7,
 				}}
 			>
-				File size: {formattedSize}
+				{t("conversion.fileSize", { size: formattedSize })}
 			</span>
 		</div>
 	);
 }
 
 // Add the keyframe animation to the document
-const style = document.createElement('style');
+const style = document.createElement("style");
 style.textContent = `
     @keyframes spin {
         from { transform: rotate(0deg); }
