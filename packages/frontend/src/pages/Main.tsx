@@ -61,7 +61,7 @@ function Main() {
 								maxWidth: "1200px",
 							}}
 						>
-							<p style={{ fontStyle: "italic", fontSize: "20px", margin: 0 }}>
+							<p style={{ fontSize: "20px", margin: 0 }}>
 								{t("common.chooseFiles")}
 							</p>
 							<Dropzone onUpload={handleUpload} />

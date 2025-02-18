@@ -3,8 +3,8 @@ import type { Language } from './i18n';
 export const translations = {
   en: {
     header: {
-      title: 'Convert your GIF to WebP',
-      titleEmphasis: ' on your browser',
+      title: 'Convert your GIF to WebP in ',
+      titleEmphasis: 'on your browser',
       subtitle: "Don't sacrifice your image for convenience."
     },
     dropzone: {
@@ -48,7 +48,7 @@ export const translations = {
   ko: {
     header: {
       title: 'GIF를 WebP로 변환하세요, ',
-      titleEmphasis: '브라우저에서',
+      titleEmphasis: '당신의 브라우저에서',
       subtitle: '편의성을 위해 이미지를 희생하지 마세요.'
     },
     dropzone: {

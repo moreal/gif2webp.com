@@ -16,7 +16,7 @@ export function Container({ children }: React.PropsWithChildren) {
 }
 
 export function InstructionText({ children }: React.PropsWithChildren) {
-	return <p style={{ fontStyle: "italic", fontSize: "20px" }}>{children}</p>;
+	return <p style={{ fontSize: "20px" }}>{children}</p>;
 }
 
 export function PreviewContainer({ children }: React.PropsWithChildren) {
@@ -152,7 +152,7 @@ export function HeaderTitle({ children }: React.PropsWithChildren) {
 	return (
 		<p
 			style={{
-				fontStyle: "italic",
+				// fontStyle: "italic",
 				fontWeight: 300,
 				fontSize: "48px",
 				marginBottom: 0,
@@ -167,7 +167,7 @@ export function HeaderSubtitle({ children }: React.PropsWithChildren) {
 	return (
 		<p
 			style={{
-				fontStyle: "italic",
+				// fontStyle: "italic",
 				fontWeight: 200,
 				fontSize: "24px",
 				marginTop: 0,
@@ -308,7 +308,7 @@ export function ProgressText({ children }: React.PropsWithChildren) {
 				fontSize: "14px",
 				color: "var(--text-secondary)",
 				textAlign: "center",
-				fontStyle: "italic",
+				// fontStyle: "italic",
 			}}
 		>
 			{children}
