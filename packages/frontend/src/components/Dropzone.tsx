@@ -4,7 +4,7 @@ import { DropzoneContainer, DropzoneText } from "./StyledComponents";
 import { readFileAsArrayBuffer, type LoadedFile } from "../utils/fileUtils";
 import { useLanguage } from "../contexts/LanguageContext";
 
-const MAX_FILE_SIZE = 20 * 1024 * 1024; // 20MB
+const MAX_FILE_SIZE = 51 * 1024 * 1024; // 512MB
 
 export type { LoadedFile };
 

@@ -10,7 +10,7 @@ export const translations = {
     dropzone: {
       processing: 'Processing...',
       fileTypeError: 'Please upload GIF files only',
-      fileSizeError: 'File size exceeds the limit (20MB)',
+      fileSizeError: 'File size exceeds the limit (512MB)',
       processingError: 'Failed to process files. Please try again.',
       readError: 'Failed to read file. Please try again.',
       dragActive: 'Drop GIF files here...',
@@ -54,7 +54,7 @@ export const translations = {
     dropzone: {
       processing: '처리 중...',
       fileTypeError: 'GIF 파일만 업로드해 주세요',
-      fileSizeError: '파일 크기가 제한을 초과했습니다 (20MB)',
+      fileSizeError: '파일 크기가 제한을 초과했습니다 (512MB)',
       processingError: '파일 처리에 실패했습니다. 다시 시도해 주세요.',
       readError: '파일 읽기에 실패했습니다. 다시 시도해 주세요.',
       dragActive: '여기에 GIF 파일을 놓으세요...',
