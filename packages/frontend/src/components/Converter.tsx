@@ -24,7 +24,6 @@ interface ConversionControlsProps {
 const ConversionControls = ({
 	status,
 	fileSize,
-	progress,
 	onConvert,
 }: ConversionControlsProps) => {
 	const { t } = useLanguage();
