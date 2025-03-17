@@ -5,7 +5,7 @@ export const translations = {
     header: {
       title: 'Convert your GIF to WebP in ',
       titleEmphasis: 'on your browser',
-      subtitle: "Don't sacrifice your image for convenience."
+      subtitle: "Don't sacrifice your copyright for convenience."
     },
     dropzone: {
       processing: 'Processing...',
@@ -41,7 +41,7 @@ export const translations = {
       refresh: 'Refresh Page'
     },
     common: {
-      chooseFiles: 'Choose files..',
+      chooseFiles: 'Choose files...',
       close: 'Close'
     }
   },
@@ -49,7 +49,7 @@ export const translations = {
     header: {
       title: 'GIF를 WebP로 변환하세요, ',
       titleEmphasis: '당신의 브라우저에서',
-      subtitle: '편의성을 위해 이미지를 희생하지 마세요.'
+      subtitle: '편의성을 위해 저작권을 희생하지 마세요.'
     },
     dropzone: {
       processing: '처리 중...',
@@ -85,7 +85,7 @@ export const translations = {
       refresh: '페이지 새로고침'
     },
     common: {
-      chooseFiles: '파일 선택..',
+      chooseFiles: '파일 선택...',
       close: '닫기'
     }
   }

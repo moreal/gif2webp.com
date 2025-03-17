@@ -156,6 +156,7 @@ export function HeaderTitle({ children }: React.PropsWithChildren) {
 				fontWeight: 300,
 				fontSize: "48px",
 				marginBottom: 0,
+				textUnderlineOffset: "6px",
 			}}
 		>
 			{children}
@@ -169,7 +170,7 @@ export function HeaderSubtitle({ children }: React.PropsWithChildren) {
 			style={{
 				// fontStyle: "italic",
 				fontWeight: 200,
-				fontSize: "24px",
+				fontSize: "20px",
 				marginTop: 0,
 			}}
 		>
