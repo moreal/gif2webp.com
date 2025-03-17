@@ -3,84 +3,84 @@ import { useState, useCallback, useEffect, useRef } from "react";
 export type ConversionStatus = "idle" | "converting" | "converted" | "error";
 
 interface ConversionState {
-  status: ConversionStatus;
-  error: string | null;
-  convertedData: Uint8Array | null;
-  progress: string;
+	status: ConversionStatus;
+	error: string | null;
+	convertedData: Uint8Array | null;
+	progress: string;
 }
 
 export function useImageConversion(fileData: Uint8Array) {
-  const [state, setState] = useState<ConversionState>({
-    status: "idle",
-    error: null,
-    convertedData: null,
-    progress: "",
-  });
-  
-  const workerRef = useRef<Worker | null>(null);
+	const [state, setState] = useState<ConversionState>({
+		status: "idle",
+		error: null,
+		convertedData: null,
+		progress: "",
+	});
 
-  useEffect(() => {
-    // Create worker instance
-    workerRef.current = new Worker(
-      new URL('../workers/conversion.worker.ts', import.meta.url),
-      { type: 'module' }
-    );
+	const workerRef = useRef<Worker | null>(null);
 
-    // Set up worker message handling
-    workerRef.current.onmessage = (event) => {
-      const { type, data, error } = event.data;
-      
-      if (type === 'success') {
-        setState((prev) => ({
-          ...prev,
-          progress: "Conversion complete",
-          convertedData: data,
-          status: "converted",
-        }));
-      } else if (type === 'error') {
-        setState((prev) => ({
-          ...prev,
-          error: error,
-          status: "error",
-        }));
-      }
-    };
+	useEffect(() => {
+		// Create worker instance
+		workerRef.current = new Worker(
+			new URL("../workers/conversion.worker.ts", import.meta.url),
+			{ type: "module" },
+		);
 
-    return () => {
-      workerRef.current?.terminate();
-    };
-  }, []);
+		// Set up worker message handling
+		workerRef.current.onmessage = (event) => {
+			const { type, data, error } = event.data;
 
-  const convert = useCallback(() => {
-    if (!workerRef.current) return;
+			if (type === "success") {
+				setState((prev) => ({
+					...prev,
+					progress: "Conversion complete",
+					convertedData: data,
+					status: "converted",
+				}));
+			} else if (type === "error") {
+				setState((prev) => ({
+					...prev,
+					error: error,
+					status: "error",
+				}));
+			}
+		};
 
-    setState((prev) => ({
-      ...prev,
-      status: "converting",
-      error: null,
-      progress: "Converting...",
-    }));
+		return () => {
+			workerRef.current?.terminate();
+		};
+	}, []);
 
-    workerRef.current.postMessage(fileData);
-  }, [fileData]);
+	const convert = useCallback(() => {
+		if (!workerRef.current) return;
 
-  useEffect(() => {
-    if (state.status === "idle") {
-      convert();
-    }
-  }, [state.status, convert]);
+		setState((prev) => ({
+			...prev,
+			status: "converting",
+			error: null,
+			progress: "Converting...",
+		}));
 
-  const retry = useCallback(() => {
-    setState((prev) => ({ ...prev, status: "idle", convertedData: null }));
-  }, []);
+		workerRef.current.postMessage(fileData);
+	}, [fileData]);
 
-  const startConversion = useCallback(() => {
-    setState((prev) => ({ ...prev, status: "converting" }));
-  }, []);
+	useEffect(() => {
+		if (state.status === "idle") {
+			convert();
+		}
+	}, [state.status, convert]);
 
-  return {
-    ...state,
-    retry,
-    startConversion,
-  };
+	const retry = useCallback(() => {
+		setState((prev) => ({ ...prev, status: "idle", convertedData: null }));
+	}, []);
+
+	const startConversion = useCallback(() => {
+		setState((prev) => ({ ...prev, status: "converting" }));
+	}, []);
+
+	return {
+		...state,
+		retry,
+		startConversion,
+	};
 }

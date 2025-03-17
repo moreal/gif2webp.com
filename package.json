@@ -1,6 +1,9 @@
 {
   "name": "gif2webp.com",
   "private": true,
+  "scripts": {
+    "fmt": "biome format --write packages/*/src"
+  },
   "workspaces": [
     "packages/*"
   ],

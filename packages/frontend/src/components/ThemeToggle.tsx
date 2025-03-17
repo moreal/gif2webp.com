@@ -30,7 +30,6 @@ export function ThemeToggle() {
 				alignItems: "center",
 				gap: "4px",
 			}}
-			
 			aria-label={`Switch to ${theme === "system" ? "manual" : theme === "dark" ? "light" : "dark"} theme`}
 		>
 			{theme === "system"
