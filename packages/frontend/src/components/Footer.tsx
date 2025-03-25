@@ -66,17 +66,21 @@ function AboutModal({ isOpen, onClose }: AboutModalProps) {
 				justifyContent: "center",
 				zIndex: 1000,
 				outline: "none", // Remove focus outline on the overlay
+				padding: "0 10px",
 			}}
 		>
 			<div
 				style={{
 					backgroundColor: "var(--bg-primary)",
 					color: "var(--text-primary)",
-					padding: "2rem",
+					padding: "1.5rem",
 					borderRadius: "8px",
-					maxWidth: "900px",
+					maxWidth: "90vw",
+					width: "600px",
+					maxHeight: "90vh",
+					overflow: "auto",
 					position: "relative",
-					margin: "20px",
+					margin: "10px",
 				}}
 			>
 				<button
@@ -89,15 +93,25 @@ function AboutModal({ isOpen, onClose }: AboutModalProps) {
 						background: "none",
 						border: "none",
 						color: "var(--text-primary)",
-						fontSize: "20px",
+						fontSize: "24px",
 						cursor: "pointer",
+						width: "36px",
+						height: "36px",
+						display: "flex",
+						alignItems: "center",
+						justifyContent: "center",
+						touchAction: "manipulation",
 					}}
 				>
 					×
 				</button>
 				<h2
 					id="modal-title"
-					style={{ marginTop: 0, color: "var(--text-primary)" }}
+					style={{
+						marginTop: 0,
+						color: "var(--text-primary)",
+						fontSize: "clamp(20px, 5vw, 24px)",
+					}}
 				>
 					{t("footer.aboutTitle")}
 				</h2>
@@ -108,6 +122,7 @@ function AboutModal({ isOpen, onClose }: AboutModalProps) {
 							lineHeight: 1.6,
 							color: "var(--text-primary)",
 							wordBreak: "keep-all",
+							fontSize: "clamp(14px, 4vw, 16px)",
 						}}
 					>
 						{paragraph}
@@ -125,11 +140,14 @@ export function Footer() {
 	return (
 		<footer
 			style={{
-				padding: "1rem 0",
+				padding: "1rem 10px",
 				borderTop: "1px solid var(--border-color)",
 				display: "flex",
+				flexDirection: "row",
+				flexWrap: "wrap",
+				alignItems: "center",
 				justifyContent: "center",
-				gap: "2rem",
+				gap: "1rem",
 				fontSize: "0.9rem",
 				marginTop: "auto",
 			}}
@@ -139,12 +157,13 @@ export function Footer() {
 				style={{
 					background: "none",
 					border: "none",
-					padding: 0,
+					padding: "8px 8px",
 					color: "inherit",
 					cursor: "pointer",
 					opacity: 0.8,
 					fontSize: "inherit",
 					transition: "opacity 0.2s",
+					touchAction: "manipulation",
 				}}
 				onMouseOver={(e) => (e.currentTarget.style.opacity = "1")}
 				onMouseOut={(e) => (e.currentTarget.style.opacity = "0.8")}
@@ -160,6 +179,7 @@ export function Footer() {
 					textDecoration: "none",
 					opacity: 0.8,
 					transition: "opacity 0.2s",
+					padding: "8px 8px",
 				}}
 				onMouseOver={(e) => (e.currentTarget.style.opacity = "1")}
 				onMouseOut={(e) => (e.currentTarget.style.opacity = "0.8")}

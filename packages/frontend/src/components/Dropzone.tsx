@@ -58,6 +58,12 @@ export function Dropzone({ onUpload }: DropzoneProps) {
 			"image/gif": [".gif"],
 		},
 		maxSize: MAX_FILE_SIZE,
+		// Make touchable device handling better
+		noClick: false,
+		noDrag: false,
+		noKeyboard: false,
+		multiple: true,
+		useFsAccessApi: true,
 	});
 
 	const message = useMemo(() => {

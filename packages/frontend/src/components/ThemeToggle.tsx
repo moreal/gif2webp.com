@@ -21,14 +21,19 @@ export function ThemeToggle() {
 			style={{
 				background: "none",
 				border: "none",
-				padding: 0,
+				padding: "8px 8px",
 				color: "inherit",
 				cursor: "pointer",
 				opacity: 0.8,
 				transition: "opacity 0.2s",
 				display: "flex",
 				alignItems: "center",
+				justifyContent: "center",
 				gap: "4px",
+				minWidth: "44px",
+				minHeight: "32px",
+				touchAction: "manipulation",
+				fontSize: "inherit",
 			}}
 			aria-label={`Switch to ${theme === "system" ? "manual" : theme === "dark" ? "light" : "dark"} theme`}
 		>

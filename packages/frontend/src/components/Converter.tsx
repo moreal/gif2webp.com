@@ -148,6 +148,8 @@ export function Converter({ file: { file, data, size } }: ConverterProps) {
 				display: "flex",
 				flexDirection: "column",
 				gap: "16px",
+				width: "100%",
+				boxSizing: "border-box",
 			}}
 		>
 			{renderContent()}

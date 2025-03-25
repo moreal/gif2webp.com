@@ -8,6 +8,7 @@ export function Container({ children }: React.PropsWithChildren) {
 				display: "flex",
 				flexDirection: "column",
 				alignItems: "center",
+				width: "100%",
 			}}
 		>
 			{children}
@@ -16,7 +17,7 @@ export function Container({ children }: React.PropsWithChildren) {
 }
 
 export function InstructionText({ children }: React.PropsWithChildren) {
-	return <p style={{ fontSize: "20px" }}>{children}</p>;
+	return <p style={{ fontSize: "clamp(16px, 5vw, 20px)" }}>{children}</p>;
 }
 
 export function PreviewContainer({ children }: React.PropsWithChildren) {
@@ -25,10 +26,11 @@ export function PreviewContainer({ children }: React.PropsWithChildren) {
 			style={{
 				display: "inline-block",
 				position: "relative",
-				margin: "0 1vw",
+				margin: "0.5rem",
 				padding: "8px",
 				borderRadius: "4px",
 				backgroundColor: "var(--bg-secondary)",
+				maxWidth: "100%",
 			}}
 		>
 			{children}
@@ -51,8 +53,8 @@ export const DeleteButton = forwardRef<
 			display: "flex",
 			alignItems: "center",
 			justifyContent: "center",
-			height: "25px",
-			width: "25px",
+			height: "30px",
+			width: "30px",
 			borderRadius: "50%",
 			border: "black solid 2px",
 			backgroundColor: "white",
@@ -61,6 +63,7 @@ export const DeleteButton = forwardRef<
 			fontWeight: "bold",
 			padding: 0,
 			fontSize: "14px",
+			touchAction: "manipulation",
 		}}
 	>
 		X
@@ -85,6 +88,7 @@ export function PreviewImage({
 				height: "100px",
 				objectFit: "cover",
 				borderRadius: "4px",
+				maxWidth: "100%",
 			}}
 			loading="lazy"
 		/>
@@ -99,6 +103,8 @@ export function FileName({ children }: React.PropsWithChildren) {
 				fontSize: "14px",
 				textAlign: "center",
 				color: "var(--text-secondary)",
+				wordBreak: "keep-all",
+				maxWidth: "100%",
 			}}
 		>
 			{children}
@@ -118,9 +124,14 @@ export function DropzoneContainer({
 				borderStyle: "dashed",
 				borderSpacing: "8px",
 				borderWidth: "5px",
-				minWidth: "400px",
+				width: "calc(100% - 32px)",
+				maxWidth: "500px",
+				minWidth: "250px",
 				fontWeight: "bold",
 				padding: "16px",
+				display: "flex",
+				alignItems: "center",
+				justifyContent: "center",
 				minHeight: "5vh",
 				cursor: "pointer",
 			}}
@@ -141,6 +152,9 @@ export function DropzoneText({ children }: React.PropsWithChildren) {
 			style={{
 				color: isError ? "#ff4444" : isLoading ? "#888888" : "inherit",
 				fontWeight: isError || isLoading ? "bold" : "normal",
+				fontSize: "clamp(14px, 4vw, 16px)",
+				textAlign: "center",
+				margin: "8px",
 			}}
 		>
 			{children}
@@ -152,11 +166,13 @@ export function HeaderTitle({ children }: React.PropsWithChildren) {
 	return (
 		<p
 			style={{
-				// fontStyle: "italic",
 				fontWeight: 300,
-				fontSize: "48px",
+				fontSize: "clamp(28px, 7vw, 48px)",
 				marginBottom: 0,
 				textUnderlineOffset: "6px",
+				textAlign: "center",
+				lineHeight: 1.2,
+				wordBreak: "keep-all",
 			}}
 		>
 			{children}
@@ -168,10 +184,12 @@ export function HeaderSubtitle({ children }: React.PropsWithChildren) {
 	return (
 		<p
 			style={{
-				// fontStyle: "italic",
 				fontWeight: 200,
-				fontSize: "20px",
+				fontSize: "clamp(16px, 5vw, 20px)",
 				marginTop: 0,
+				textAlign: "center",
+				padding: "0 10px",
+				wordBreak: "keep-all",
 			}}
 		>
 			{children}
@@ -183,7 +201,14 @@ export function HeaderContainer({ children }: React.PropsWithChildren) {
 	return (
 		<header
 			style={{
-				padding: "0.5rem 0",
+				padding: "0.5rem 10px",
+				width: "100%",
+				boxSizing: "border-box",
+				display: "flex",
+				flexDirection: "column",
+				alignItems: "center",
+				justifyContent: "center",
+				gap: "clamp(4px, 2vw, 8px)",
 			}}
 		>
 			{children}
@@ -209,6 +234,9 @@ export function FileListContainer({ children }: React.PropsWithChildren) {
 				gap: "16px",
 				justifyContent: "center",
 				maxHeight: "100%",
+				width: "100%",
+				padding: "0 10px",
+				boxSizing: "border-box",
 			}}
 		>
 			{children}
@@ -225,6 +253,7 @@ export function ErrorText({ children }: React.PropsWithChildren) {
 				fontSize: "14px",
 				textAlign: "center",
 				padding: "8px",
+				wordBreak: "keep-all",
 			}}
 		>
 			{children}
@@ -242,7 +271,7 @@ export const ConversionButton = forwardRef<
 		onClick={onClick}
 		aria-busy={disabled}
 		style={{
-			padding: "8px 16px",
+			padding: "12px 16px",
 			borderRadius: "4px",
 			border: "1px solid var(--text-primary)",
 			backgroundColor: "transparent",
@@ -250,8 +279,10 @@ export const ConversionButton = forwardRef<
 			cursor: disabled ? "default" : "pointer",
 			opacity: disabled ? 0.7 : 1,
 			transition: "all 0.2s ease",
-			fontSize: "14px",
+			fontSize: "16px",
 			fontWeight: "500",
+			minWidth: "120px",
+			touchAction: "manipulation",
 		}}
 		{...props}
 	>
@@ -277,6 +308,8 @@ export function DownloadLink({
 			style={{
 				textDecoration: "none",
 				color: "inherit",
+				display: "inline-block",
+				padding: "5px",
 			}}
 		>
 			{children}
@@ -294,6 +327,7 @@ export function ConversionErrorContainer({
 				display: "flex",
 				flexDirection: "column",
 				gap: "8px",
+				width: "100%",
 			}}
 		>
 			{children}
@@ -309,7 +343,6 @@ export function ProgressText({ children }: React.PropsWithChildren) {
 				fontSize: "14px",
 				color: "var(--text-secondary)",
 				textAlign: "center",
-				// fontStyle: "italic",
 			}}
 		>
 			{children}
@@ -328,7 +361,13 @@ export function QualitySlider({
 }) {
 	return (
 		<div
-			style={{ display: "flex", alignItems: "center", gap: "8px" }}
+			style={{
+				display: "flex",
+				alignItems: "center",
+				gap: "8px",
+				flexWrap: "wrap",
+				justifyContent: "center",
+			}}
 			role="group"
 			aria-labelledby="quality-label"
 		>
@@ -349,6 +388,7 @@ export function QualitySlider({
 				style={{
 					width: "100px",
 					opacity: disabled ? 0.5 : 1,
+					height: "24px",
 				}}
 			/>
 		</div>
@@ -364,6 +404,9 @@ export function OptionsContainer({ children }: React.PropsWithChildren) {
 				gap: "16px",
 				marginBottom: "12px",
 				fontSize: "14px",
+				flexWrap: "wrap",
+				justifyContent: "center",
+				width: "100%",
 			}}
 		>
 			{children}
@@ -395,6 +438,8 @@ export function WarningText({ children }: React.PropsWithChildren) {
 				alignItems: "center",
 				justifyContent: "center",
 				gap: "4px",
+				flexWrap: "wrap",
+				wordBreak: "keep-all",
 			}}
 		>
 			{children}

@@ -38,6 +38,8 @@ function Main() {
 						flexDirection: "column",
 						alignItems: "center",
 						justifyContent: "center",
+						width: "100%",
+						boxSizing: "border-box",
 					}}
 				>
 					<Header />
@@ -49,6 +51,8 @@ function Main() {
 							justifyContent: "center",
 							minHeight: 0,
 							padding: "1rem",
+							width: "100%",
+							boxSizing: "border-box",
 						}}
 					>
 						<div
@@ -59,11 +63,9 @@ function Main() {
 								gap: "2rem",
 								width: "100%",
 								maxWidth: "1200px",
+								boxSizing: "border-box",
 							}}
 						>
-							<p style={{ fontSize: "20px", margin: 0 }}>
-								{t("common.chooseFiles")}
-							</p>
 							<Dropzone onUpload={handleUpload} />
 							<div style={{ width: "100%" }}>
 								<FileList files={files} onDelete={handleDelete} />

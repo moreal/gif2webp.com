@@ -24,13 +24,18 @@ export function ProgressIndicator({
 				alignItems: "center",
 				gap: "8px",
 				margin: "12px 0",
+				width: "100%",
+				padding: "0 5px",
+				boxSizing: "border-box",
 			}}
 		>
 			<div
 				style={{
 					display: "flex",
 					alignItems: "center",
+					justifyContent: "center",
 					gap: "8px",
+					flexWrap: "wrap",
 				}}
 			>
 				{isComplete ? (
@@ -47,12 +52,21 @@ export function ProgressIndicator({
 						}}
 					/>
 				)}
-				<span style={{ fontSize: "14px" }}>{phase}</span>
+				<span
+					style={{
+						fontSize: "14px",
+						textAlign: "center",
+						wordBreak: "keep-all",
+					}}
+				>
+					{phase}
+				</span>
 			</div>
 			<span
 				style={{
 					fontSize: "12px",
 					opacity: 0.7,
+					textAlign: "center",
 				}}
 			>
 				{t("conversion.fileSize", { size: formattedSize })}
@@ -62,11 +76,14 @@ export function ProgressIndicator({
 }
 
 // Add the keyframe animation to the document
-const style = document.createElement("style");
-style.textContent = `
-    @keyframes spin {
-        from { transform: rotate(0deg); }
-        to { transform: rotate(360deg); }
-    }
-`;
-document.head.appendChild(style);
+if (!document.getElementById("spin-animation-style")) {
+	const style = document.createElement("style");
+	style.id = "spin-animation-style";
+	style.textContent = `
+		@keyframes spin {
+			from { transform: rotate(0deg); }
+			to { transform: rotate(360deg); }
+		}
+	`;
+	document.head.appendChild(style);
+}
