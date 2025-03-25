@@ -10,7 +10,6 @@ interface AboutModalProps {
 
 function AboutModal({ isOpen, onClose }: AboutModalProps) {
 	const { t } = useLanguage();
-	if (!isOpen) return null;
 
 	const modalRef = useRef<HTMLDivElement>(null);
 
@@ -42,6 +41,8 @@ function AboutModal({ isOpen, onClose }: AboutModalProps) {
 		document.addEventListener("keydown", handleEscape);
 		return () => document.removeEventListener("keydown", handleEscape);
 	}, [onClose]);
+
+	if (!isOpen) return null;
 
 	const aboutContent = t("footer.aboutContent") as unknown as string[];
 

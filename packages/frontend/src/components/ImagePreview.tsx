@@ -30,9 +30,8 @@ export function ImagePreview({
 			return () => {
 				URL.revokeObjectURL(url);
 			};
-		} catch (err) {
+		} catch {
 			setError("Failed to load image preview");
-			return undefined;
 		}
 	}, [data, file.type]);
 

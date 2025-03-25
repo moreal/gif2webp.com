@@ -1,6 +1,47 @@
 import type { Language } from "./i18n";
 
-export const translations = {
+export type TranslationSet = {
+	header: {
+		title: string;
+		titleEmphasis: string;
+		subtitle: string;
+	};
+	dropzone: {
+		processing: string;
+		fileTypeError: string;
+		fileSizeError: string;
+		processingError: string;
+		readError: string;
+		dragActive: string;
+		default: string;
+	};
+	conversion: {
+		button: string;
+		download: string;
+		complete: string;
+		retry: string;
+		converting: string;
+		fileSize: string;
+		memoryWarning: string;
+		error: string;
+	};
+	footer: {
+		about: string;
+		sourceCode: string;
+		aboutTitle: string;
+		aboutContent: string[];
+	};
+	errors: {
+		general: string;
+		refresh: string;
+	};
+	common: {
+		chooseFiles: string;
+		close: string;
+	};
+};
+
+export const translations: Record<string, TranslationSet> = {
 	en: {
 		header: {
 			title: "Convert your GIF to WebP in ",
@@ -101,7 +142,7 @@ export function getTranslation(
 	values?: TranslationValues,
 ) {
 	const keys = key.split(".");
-	let translation: any = translations[lang];
+	let translation: any = translations[lang]; // eslint-disable-line @typescript-eslint/no-explicit-any
 
 	for (const k of keys) {
 		if (!translation[k]) return key;

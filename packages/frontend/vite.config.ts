@@ -9,8 +9,6 @@ export default defineConfig({
       output: {
         assetFileNames: (chunkInfo) => {
           const noHashFiles = ["vips-es6.js", "vips.wasm"];
-          // @ts-ignore
-          console.log(chunkInfo.names, chunkInfo.originalFileNames);
           if (chunkInfo.names instanceof Array && chunkInfo.names.length === 1 && noHashFiles.includes(chunkInfo.names[0])) {
             return "assets/[name].[ext]";
           }
