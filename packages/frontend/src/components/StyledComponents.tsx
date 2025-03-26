@@ -190,6 +190,7 @@ export function HeaderSubtitle({ children }: React.PropsWithChildren) {
 				textAlign: "center",
 				padding: "0 10px",
 				wordBreak: "keep-all",
+				lineHeight: 1.4,
 			}}
 		>
 			{children}
@@ -208,7 +209,7 @@ export function HeaderContainer({ children }: React.PropsWithChildren) {
 				flexDirection: "column",
 				alignItems: "center",
 				justifyContent: "center",
-				gap: "clamp(4px, 2vw, 8px)",
+				gap: "clamp(20px, 2vw, 8px)",
 			}}
 		>
 			{children}
