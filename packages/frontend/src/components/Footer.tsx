@@ -180,6 +180,7 @@ export function Footer() {
 					opacity: 0.8,
 					transition: "opacity 0.2s",
 					padding: "8px 8px",
+					fontWeight: "400",
 				}}
 				onMouseOver={(e) => (e.currentTarget.style.opacity = "1")}
 				onMouseOut={(e) => (e.currentTarget.style.opacity = "0.8")}
