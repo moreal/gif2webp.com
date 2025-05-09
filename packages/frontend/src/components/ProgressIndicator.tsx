@@ -38,9 +38,7 @@ export function ProgressIndicator({
 					flexWrap: "wrap",
 				}}
 			>
-				{isComplete ? (
-					<></>
-				) : (
+				{isComplete && 
 					<div
 						style={{
 							width: "16px",
@@ -51,7 +49,7 @@ export function ProgressIndicator({
 							animation: "spin 1s linear infinite",
 						}}
 					/>
-				)}
+				}
 				<span
 					style={{
 						fontSize: "14px",
