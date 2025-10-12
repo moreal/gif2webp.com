@@ -1,23 +1,11 @@
 import { useTheme } from "../contexts/ThemeContext";
 
 export function ThemeToggle() {
-	const { theme, setTheme, currentTheme } = useTheme();
+	const { theme, themeSource, nextTheme, toggleTheme } = useTheme();
 
 	return (
 		<button
-			onClick={() => {
-				switch (theme) {
-					case "system":
-						setTheme(currentTheme === "dark" ? "light" : "dark");
-						break;
-					case "dark":
-						setTheme("light");
-						break;
-					case "light":
-						setTheme("dark");
-						break;
-				}
-			}}
+			onClick={toggleTheme}
 			style={{
 				background: "none",
 				border: "none",
@@ -35,16 +23,10 @@ export function ThemeToggle() {
 				touchAction: "manipulation",
 				fontSize: "inherit",
 			}}
-			aria-label={`Switch to ${theme === "system" ? "manual" : theme === "dark" ? "light" : "dark"} theme`}
+			aria-label={`Switch to ${nextTheme} theme`}
 		>
-			{theme === "system"
-				? currentTheme === "dark"
-					? "🌙"
-					: "☀️"
-				: theme === "dark"
-					? "🌙"
-					: "☀️"}
-			{theme === "system" && " (System)"}
+			{theme === "dark" ? "🌙" : "☀️"}
+			{themeSource === "system" && " (System)"}
 		</button>
 	);
 }
