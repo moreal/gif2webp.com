@@ -2,7 +2,8 @@
   "name": "gif2webp.com",
   "private": true,
   "scripts": {
-    "fmt": "biome format --write packages/*/src"
+    "fmt": "biome format --write packages/*/src",
+    "build": "yarn workspaces foreach -A run build"
   },
   "workspaces": [
     "packages/*"
