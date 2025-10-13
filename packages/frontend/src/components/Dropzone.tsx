@@ -2,7 +2,7 @@ import { useCallback, useState, useMemo } from "react";
 import { useDropzone, type FileRejection } from "react-dropzone";
 import { DropzoneContainer, DropzoneText } from "./StyledComponents";
 import { readFileAsArrayBuffer, type LoadedFile } from "../utils/fileUtils";
-import { useLanguage } from "../contexts/LanguageContext";
+import { useLanguage } from "../hooks/useLanguage";
 
 const MAX_FILE_SIZE = 512 * 1024 * 1024; // 512MB
 

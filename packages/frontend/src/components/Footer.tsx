@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { ThemeToggle } from "./ThemeToggle";
 import { LanguageSelect } from "./LanguageSelect";
-import { useLanguage } from "../contexts/LanguageContext";
+import { useLanguage } from "../hooks/useLanguage";
 
 interface AboutModalProps {
 	isOpen: boolean;

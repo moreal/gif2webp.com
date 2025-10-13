@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { formatFileSize } from "../utils/fileUtils";
-import { useLanguage } from "../contexts/LanguageContext";
+import { useLanguage } from "../hooks/useLanguage";
 
 interface ProgressIndicatorProps {
 	phase: string;

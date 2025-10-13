@@ -4,7 +4,7 @@ import {
 	HeaderContainer,
 	EmphasisText,
 } from "./StyledComponents";
-import { useLanguage } from "../contexts/LanguageContext";
+import { useLanguage } from "../hooks/useLanguage";
 
 export const Header = () => {
 	const { t } = useLanguage();

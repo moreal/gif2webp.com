@@ -1,4 +1,4 @@
-import { useLanguage } from "../contexts/LanguageContext";
+import { useLanguage } from "../hooks/useLanguage";
 import { SUPPORTED_LANGUAGES } from "../config/i18n";
 
 export function LanguageSelect() {

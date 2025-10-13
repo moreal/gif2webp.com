@@ -12,7 +12,7 @@ import {
 	type ConversionStatus,
 	useImageConversion,
 } from "../hooks/useImageConversion";
-import { useLanguage } from "../contexts/LanguageContext";
+import { useLanguage } from "../hooks/useLanguage";
 
 interface ConversionControlsProps {
 	status: ConversionStatus;

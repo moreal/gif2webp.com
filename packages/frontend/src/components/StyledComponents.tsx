@@ -1,5 +1,5 @@
 import { forwardRef } from "react";
-import { useLanguage } from "../contexts/LanguageContext";
+import { useLanguage } from "../hooks/useLanguage";
 
 export function Container({ children }: React.PropsWithChildren) {
 	return (
