@@ -7,7 +7,7 @@ export interface ConversionOptions {
 }
 
 export async function convertImage(
-	data: ArrayBuffer,
+	data: Uint8Array,
 	options: ConversionOptions = {},
 ): Promise<Uint8Array> {
 	const { quality = 100, lossless = true, onProgress } = options;
