@@ -32,3 +32,17 @@ Run `yarn dev` command in `packages/frontend` or run following command:
 ```
 yarn workspace @gif2webp/frontend dev
 ```
+
+## Storybook
+
+To view and test UI components in isolation:
+
+```bash
+# Run Storybook development server
+yarn workspace @gif2webp/frontend storybook
+
+# Build Storybook for production
+yarn workspace @gif2webp/frontend build-storybook
+```
+
+Storybook will be available at http://localhost:6006

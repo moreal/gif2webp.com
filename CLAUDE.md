@@ -44,6 +44,15 @@ yarn workspace @gif2webp/frontend lint
 yarn fmt
 ```
 
+### Storybook
+```bash
+# Run Storybook development server
+yarn workspace @gif2webp/frontend storybook
+
+# Build Storybook for production
+yarn workspace @gif2webp/frontend build-storybook
+```
+
 ## Pre-commit Checklist
 
 Before committing, ensure the following commands run successfully:
@@ -94,6 +103,12 @@ Image conversion happens in a Web Worker (`src/workers/conversion.worker.ts`) to
 - `Converter.tsx` - handles conversion UI per file
 - `Header.tsx`, `Footer.tsx` - layout components
 - `ErrorBoundary.tsx` - React error boundary
+
+**Storybook Integration:**
+- All UI components have corresponding `.stories.tsx` files for isolated testing
+- Mock data available in `src/__mocks__/mockFiles.ts` for file-related components
+- Global decorators provide ThemeProvider and LanguageProvider context
+- Stories cover multiple states: default, loading, error, and success
 
 ### Image Converter Package
 
