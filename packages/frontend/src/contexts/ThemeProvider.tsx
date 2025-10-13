@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { usePersistedState } from "../hooks/usePersistedState";
 import { useSystemTheme } from "../hooks/useSystemTheme";
 import type { Theme } from "../types/theme";
+import { ThemeContext } from "./ThemeContext";
 
 const THEME_STORAGE_KEY = "gif2webp-theme";
 
