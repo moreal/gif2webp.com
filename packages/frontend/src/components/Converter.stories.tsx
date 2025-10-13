@@ -23,9 +23,14 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const IdleState: Story = {
-  args: {
-    file: mockSmallFile,
-  },
+  loaders: [
+    async () => ({
+      mockFile: await mockSmallFile,
+    }),
+  ],
+  render: (args, { loaded: { mockFile } }) => (
+    <Converter {...args} file={mockFile} />
+  ),
   parameters: {
     docs: {
       description: {
@@ -37,9 +42,14 @@ export const IdleState: Story = {
 
 // Idle 상태 한국어 - 신규 추가
 export const IdleStateKorean: Story = {
-  args: {
-    file: mockSmallFile,
-  },
+  loaders: [
+    async () => ({
+      mockFile: await mockSmallFile,
+    }),
+  ],
+  render: (args, { loaded: { mockFile } }) => (
+    <Converter {...args} file={mockFile} />
+  ),
   decorators: [
     (Story) => (
       <MockLanguageProvider language="ko">
@@ -57,9 +67,14 @@ export const IdleStateKorean: Story = {
 };
 
 export const MediumFile: Story = {
-  args: {
-    file: mockMediumFile,
-  },
+  loaders: [
+    async () => ({
+      mockFile: await mockMediumFile,
+    }),
+  ],
+  render: (args, { loaded: { mockFile } }) => (
+    <Converter {...args} file={mockFile} />
+  ),
   parameters: {
     docs: {
       description: {
@@ -70,9 +85,14 @@ export const MediumFile: Story = {
 };
 
 export const LargeFile: Story = {
-  args: {
-    file: mockLargeFile,
-  },
+  loaders: [
+    async () => ({
+      mockFile: await mockLargeFile,
+    }),
+  ],
+  render: (args, { loaded: { mockFile } }) => (
+    <Converter {...args} file={mockFile} />
+  ),
   parameters: {
     docs: {
       description: {
@@ -83,9 +103,14 @@ export const LargeFile: Story = {
 };
 
 export const WithMemoryWarning: Story = {
-  args: {
-    file: mockLargeFile,
-  },
+  loaders: [
+    async () => ({
+      mockFile: await mockLargeFile,
+    }),
+  ],
+  render: (args, { loaded: { mockFile } }) => (
+    <Converter {...args} file={mockFile} />
+  ),
   parameters: {
     docs: {
       description: {
@@ -97,9 +122,14 @@ export const WithMemoryWarning: Story = {
 
 // 메모리 경고 한국어 - 신규 추가
 export const WithMemoryWarningKorean: Story = {
-  args: {
-    file: mockLargeFile,
-  },
+  loaders: [
+    async () => ({
+      mockFile: await mockLargeFile,
+    }),
+  ],
+  render: (args, { loaded: { mockFile } }) => (
+    <Converter {...args} file={mockFile} />
+  ),
   decorators: [
     (Story) => (
       <MockLanguageProvider language="ko">

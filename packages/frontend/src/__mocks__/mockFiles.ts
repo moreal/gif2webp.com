@@ -1,59 +1,54 @@
 import type { LoadedFile } from "../utils/fileUtils";
+// Import real GIF file using Vite's asset handling
+import catsGifUrl from "./cats_move.gif?url";
 
-// Create a simple GIF-like header for mock data
-// This is a minimal GIF87a header
-const createMockGifData = (size: number): ArrayBuffer => {
-  const buffer = new ArrayBuffer(size);
-  const view = new Uint8Array(buffer);
-
-  // GIF89a header
-  view[0] = 0x47; // 'G'
-  view[1] = 0x49; // 'I'
-  view[2] = 0x46; // 'F'
-  view[3] = 0x38; // '8'
-  view[4] = 0x39; // '9'
-  view[5] = 0x61; // 'a'
-
-  // Fill rest with dummy data
-  for (let i = 6; i < size; i++) {
-    view[i] = Math.floor(Math.random() * 256);
+// Load real GIF data from the actual file
+const loadRealGifData = async (url: string): Promise<ArrayBuffer> => {
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(`Failed to load GIF file: ${response.statusText}`);
   }
-
-  return buffer;
+  return await response.arrayBuffer();
 };
 
-export const createMockFile = (
+export const createMockFile = async (
   name: string,
-  size: number,
   type = "image/gif"
-): File => {
-  const buffer = createMockGifData(size);
+): Promise<File> => {
+  const buffer = await loadRealGifData(catsGifUrl);
   const blob = new Blob([buffer], { type });
   return new File([blob], name, { type, lastModified: Date.now() });
 };
 
-export const createMockLoadedFile = (
-  name: string,
-  size: number
-): LoadedFile => {
-  const data = createMockGifData(size);
-  const file = createMockFile(name, size);
+export const createMockLoadedFile = async (
+  name: string
+): Promise<LoadedFile> => {
+  const data = await loadRealGifData(catsGifUrl);
+  const file = await createMockFile(name);
 
   return {
     file,
     data,
-    size,
+    size: data.byteLength,
   };
 };
 
 // Pre-configured mock files for common scenarios
-export const mockSmallFile = createMockLoadedFile("small-animation.gif", 50 * 1024); // 50KB
-export const mockMediumFile = createMockLoadedFile("medium-animation.gif", 5 * 1024 * 1024); // 5MB
-export const mockLargeFile = createMockLoadedFile("large-animation.gif", 50 * 1024 * 1024); // 50MB
-export const mockVeryLargeFile = createMockLoadedFile("very-large-animation.gif", 150 * 1024 * 1024); // 150MB
+// These are Promises that resolve to LoadedFile - use with await
+// All use the real cats_move.gif file
+export const mockSmallFile = createMockLoadedFile("small-animation.gif");
+export const mockMediumFile = createMockLoadedFile("medium-animation.gif");
+export const mockLargeFile = createMockLoadedFile("large-animation.gif");
+export const mockVeryLargeFile = createMockLoadedFile("very-large-animation.gif");
 
-export const mockFileList: LoadedFile[] = [
-  createMockLoadedFile("cat.gif", 1.5 * 1024 * 1024),
-  createMockLoadedFile("dog.gif", 2.3 * 1024 * 1024),
-  createMockLoadedFile("animation.gif", 800 * 1024),
-];
+// Mock using the actual cats_move.gif file
+export const mockCatsFile = createMockLoadedFile("cats_move.gif");
+
+// Helper function to create a list of mock files
+export const createMockFileList = async (): Promise<LoadedFile[]> => {
+  return Promise.all([
+    createMockLoadedFile("cat.gif"),
+    createMockLoadedFile("dog.gif"),
+    createMockLoadedFile("animation.gif"),
+  ]);
+};

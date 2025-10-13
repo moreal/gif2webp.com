@@ -27,9 +27,14 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: {
-    file: mockSmallFile,
-  },
+  loaders: [
+    async () => ({
+      mockFile: await mockSmallFile,
+    }),
+  ],
+  render: (args, { loaded: { mockFile } }) => (
+    <ImagePreview {...args} file={mockFile} />
+  ),
   parameters: {
     docs: {
       description: {
@@ -40,9 +45,14 @@ export const Default: Story = {
 };
 
 export const WithConverter: Story = {
-  args: {
-    file: mockSmallFile,
-  },
+  loaders: [
+    async () => ({
+      mockFile: await mockSmallFile,
+    }),
+  ],
+  render: (args, { loaded: { mockFile } }) => (
+    <ImagePreview {...args} file={mockFile} />
+  ),
   parameters: {
     docs: {
       description: {
@@ -54,9 +64,14 @@ export const WithConverter: Story = {
 
 // Converter 포함 한국어 - 신규 추가
 export const WithConverterKorean: Story = {
-  args: {
-    file: mockSmallFile,
-  },
+  loaders: [
+    async () => ({
+      mockFile: await mockSmallFile,
+    }),
+  ],
+  render: (args, { loaded: { mockFile } }) => (
+    <ImagePreview {...args} file={mockFile} />
+  ),
   decorators: [
     (Story) => (
       <MockLanguageProvider language="ko">
@@ -74,12 +89,20 @@ export const WithConverterKorean: Story = {
 };
 
 export const LoadError: Story = {
-  args: {
-    file: {
-      ...mockSmallFile,
-      file: new File([], 'corrupted.gif', { type: 'image/gif' }),
-    },
-  },
+  loaders: [
+    async () => ({
+      mockFile: await mockSmallFile,
+    }),
+  ],
+  render: (args, { loaded: { mockFile } }) => (
+    <ImagePreview
+      {...args}
+      file={{
+        ...mockFile,
+        file: new File([], 'corrupted.gif', { type: 'image/gif' }),
+      }}
+    />
+  ),
   parameters: {
     docs: {
       description: {
@@ -91,12 +114,20 @@ export const LoadError: Story = {
 
 // 에러 한국어 - 신규 추가
 export const LoadErrorKorean: Story = {
-  args: {
-    file: {
-      ...mockSmallFile,
-      file: new File([], 'corrupted.gif', { type: 'image/gif' }),
-    },
-  },
+  loaders: [
+    async () => ({
+      mockFile: await mockSmallFile,
+    }),
+  ],
+  render: (args, { loaded: { mockFile } }) => (
+    <ImagePreview
+      {...args}
+      file={{
+        ...mockFile,
+        file: new File([], 'corrupted.gif', { type: 'image/gif' }),
+      }}
+    />
+  ),
   decorators: [
     (Story) => (
       <MockLanguageProvider language="ko">

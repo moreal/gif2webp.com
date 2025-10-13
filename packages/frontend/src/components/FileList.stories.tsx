@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from 'storybook/test';
 import { FileList } from './FileList';
-import { mockFileList, mockSmallFile } from '../__mocks__/mockFiles';
+import { createMockFileList, mockSmallFile } from '../__mocks__/mockFiles';
 
 const meta = {
   title: 'File Management/FileList',
@@ -40,8 +40,16 @@ export const Empty: Story = {
 
 export const SingleFile: Story = {
   args: {
-    files: [mockSmallFile],
+    files: [],
   },
+  loaders: [
+    async () => ({
+      mockFile: await mockSmallFile,
+    }),
+  ],
+  render: (args, { loaded: { mockFile } }) => (
+    <FileList {...args} files={[mockFile]} />
+  ),
   parameters: {
     docs: {
       description: {
@@ -53,8 +61,16 @@ export const SingleFile: Story = {
 
 export const MultipleFiles: Story = {
   args: {
-    files: mockFileList,
+    files: [],
   },
+  loaders: [
+    async () => ({
+      mockFiles: await createMockFileList(),
+    }),
+  ],
+  render: (args, { loaded: { mockFiles } }) => (
+    <FileList {...args} files={mockFiles} />
+  ),
   parameters: {
     docs: {
       description: {
