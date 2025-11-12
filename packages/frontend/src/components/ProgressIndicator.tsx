@@ -5,15 +5,21 @@ import { useLanguage } from "../hooks/useLanguage";
 interface ProgressIndicatorProps {
 	phase: string;
 	fileSize: number;
+	convertedFileSize?: number;
 	isComplete?: boolean;
 }
 
 export function ProgressIndicator({
 	phase,
 	fileSize,
+	convertedFileSize,
 	isComplete,
 }: ProgressIndicatorProps) {
 	const formattedSize = useMemo(() => formatFileSize(fileSize), [fileSize]);
+	const formattedConvertedSize = useMemo(
+		() => (convertedFileSize ? formatFileSize(convertedFileSize) : null),
+		[convertedFileSize],
+	);
 	const { t } = useLanguage();
 
 	return (
@@ -69,7 +75,12 @@ export function ProgressIndicator({
 					textAlign: "center",
 				}}
 			>
-				{t("conversion.fileSize", { size: formattedSize })}
+				{formattedConvertedSize
+					? t("conversion.fileSizeComparison", {
+							originalSize: formattedSize,
+							convertedSize: formattedConvertedSize,
+						})
+					: t("conversion.fileSize", { size: formattedSize })}
 			</span>
 		</div>
 	);

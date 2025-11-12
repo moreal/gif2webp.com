@@ -49,12 +49,14 @@ const ConversionControls = ({
 };
 
 interface CompletedConversionProps {
-	fileSize: number;
+	originalFileSize: number;
+	convertedFileSize: number;
 	onDownload: () => void;
 }
 
 const CompletedConversion = ({
-	fileSize,
+	originalFileSize,
+	convertedFileSize,
 	onDownload,
 }: CompletedConversionProps) => {
 	const { t } = useLanguage();
@@ -63,7 +65,8 @@ const CompletedConversion = ({
 		<>
 			<ProgressIndicator
 				phase={t("conversion.complete")}
-				fileSize={fileSize}
+				fileSize={originalFileSize}
+				convertedFileSize={convertedFileSize}
 				isComplete={true}
 			/>
 			<ConversionButton onClick={onDownload}>
@@ -96,8 +99,15 @@ interface ConverterProps {
 }
 
 export function Converter({ file: { file, data, size } }: ConverterProps) {
-	const { status, error, convertedData, progress, retry, startConversion } =
-		useImageConversion(new Uint8Array(data));
+	const {
+		status,
+		error,
+		convertedData,
+		convertedSize,
+		progress,
+		retry,
+		startConversion,
+	} = useImageConversion(new Uint8Array(data));
 
 	const handleDownload = useCallback(() => {
 		if (convertedData) {
@@ -128,7 +138,11 @@ export function Converter({ file: { file, data, size } }: ConverterProps) {
 
 			case "converted":
 				return (
-					<CompletedConversion fileSize={size} onDownload={handleDownload} />
+					<CompletedConversion
+						originalFileSize={size}
+						convertedFileSize={convertedSize || 0}
+						onDownload={handleDownload}
+					/>
 				);
 
 			case "error":
