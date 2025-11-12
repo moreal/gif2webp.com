@@ -22,6 +22,7 @@ export type TranslationSet = {
 		retry: string;
 		converting: string;
 		fileSize: string;
+		fileSizeComparison: string;
 		memoryWarning: string;
 		error: string;
 	};
@@ -64,6 +65,7 @@ export const translations: Record<string, TranslationSet> = {
 			retry: "Retry",
 			converting: "Converting...",
 			fileSize: "File size: {size}",
+			fileSizeComparison: "{originalSize} → {convertedSize}",
 			memoryWarning: "⚠️ Large file size ({size}MB) may affect performance",
 			error: "Conversion failed",
 		},
@@ -108,6 +110,7 @@ export const translations: Record<string, TranslationSet> = {
 			retry: "다시 시도",
 			converting: "변환 중...",
 			fileSize: "파일 크기: {size}",
+			fileSizeComparison: "{originalSize} → {convertedSize}",
 			memoryWarning:
 				"⚠️ 큰 파일 크기 ({size}MB)는 성능에 영향을 미칠 수 있습니다",
 			error: "변환 실패",

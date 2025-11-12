@@ -6,6 +6,7 @@ interface ConversionState {
 	status: ConversionStatus;
 	error: string | null;
 	convertedData: Uint8Array | null;
+	convertedSize: number | null;
 	progress: string;
 }
 
@@ -14,6 +15,7 @@ export function useImageConversion(fileData: Uint8Array) {
 		status: "idle",
 		error: null,
 		convertedData: null,
+		convertedSize: null,
 		progress: "",
 	});
 
@@ -35,6 +37,7 @@ export function useImageConversion(fileData: Uint8Array) {
 					...prev,
 					progress: "Conversion complete",
 					convertedData: data,
+					convertedSize: data.length,
 					status: "converted",
 				}));
 			} else if (type === "error") {
@@ -71,7 +74,12 @@ export function useImageConversion(fileData: Uint8Array) {
 	}, [state.status, convert]);
 
 	const retry = useCallback(() => {
-		setState((prev) => ({ ...prev, status: "idle", convertedData: null }));
+		setState((prev) => ({
+			...prev,
+			status: "idle",
+			convertedData: null,
+			convertedSize: null,
+		}));
 	}, []);
 
 	const startConversion = useCallback(() => {
