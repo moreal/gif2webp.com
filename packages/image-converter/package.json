@@ -10,7 +10,8 @@
         }
     },
     "scripts": {
-        "build": "tsc"
+        "build": "tsc",
+        "build:prod": "tsc --project tsconfig.prod.json"
     },
     "dependencies": {
         "wasm-vips": "^0.0.10"
