@@ -4,7 +4,7 @@
   "scripts": {
     "fmt": "biome format --write packages/*/src",
     "build": "yarn workspaces foreach -A run build",
-    "build:prod": "NODE_ENV=production yarn workspaces foreach -A run build"
+    "build:prod": "NODE_ENV=production yarn workspaces foreach -A run build:prod"
   },
   "workspaces": [
     "packages/*"
