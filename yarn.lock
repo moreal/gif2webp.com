@@ -846,10 +846,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@eslint/js@npm:9.12.0, @eslint/js@npm:^9.11.1":
+"@eslint/js@npm:9.12.0":
   version: 9.12.0
   resolution: "@eslint/js@npm:9.12.0"
   checksum: 10c0/325650a59a1ce3d97c69441501ebaf415607248bacbe8c8ca35adc7cb73b524f592f266a75772f496b06f3239e3ee1996722a242148085f0ee5fb3dd7065897c
+  languageName: node
+  linkType: hard
+
+"@eslint/js@npm:^9.39.1":
+  version: 9.39.1
+  resolution: "@eslint/js@npm:9.39.1"
+  checksum: 10c0/6f7f26f8cdb7ad6327bbf9741973b6278eb946f18f70e35406e88194b0d5c522d0547a34a02f2a208eec95c5d1388cdf7ccb20039efd2e4cb6655615247a50f1
   languageName: node
   linkType: hard
 
@@ -873,7 +880,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@gif2webp/frontend@workspace:packages/frontend"
   dependencies:
-    "@eslint/js": "npm:^9.11.1"
+    "@eslint/js": "npm:^9.39.1"
     "@gif2webp/image-converter": "workspace:^"
     "@storybook/addon-links": "npm:^9.1.10"
     "@storybook/react-vite": "npm:^9.1.10"
