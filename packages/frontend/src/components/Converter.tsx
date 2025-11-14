@@ -1,117 +1,35 @@
 import { useCallback } from "react";
 import type { LoadedFile } from "../utils/fileUtils";
-import {
-	ConversionButton,
-	ConversionErrorContainer,
-	ErrorText,
-	OptionsContainer,
-	MemoryWarning,
-} from "./StyledComponents";
-import { ProgressIndicator } from "./ProgressIndicator";
-import {
-	type ConversionStatus,
-	useImageConversion,
-} from "../hooks/useImageConversion";
-import { useLanguage } from "../hooks/useLanguage";
-
-interface ConversionControlsProps {
-	status: ConversionStatus;
-	fileSize: number;
-	progress: string;
-	onConvert: () => void;
-}
-
-const ConversionControls = ({
-	status,
-	fileSize,
-	onConvert,
-}: ConversionControlsProps) => {
-	const { t } = useLanguage();
-
-	return (
-		<>
-			<MemoryWarning fileSize={fileSize} />
-			<OptionsContainer>
-				{status === "converting" ? (
-					<ProgressIndicator
-						phase={t("conversion.converting")}
-						fileSize={fileSize}
-						isComplete={false}
-					/>
-				) : (
-					<ConversionButton onClick={onConvert}>
-						{t("conversion.button")}
-					</ConversionButton>
-				)}
-			</OptionsContainer>
-		</>
-	);
-};
-
-interface CompletedConversionProps {
-	fileSize: number;
-	onDownload: () => void;
-}
-
-const CompletedConversion = ({
-	fileSize,
-	onDownload,
-}: CompletedConversionProps) => {
-	const { t } = useLanguage();
-
-	return (
-		<>
-			<ProgressIndicator
-				phase={t("conversion.complete")}
-				fileSize={fileSize}
-				isComplete={true}
-			/>
-			<ConversionButton onClick={onDownload}>
-				{t("conversion.download")}
-			</ConversionButton>
-		</>
-	);
-};
-
-interface ConversionErrorProps {
-	error: string | null;
-	onRetry: () => void;
-}
-
-const ConversionError = ({ error, onRetry }: ConversionErrorProps) => {
-	const { t } = useLanguage();
-
-	return (
-		<ConversionErrorContainer>
-			<ErrorText>{error || t("conversion.error")}</ErrorText>
-			<ConversionButton onClick={onRetry}>
-				{t("conversion.retry")}
-			</ConversionButton>
-		</ConversionErrorContainer>
-	);
-};
+import { replaceExtension } from "../utils/fileUtils";
+import { downloadWebP } from "../utils/downloadUtils";
+import { ConverterContainer } from "./StyledComponents";
+import { ConversionControls } from "./ConversionControls";
+import { CompletedConversion } from "./CompletedConversion";
+import { ConversionError } from "./ConversionError";
+import { useImageConversion } from "../hooks/useImageConversion";
 
 interface ConverterProps {
 	file: LoadedFile;
+	onDownload?: (data: Uint8Array, filename: string) => void;
 }
 
-export function Converter({ file: { file, data, size } }: ConverterProps) {
-	const { status, error, convertedData, progress, retry, startConversion } =
+export function Converter({
+	file: { file, data, size },
+	onDownload,
+}: ConverterProps) {
+	const { status, error, convertedData, retry, startConversion } =
 		useImageConversion(new Uint8Array(data));
 
 	const handleDownload = useCallback(() => {
 		if (convertedData) {
-			const blob = new Blob([convertedData], { type: "image/webp" });
-			const url = URL.createObjectURL(blob);
-			const a = document.createElement("a");
-			a.href = url;
-			a.download = file.name.replace(/\.[^/.]+$/, ".webp");
-			document.body.appendChild(a);
-			a.click();
-			document.body.removeChild(a);
-			URL.revokeObjectURL(url);
+			const filename = replaceExtension(file.name, ".webp");
+			if (onDownload) {
+				onDownload(convertedData, filename);
+			} else {
+				downloadWebP(convertedData, filename);
+			}
 		}
-	}, [convertedData, file.name]);
+	}, [convertedData, file.name, onDownload]);
 
 	const renderContent = () => {
 		switch (status) {
@@ -121,7 +39,6 @@ export function Converter({ file: { file, data, size } }: ConverterProps) {
 					<ConversionControls
 						status={status}
 						fileSize={size}
-						progress={progress}
 						onConvert={startConversion}
 					/>
 				);
@@ -139,20 +56,5 @@ export function Converter({ file: { file, data, size } }: ConverterProps) {
 		}
 	};
 
-	return (
-		<div
-			style={{
-				padding: "16px",
-				backgroundColor: "rgba(0, 0, 0, 0.1)",
-				borderRadius: "8px",
-				display: "flex",
-				flexDirection: "column",
-				gap: "16px",
-				width: "100%",
-				boxSizing: "border-box",
-			}}
-		>
-			{renderContent()}
-		</div>
-	);
+	return <ConverterContainer>{renderContent()}</ConverterContainer>;
 }

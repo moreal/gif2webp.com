@@ -79,3 +79,43 @@ export function formatFileSize(bytes: number): string {
 
 	return `${Math.round(size * 10) / 10} ${units[unitIndex]}`;
 }
+
+/**
+ * Replaces the file extension of a filename with a new extension
+ * @param filename - The original filename
+ * @param newExtension - The new extension (with or without leading dot)
+ * @returns The filename with the new extension
+ *
+ * @example
+ * replaceExtension("image.gif", ".webp") // "image.webp"
+ * replaceExtension("image.gif", "webp") // "image.webp"
+ * replaceExtension("file.tar.gz", ".zip") // "file.tar.zip"
+ */
+export function replaceExtension(
+	filename: string,
+	newExtension: string,
+): string {
+	const extension = newExtension.startsWith(".")
+		? newExtension
+		: `.${newExtension}`;
+
+	// Check if filename has an extension
+	// For files starting with dot (hidden files), check if there's another dot
+	if (filename.startsWith(".")) {
+		const hasExtension = /\.\w+\.\w+/.test(filename);
+		if (hasExtension) {
+			return filename.replace(/\.[^/.]+$/, extension);
+		}
+		// Hidden file without extension, append extension
+		return filename + extension;
+	}
+
+	// Regular file with extension
+	const hasExtension = /\.[^/.]+$/.test(filename);
+	if (hasExtension) {
+		return filename.replace(/\.[^/.]+$/, extension);
+	}
+
+	// If no extension, just append it
+	return filename + extension;
+}
