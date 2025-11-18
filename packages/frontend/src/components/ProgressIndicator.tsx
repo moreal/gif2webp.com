@@ -4,17 +4,44 @@ import { useLanguage } from "../hooks/useLanguage";
 
 interface ProgressIndicatorProps {
 	phase: string;
-	fileSize: number;
+	fileSize?: number;
+	originalSize?: number;
+	convertedSize?: number;
 	isComplete?: boolean;
 }
 
 export function ProgressIndicator({
 	phase,
 	fileSize,
+	originalSize,
+	convertedSize,
 	isComplete,
 }: ProgressIndicatorProps) {
-	const formattedSize = useMemo(() => formatFileSize(fileSize), [fileSize]);
 	const { t } = useLanguage();
+
+	// Determine which display mode to use
+	const showComparison =
+		originalSize !== undefined && convertedSize !== undefined;
+
+	const sizeDisplay = useMemo(() => {
+		if (showComparison) {
+			// Show size comparison with reduction percentage
+			const formattedOriginal = formatFileSize(originalSize);
+			const formattedConverted = formatFileSize(convertedSize);
+			const reductionPercentage = Math.round(
+				((originalSize - convertedSize) / originalSize) * 100,
+			);
+
+			return t("conversion.sizeComparison", {
+				original: formattedOriginal,
+				converted: formattedConverted,
+				percentage: reductionPercentage,
+			});
+		}
+		// Fallback to single file size display
+		const formattedSize = formatFileSize(fileSize ?? 0);
+		return t("conversion.fileSize", { size: formattedSize });
+	}, [showComparison, originalSize, convertedSize, fileSize, t]);
 
 	return (
 		<div
@@ -69,7 +96,7 @@ export function ProgressIndicator({
 					textAlign: "center",
 				}}
 			>
-				{t("conversion.fileSize", { size: formattedSize })}
+				{sizeDisplay}
 			</span>
 		</div>
 	);

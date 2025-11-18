@@ -17,8 +17,14 @@ export function Converter({
 	file: { file, data, size },
 	onDownload,
 }: ConverterProps) {
-	const { status, error, convertedData, retry, startConversion } =
-		useImageConversion(new Uint8Array(data));
+	const {
+		status,
+		error,
+		convertedData,
+		convertedSize,
+		retry,
+		startConversion,
+	} = useImageConversion(new Uint8Array(data));
 
 	const handleDownload = useCallback(() => {
 		if (convertedData) {
@@ -45,7 +51,11 @@ export function Converter({
 
 			case "converted":
 				return (
-					<CompletedConversion fileSize={size} onDownload={handleDownload} />
+					<CompletedConversion
+						originalSize={size}
+						convertedSize={convertedSize}
+						onDownload={handleDownload}
+					/>
 				);
 
 			case "error":

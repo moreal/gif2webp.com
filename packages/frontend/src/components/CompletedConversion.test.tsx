@@ -5,7 +5,8 @@ import userEvent from "@testing-library/user-event";
 
 describe("CompletedConversion", () => {
 	const defaultProps = {
-		fileSize: 1024 * 1024, // 1MB
+		originalSize: 2 * 1024 * 1024, // 2MB
+		convertedSize: 1024 * 1024, // 1MB
 		onDownload: vi.fn(),
 	};
 

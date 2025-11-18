@@ -18,18 +18,21 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
 	args: {
-		fileSize: 1024 * 1024, // 1MB
+		originalSize: 2 * 1024 * 1024, // 2MB original
+		convertedSize: 1024 * 1024, // 1MB converted (50% reduction)
 	},
 };
 
 export const SmallFile: Story = {
 	args: {
-		fileSize: 500 * 1024, // 500KB
+		originalSize: 1024 * 1024, // 1MB original
+		convertedSize: 500 * 1024, // 500KB converted (50% reduction)
 	},
 };
 
 export const LargeFile: Story = {
 	args: {
-		fileSize: 50 * 1024 * 1024, // 50MB
+		originalSize: 100 * 1024 * 1024, // 100MB original
+		convertedSize: 50 * 1024 * 1024, // 50MB converted (50% reduction)
 	},
 };

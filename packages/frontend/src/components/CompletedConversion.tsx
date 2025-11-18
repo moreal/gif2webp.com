@@ -3,12 +3,14 @@ import { ConversionButton } from "./StyledComponents";
 import { ProgressIndicator } from "./ProgressIndicator";
 
 export interface CompletedConversionProps {
-	fileSize: number;
+	originalSize: number;
+	convertedSize: number;
 	onDownload: () => void;
 }
 
 export function CompletedConversion({
-	fileSize,
+	originalSize,
+	convertedSize,
 	onDownload,
 }: CompletedConversionProps) {
 	const { t } = useLanguage();
@@ -17,7 +19,8 @@ export function CompletedConversion({
 		<>
 			<ProgressIndicator
 				phase={t("conversion.complete")}
-				fileSize={fileSize}
+				originalSize={originalSize}
+				convertedSize={convertedSize}
 				isComplete={true}
 			/>
 			<ConversionButton onClick={onDownload}>
