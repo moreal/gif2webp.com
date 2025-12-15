@@ -64,6 +64,7 @@ body {
 	text-align: center;
 	font-family: "Noto Sans", "Noto Sans KR", sans-serif;
 	box-sizing: border-box;
+	isolation: isolate;
 }
 
 a {

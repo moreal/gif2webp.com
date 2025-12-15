@@ -17,6 +17,7 @@
         "build-storybook": "storybook build"
     },
     "dependencies": {
+        "@base-ui/react": "^1.0.0",
         "@gif2webp/image-converter": "workspace:^",
         "react": "^19.0.0",
         "react-dom": "^19.0.0",

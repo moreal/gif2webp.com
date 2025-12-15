@@ -1,4 +1,5 @@
 import { forwardRef } from "react";
+import { Button } from "@base-ui/react/button";
 import { useLanguage } from "../hooks/useLanguage";
 
 export function Container({ children }: React.PropsWithChildren) {
@@ -42,7 +43,7 @@ export const DeleteButton = forwardRef<
 	HTMLButtonElement,
 	{ onClick: () => void }
 >(({ onClick }, ref) => (
-	<button
+	<Button
 		ref={ref}
 		onClick={onClick}
 		aria-label="Delete image"
@@ -67,7 +68,7 @@ export const DeleteButton = forwardRef<
 		}}
 	>
 		X
-	</button>
+	</Button>
 ));
 
 DeleteButton.displayName = "DeleteButton";
@@ -266,7 +267,7 @@ export const ConversionButton = forwardRef<
 	HTMLButtonElement,
 	React.ButtonHTMLAttributes<HTMLButtonElement> & React.PropsWithChildren
 >(({ children, disabled, onClick, ...props }, ref) => (
-	<button
+	<Button
 		ref={ref}
 		disabled={disabled}
 		onClick={onClick}
@@ -288,7 +289,7 @@ export const ConversionButton = forwardRef<
 		{...props}
 	>
 		{children}
-	</button>
+	</Button>
 ));
 
 ConversionButton.displayName = "ConversionButton";
@@ -348,51 +349,6 @@ export function ProgressText({ children }: React.PropsWithChildren) {
 		>
 			{children}
 		</p>
-	);
-}
-
-export function QualitySlider({
-	value,
-	onChange,
-	disabled,
-}: {
-	value: number;
-	onChange: (value: number) => void;
-	disabled?: boolean;
-}) {
-	return (
-		<div
-			style={{
-				display: "flex",
-				alignItems: "center",
-				gap: "8px",
-				flexWrap: "wrap",
-				justifyContent: "center",
-			}}
-			role="group"
-			aria-labelledby="quality-label"
-		>
-			<label id="quality-label" style={{ fontSize: "14px" }}>
-				Quality: {value}
-			</label>
-			<input
-				type="range"
-				min="0"
-				max="100"
-				value={value}
-				onChange={(e) => onChange(Number(e.target.value))}
-				disabled={disabled}
-				aria-label="Image quality"
-				aria-valuemin={0}
-				aria-valuemax={100}
-				aria-valuenow={value}
-				style={{
-					width: "100px",
-					opacity: disabled ? 0.5 : 1,
-					height: "24px",
-				}}
-			/>
-		</div>
 	);
 }
 
