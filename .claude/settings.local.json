@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(yarn workspace @gif2webp/frontend lint:*)",
+      "Bash(yarn workspace @gif2webp/frontend test:*)",
+      "Bash(yarn workspace @gif2webp/frontend build:*)",
+      "Bash(git diff:*)",
+      "Bash(yarn workspace @gif2webp/frontend test:run:*)",
+      "Bash(yarn vitest run:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

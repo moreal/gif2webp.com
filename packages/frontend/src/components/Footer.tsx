@@ -1,4 +1,5 @@
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
+import { Dialog } from "@base-ui/react/dialog";
 import { ThemeToggle } from "./ThemeToggle";
 import { LanguageSelect } from "./LanguageSelect";
 import { useLanguage } from "../hooks/useLanguage";
@@ -10,126 +11,88 @@ interface AboutModalProps {
 
 function AboutModal({ isOpen, onClose }: AboutModalProps) {
 	const { t } = useLanguage();
-
-	const modalRef = useRef<HTMLDivElement>(null);
-
-	useEffect(() => {
-		const originalStyle = window.getComputedStyle(document.body).overflow;
-		document.body.style.overflow = "hidden";
-
-		// Focus the modal when it opens
-		modalRef.current?.focus();
-
-		return () => {
-			document.body.style.overflow = originalStyle;
-		};
-	}, []);
-
-	const handleOverlayClick = (e: React.MouseEvent) => {
-		if (e.target === e.currentTarget) {
-			onClose();
-		}
-	};
-
-	useEffect(() => {
-		const handleEscape = (e: KeyboardEvent) => {
-			if (e.key === "Escape") {
-				onClose();
-			}
-		};
-
-		document.addEventListener("keydown", handleEscape);
-		return () => document.removeEventListener("keydown", handleEscape);
-	}, [onClose]);
-
-	if (!isOpen) return null;
-
 	const aboutContent = t("footer.aboutContent") as unknown as string[];
 
 	return (
-		<div
-			onClick={handleOverlayClick}
-			role="dialog"
-			aria-modal="true"
-			aria-labelledby="modal-title"
-			ref={modalRef}
-			tabIndex={-1}
-			style={{
-				position: "fixed",
-				top: 0,
-				left: 0,
-				right: 0,
-				bottom: 0,
-				backgroundColor: "rgba(0, 0, 0, 0.7)",
-				display: "flex",
-				alignItems: "center",
-				justifyContent: "center",
-				zIndex: 1000,
-				outline: "none", // Remove focus outline on the overlay
-				padding: "0 10px",
-			}}
-		>
-			<div
-				style={{
-					backgroundColor: "var(--bg-primary)",
-					color: "var(--text-primary)",
-					padding: "1.5rem",
-					borderRadius: "8px",
-					maxWidth: "90vw",
-					width: "600px",
-					maxHeight: "90vh",
-					overflow: "auto",
-					position: "relative",
-					margin: "10px",
-				}}
-			>
-				<button
-					onClick={onClose}
-					aria-label={t("common.close")}
+		<Dialog.Root open={isOpen} onOpenChange={(open) => !open && onClose()}>
+			<Dialog.Portal>
+				<Dialog.Backdrop
 					style={{
-						position: "absolute",
-						top: "10px",
-						right: "10px",
-						background: "none",
-						border: "none",
+						position: "fixed",
+						top: 0,
+						left: 0,
+						right: 0,
+						bottom: 0,
+						backgroundColor: "rgba(0, 0, 0, 0.7)",
+						zIndex: 1000,
+					}}
+				/>
+				<Dialog.Popup
+					style={{
+						position: "fixed",
+						top: "50%",
+						left: "50%",
+						transform: "translate(-50%, -50%)",
+						backgroundColor: "var(--bg-primary)",
 						color: "var(--text-primary)",
-						fontSize: "24px",
-						cursor: "pointer",
-						width: "36px",
-						height: "36px",
-						display: "flex",
-						alignItems: "center",
-						justifyContent: "center",
-						touchAction: "manipulation",
+						padding: "1.5rem",
+						borderRadius: "8px",
+						maxWidth: "90vw",
+						width: "600px",
+						maxHeight: "90vh",
+						overflow: "auto",
+						zIndex: 1001,
+						margin: "10px",
 					}}
 				>
-					×
-				</button>
-				<h2
-					id="modal-title"
-					style={{
-						marginTop: 0,
-						color: "var(--text-primary)",
-						fontSize: "clamp(20px, 5vw, 24px)",
-					}}
-				>
-					{t("footer.aboutTitle")}
-				</h2>
-				{aboutContent.map((paragraph, index) => (
-					<p
-						key={index}
+					<Dialog.Close
+						aria-label={t("common.close")}
 						style={{
-							lineHeight: 1.6,
+							position: "absolute",
+							top: "10px",
+							right: "10px",
+							background: "none",
+							border: "none",
 							color: "var(--text-primary)",
-							wordBreak: "keep-all",
-							fontSize: "clamp(14px, 4vw, 16px)",
+							fontSize: "24px",
+							cursor: "pointer",
+							width: "36px",
+							height: "36px",
+							display: "flex",
+							alignItems: "center",
+							justifyContent: "center",
+							touchAction: "manipulation",
 						}}
 					>
-						{paragraph}
-					</p>
-				))}
-			</div>
-		</div>
+						×
+					</Dialog.Close>
+					<Dialog.Title
+						style={{
+							marginTop: 0,
+							color: "var(--text-primary)",
+							fontSize: "clamp(20px, 5vw, 24px)",
+						}}
+					>
+						{t("footer.aboutTitle")}
+					</Dialog.Title>
+					<Dialog.Description>
+						{aboutContent.map((paragraph, index) => (
+							<p
+								key={index}
+								style={{
+									lineHeight: 1.6,
+									color: "var(--text-primary)",
+									wordBreak: "keep-all",
+									fontSize: "clamp(14px, 4vw, 16px)",
+								}}
+							>
+								{paragraph}
+							</p>
+						))}
+					</Dialog.Description>
+				</Dialog.Popup>
+			</Dialog.Portal>
+		</Dialog.Root>
 	);
 }
 
