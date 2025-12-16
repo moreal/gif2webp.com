@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { usePersistedState } from "../hooks/usePersistedState";
 import { useSystemTheme } from "../hooks/useSystemTheme";
 import type { Theme } from "../types/theme";
@@ -24,17 +24,21 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 	const theme = rawTheme === "system" ? systemTheme : rawTheme;
 
 	const nextTheme = invertTheme(theme);
-	const toggleTheme = () => setRawTheme(nextTheme);
+
+	const toggleTheme = useCallback(() => {
+		setRawTheme(invertTheme(rawTheme === "system" ? systemTheme : rawTheme));
+	}, [rawTheme, systemTheme, setRawTheme]);
 
 	useEffect(() => {
 		document.documentElement.setAttribute("data-theme", theme);
 	}, [theme]);
 
+	const value = useMemo(
+		() => ({ theme, themeSource, nextTheme, toggleTheme }),
+		[theme, themeSource, nextTheme, toggleTheme],
+	);
+
 	return (
-		<ThemeContext.Provider
-			value={{ theme, themeSource, nextTheme, toggleTheme }}
-		>
-			{children}
-		</ThemeContext.Provider>
+		<ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
 	);
 }
