@@ -1174,7 +1174,7 @@ __metadata:
     react: "npm:^19.2.3"
     react-dom: "npm:^19.2.3"
     react-dropzone: "npm:^14.2.9"
-    storybook: "npm:^9.1.10"
+    storybook: "npm:^9.1.17"
     typescript: "npm:^5.9.3"
     typescript-eslint: "npm:^8.46.4"
     vite: "npm:^7.3.0"
@@ -4966,9 +4966,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"storybook@npm:^9.1.10":
-  version: 9.1.10
-  resolution: "storybook@npm:9.1.10"
+"storybook@npm:^9.1.17":
+  version: 9.1.17
+  resolution: "storybook@npm:9.1.17"
   dependencies:
     "@storybook/global": "npm:^5.0.0"
     "@testing-library/jest-dom": "npm:^6.6.3"
@@ -4989,7 +4989,7 @@ __metadata:
       optional: true
   bin:
     storybook: ./bin/index.cjs
-  checksum: 10c0/e44ced87d5ed1c3260c65824d5e1c5d09d4f58731ba63371bb5b52f68f5b73d52062d79c17c63ad85a4ffa69774b26b51210bbc22ffa495bb44d4fe5c87d95a7
+  checksum: 10c0/8590eaff08714565f19658b16676005960cada649fd0809171d8e8917f38592c52a795a68662c92abb90aae9d5794f0e60f08a2523d9d2524f7f826af0ddd66e
   languageName: node
   linkType: hard
 
