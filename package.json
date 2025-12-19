@@ -10,7 +10,7 @@
     "packages/*"
   ],
   "devDependencies": {
-    "@biomejs/biome": "1.9.4",
+    "@biomejs/biome": "2.3.10",
     "@yarnpkg/types": "^4.0.0",
     "typescript": "^5.9.3"
   },
