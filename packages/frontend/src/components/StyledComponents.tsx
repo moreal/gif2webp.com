@@ -77,7 +77,11 @@ export function PreviewImage({
 	src,
 	alt,
 	onError,
-}: { src: string; alt?: string; onError?: () => void }) {
+}: {
+	src: string;
+	alt?: string;
+	onError?: () => void;
+}) {
 	return (
 		<img
 			src={src}
