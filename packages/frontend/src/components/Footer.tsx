@@ -9,6 +9,14 @@ interface AboutModalProps {
 	onClose: () => void;
 }
 
+const handleMouseOver = (e: React.MouseEvent<HTMLElement>) => {
+	e.currentTarget.style.opacity = "1";
+};
+
+const handleMouseOut = (e: React.MouseEvent<HTMLElement>) => {
+	e.currentTarget.style.opacity = "0.8";
+};
+
 function AboutModal({ isOpen, onClose }: AboutModalProps) {
 	const { t } = useLanguage();
 	const aboutContent = t("footer.aboutContent") as unknown as string[];
@@ -128,8 +136,8 @@ export function Footer() {
 					transition: "opacity 0.2s",
 					touchAction: "manipulation",
 				}}
-				onMouseOver={(e) => (e.currentTarget.style.opacity = "1")}
-				onMouseOut={(e) => (e.currentTarget.style.opacity = "0.8")}
+				onMouseOver={handleMouseOver}
+				onMouseOut={handleMouseOut}
 			>
 				{t("footer.about")}
 			</button>
@@ -145,8 +153,8 @@ export function Footer() {
 					padding: "8px 8px",
 					fontWeight: "400",
 				}}
-				onMouseOver={(e) => (e.currentTarget.style.opacity = "1")}
-				onMouseOut={(e) => (e.currentTarget.style.opacity = "0.8")}
+				onMouseOver={handleMouseOver}
+				onMouseOut={handleMouseOut}
 			>
 				{t("footer.sourceCode")}
 			</a>
