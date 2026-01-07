@@ -3,8 +3,7 @@ import { useDropzone, type FileRejection } from "react-dropzone";
 import { DropzoneContainer, DropzoneText } from "./StyledComponents";
 import { readFileAsArrayBuffer, type LoadedFile } from "../utils/fileUtils";
 import { useLanguage } from "../hooks/useLanguage";
-
-const MAX_FILE_SIZE = 512 * 1024 * 1024; // 512MB
+import { config } from "../config/conversion";
 
 export type { LoadedFile };
 
@@ -23,7 +22,7 @@ export function Dropzone({ onUpload }: DropzoneProps) {
 
 			if (rejectedFiles.length > 0) {
 				const sizeError = rejectedFiles.some(
-					(f) => f.file.size > MAX_FILE_SIZE,
+					(f) => f.file.size > config.MAX_FILE_SIZE,
 				);
 				setError(
 					sizeError ? t("dropzone.fileSizeError") : t("dropzone.fileTypeError"),
@@ -57,7 +56,7 @@ export function Dropzone({ onUpload }: DropzoneProps) {
 		accept: {
 			"image/gif": [".gif"],
 		},
-		maxSize: MAX_FILE_SIZE,
+		maxSize: config.MAX_FILE_SIZE,
 		// Make touchable device handling better
 		noClick: false,
 		noDrag: false,
