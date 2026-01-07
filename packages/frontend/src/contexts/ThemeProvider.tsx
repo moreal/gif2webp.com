@@ -15,7 +15,7 @@ const invertTheme = (theme: Theme) => (theme === "dark" ? "light" : "dark");
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
 	const systemTheme = useSystemTheme();
 	const [rawTheme, setRawTheme] = usePersistedState<RawTheme>(
-		THEME_STORAGE_KEY ? THEME_STORAGE_KEY : "system",
+		THEME_STORAGE_KEY,
 		"system",
 		isRawTheme,
 	);
