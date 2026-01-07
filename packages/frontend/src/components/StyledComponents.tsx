@@ -1,6 +1,7 @@
 import { forwardRef } from "react";
 import { Button } from "@base-ui/react/button";
 import { useLanguage } from "../hooks/useLanguage";
+import { config } from "../config/conversion";
 
 export function Container({ children }: React.PropsWithChildren) {
 	return (
@@ -375,11 +376,9 @@ export function OptionsContainer({ children }: React.PropsWithChildren) {
 	);
 }
 
-export const MAX_SAFE_FILE_SIZE = 100 * 1024 * 1024; // 100MB
-
 export function MemoryWarning({ fileSize }: { fileSize: number }) {
 	const { t } = useLanguage();
-	if (fileSize <= MAX_SAFE_FILE_SIZE) return null;
+	if (fileSize <= config.MAX_SAFE_FILE_SIZE) return null;
 
 	const sizeMB = Math.round(fileSize / 1024 / 1024);
 	return (
