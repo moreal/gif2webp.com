@@ -9,6 +9,8 @@ import {
 	ErrorText,
 } from "./StyledComponents";
 
+const IMAGE_PREVIEW_ERROR = "Failed to load image preview";
+
 interface ImagePreviewProps {
 	file: LoadedFile;
 	onDelete: () => void;
@@ -31,7 +33,7 @@ export function ImagePreview({
 				URL.revokeObjectURL(url);
 			};
 		} catch {
-			setError("Failed to load image preview");
+			setError(IMAGE_PREVIEW_ERROR);
 		}
 	}, [data, file.type]);
 
@@ -39,7 +41,7 @@ export function ImagePreview({
 		file.name.length > 16 ? `${file.name.substring(0, 13)}...` : file.name;
 
 	const handleImageError = useCallback(() => {
-		setError("Failed to load image preview");
+		setError(IMAGE_PREVIEW_ERROR);
 	}, []);
 
 	if (error) {
