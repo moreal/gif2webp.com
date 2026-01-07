@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { Theme } from "../types/theme";
+import type { Theme } from "../types/theme";
 
 type ThemeSource = "user" | "system";
 
