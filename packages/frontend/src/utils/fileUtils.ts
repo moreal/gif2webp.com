@@ -99,23 +99,13 @@ export function replaceExtension(
 		? newExtension
 		: `.${newExtension}`;
 
-	// Check if filename has an extension
-	// For files starting with dot (hidden files), check if there's another dot
-	if (filename.startsWith(".")) {
-		const hasExtension = /\.\w+\.\w+/.test(filename);
-		if (hasExtension) {
-			return filename.replace(/\.[^/.]+$/, extension);
-		}
-		// Hidden file without extension, append extension
-		return filename + extension;
-	}
+	// For hidden files (starting with .), check if there's a second dot for extension
+	// For regular files, check if there's any dot for extension
+	const hasExtension = filename.startsWith(".")
+		? /\.\w+\.\w+/.test(filename) // Hidden file needs two dots
+		: /\.[^/.]+$/.test(filename); // Regular file needs one dot
 
-	// Regular file with extension
-	const hasExtension = /\.[^/.]+$/.test(filename);
-	if (hasExtension) {
-		return filename.replace(/\.[^/.]+$/, extension);
-	}
-
-	// If no extension, just append it
-	return filename + extension;
+	return hasExtension
+		? filename.replace(/\.[^/.]+$/, extension)
+		: filename + extension;
 }
