@@ -154,7 +154,8 @@ export function getTranslation(
 
 	if (typeof translation === "string" && values) {
 		return Object.entries(values).reduce(
-			(text, [key, value]) => text.replace(`{${key}}`, value.toString()),
+			(text, [placeholder, value]) =>
+				text.replace(`{${placeholder}}`, value.toString()),
 			translation,
 		);
 	}
