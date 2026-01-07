@@ -32,4 +32,4 @@ jobs:
         run: yarn workspace @gif2webp/frontend lint
 
       - name: Build
-        run: yarn build
+        run: yarn build:prod
