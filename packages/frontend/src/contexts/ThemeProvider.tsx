@@ -10,7 +10,8 @@ type RawTheme = Theme | "system";
 const isRawTheme = (value: string): value is RawTheme =>
 	value === "light" || value === "dark" || value === "system";
 
-const invertTheme = (theme: Theme) => (theme === "dark" ? "light" : "dark");
+const getOppositeTheme = (theme: Theme) =>
+	theme === "dark" ? "light" : "dark";
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
 	const systemTheme = useSystemTheme();
@@ -23,7 +24,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 	const themeSource = rawTheme === "system" ? "system" : "user";
 	const theme = rawTheme === "system" ? systemTheme : rawTheme;
 
-	const nextTheme = invertTheme(theme);
+	const nextTheme = getOppositeTheme(theme);
 	const toggleTheme = () => setRawTheme(nextTheme);
 
 	useEffect(() => {
