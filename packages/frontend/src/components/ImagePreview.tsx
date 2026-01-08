@@ -10,6 +10,8 @@ import {
 } from "./StyledComponents";
 
 const IMAGE_PREVIEW_ERROR = "Failed to load image preview";
+const MAX_FILENAME_DISPLAY_LENGTH = 16;
+const FILENAME_TRUNCATE_LENGTH = 13;
 
 interface ImagePreviewProps {
 	file: LoadedFile;
@@ -38,7 +40,9 @@ export function ImagePreview({
 	}, [data, file.type]);
 
 	const filename =
-		file.name.length > 16 ? `${file.name.substring(0, 13)}...` : file.name;
+		file.name.length > MAX_FILENAME_DISPLAY_LENGTH
+			? `${file.name.substring(0, FILENAME_TRUNCATE_LENGTH)}...`
+			: file.name;
 
 	const handleImageError = useCallback(() => {
 		setError(IMAGE_PREVIEW_ERROR);
