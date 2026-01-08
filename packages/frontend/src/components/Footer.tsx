@@ -128,7 +128,7 @@ export function Footer() {
 				style={{
 					background: "none",
 					border: "none",
-					padding: "8px 8px",
+					padding: "8px",
 					color: "inherit",
 					cursor: "pointer",
 					opacity: 0.8,
@@ -150,7 +150,7 @@ export function Footer() {
 					textDecoration: "none",
 					opacity: 0.8,
 					transition: "opacity 0.2s",
-					padding: "8px 8px",
+					padding: "8px",
 					fontWeight: "400",
 				}}
 				onMouseOver={handleMouseOver}
