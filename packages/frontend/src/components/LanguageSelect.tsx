@@ -1,6 +1,7 @@
 import { Select } from "@base-ui/react/select";
 import { useLanguage } from "../hooks/useLanguage";
 import { type Language, SUPPORTED_LANGUAGES } from "../config/i18n";
+import { FOOTER_ELEMENT_OPACITY } from "../config/styles";
 
 export function LanguageSelect() {
 	const { language, setLanguage } = useLanguage();
@@ -20,7 +21,7 @@ export function LanguageSelect() {
 					padding: "8px 4px",
 					color: "inherit",
 					cursor: "pointer",
-					opacity: 0.8,
+					opacity: FOOTER_ELEMENT_OPACITY,
 					fontSize: "inherit",
 					transition: "opacity 0.2s",
 					minHeight: "44px",

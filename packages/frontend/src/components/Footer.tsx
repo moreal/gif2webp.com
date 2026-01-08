@@ -3,6 +3,7 @@ import { Dialog } from "@base-ui/react/dialog";
 import { ThemeToggle } from "./ThemeToggle";
 import { LanguageSelect } from "./LanguageSelect";
 import { useLanguage } from "../hooks/useLanguage";
+import { FOOTER_ELEMENT_OPACITY } from "../config/styles";
 
 interface AboutModalProps {
 	isOpen: boolean;
@@ -14,7 +15,7 @@ const handleMouseOver = (e: React.MouseEvent<HTMLElement>) => {
 };
 
 const handleMouseOut = (e: React.MouseEvent<HTMLElement>) => {
-	e.currentTarget.style.opacity = "0.8";
+	e.currentTarget.style.opacity = String(FOOTER_ELEMENT_OPACITY);
 };
 
 function AboutModal({ isOpen, onClose }: AboutModalProps) {
@@ -131,7 +132,7 @@ export function Footer() {
 					padding: "8px 8px",
 					color: "inherit",
 					cursor: "pointer",
-					opacity: 0.8,
+					opacity: FOOTER_ELEMENT_OPACITY,
 					fontSize: "inherit",
 					transition: "opacity 0.2s",
 					touchAction: "manipulation",
@@ -148,7 +149,7 @@ export function Footer() {
 				style={{
 					color: "inherit",
 					textDecoration: "none",
-					opacity: 0.8,
+					opacity: FOOTER_ELEMENT_OPACITY,
 					transition: "opacity 0.2s",
 					padding: "8px 8px",
 					fontWeight: "400",
