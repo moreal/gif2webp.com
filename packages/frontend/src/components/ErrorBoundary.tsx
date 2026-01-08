@@ -33,9 +33,7 @@ export class ErrorBoundary extends Component<Props, State> {
 			const lang = this.props.language || "en";
 			return (
 				<div style={{ padding: "20px", textAlign: "center" }}>
-					<ErrorText>
-						{getTranslation(lang, "errors.general", undefined)}
-					</ErrorText>
+					<ErrorText>{getTranslation(lang, "errors.general")}</ErrorText>
 					<button
 						onClick={() => {
 							this.setState({ hasError: false, error: undefined });
@@ -51,7 +49,7 @@ export class ErrorBoundary extends Component<Props, State> {
 							cursor: "pointer",
 						}}
 					>
-						{getTranslation(lang, "errors.refresh", undefined)}
+						{getTranslation(lang, "errors.refresh")}
 					</button>
 				</div>
 			);
