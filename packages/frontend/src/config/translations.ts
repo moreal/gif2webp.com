@@ -42,7 +42,7 @@ export type TranslationSet = {
 	};
 };
 
-export const translations: Record<string, TranslationSet> = {
+export const translations: Record<Language, TranslationSet> = {
 	en: {
 		header: {
 			title: "Convert your GIF to WebP in ",
