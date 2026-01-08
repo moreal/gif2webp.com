@@ -3,6 +3,13 @@ import { Button } from "@base-ui/react/button";
 import { useLanguage } from "../hooks/useLanguage";
 import { config } from "../config/conversion";
 
+// Semantic color constants
+const COLORS = {
+	ERROR: "#ff4444",
+	WARNING: "#ffcc00",
+	LOADING: "#888888",
+} as const;
+
 export function Container({ children }: React.PropsWithChildren) {
 	return (
 		<div
@@ -163,7 +170,7 @@ export function DropzoneText({
 	return (
 		<p
 			style={{
-				color: isError ? "#ff4444" : isLoading ? "#888888" : "inherit",
+				color: isError ? COLORS.ERROR : isLoading ? COLORS.LOADING : "inherit",
 				fontWeight: isError || isLoading ? "bold" : "normal",
 				fontSize: "clamp(14px, 4vw, 16px)",
 				textAlign: "center",
@@ -263,7 +270,7 @@ export function ErrorText({ children }: React.PropsWithChildren) {
 		<p
 			style={{
 				margin: 0,
-				color: "#ff4444",
+				color: COLORS.ERROR,
 				fontSize: "14px",
 				textAlign: "center",
 				padding: "8px",
@@ -399,7 +406,7 @@ export function WarningText({ children }: React.PropsWithChildren) {
 			style={{
 				margin: "8px 0",
 				fontSize: "14px",
-				color: "#ffcc00",
+				color: COLORS.WARNING,
 				textAlign: "center",
 				display: "flex",
 				alignItems: "center",
