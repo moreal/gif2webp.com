@@ -64,7 +64,7 @@ export const ErrorFileSize: Story = {
 		docs: {
 			description: {
 				story:
-					"Error state when uploaded file exceeds maximum size limit (512MB) - English",
+					"Error state when uploaded file exceeds maximum size limit (200MB) - English",
 			},
 		},
 	},
@@ -83,7 +83,7 @@ export const ErrorFileSizeKorean: Story = {
 		docs: {
 			description: {
 				story:
-					"Error state when uploaded file exceeds maximum size limit (512MB) - Korean",
+					"Error state when uploaded file exceeds maximum size limit (200MB) - Korean",
 			},
 		},
 	},
