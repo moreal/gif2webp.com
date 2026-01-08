@@ -1,4 +1,5 @@
 import { useTheme } from "../hooks/useTheme";
+import { ui } from "../config/ui";
 
 export function ThemeToggle() {
 	const { theme, themeSource, nextTheme, toggleTheme } = useTheme();
@@ -12,7 +13,7 @@ export function ThemeToggle() {
 				padding: "8px",
 				color: "inherit",
 				cursor: "pointer",
-				opacity: 0.8,
+				opacity: ui.INTERACTIVE_ELEMENT_OPACITY,
 				transition: "opacity 0.2s",
 				display: "flex",
 				alignItems: "center",
