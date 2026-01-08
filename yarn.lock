@@ -1194,7 +1194,7 @@ __metadata:
     "@rollup/plugin-typescript": "npm:^12.3.0"
     rollup: "npm:^4.55.1"
     typescript: "npm:^5.9.3"
-    wasm-vips: "npm:^0.0.10"
+    wasm-vips: "npm:^0.0.16"
   languageName: unknown
   linkType: soft
 
@@ -5482,10 +5482,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"wasm-vips@npm:^0.0.10":
-  version: 0.0.10
-  resolution: "wasm-vips@npm:0.0.10"
-  checksum: 10c0/f6986382e72ab7cc1c0c4f9aaff471abf544f678c205510dda5e3775b8e5224748bc17c707fdced51b9a823851f5c8c315c2e42a63ec1b6750f14309338908b0
+"wasm-vips@npm:^0.0.16":
+  version: 0.0.16
+  resolution: "wasm-vips@npm:0.0.16"
+  checksum: 10c0/5e4f9fcfe8fc0e320bba81b7278d56373fe3a7fe0af771e7bb0932bc35d690323b00e6ff09bfdd147b68b2f095603a455725e341908033fa7dc3ff16e1d58af0
   languageName: node
   linkType: hard
 
