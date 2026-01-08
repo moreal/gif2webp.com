@@ -81,6 +81,20 @@ export function formatFileSize(bytes: number): string {
 }
 
 /**
+ * Converts bytes to megabytes (MB)
+ * @param bytes - The number of bytes to convert
+ * @returns The size in megabytes, rounded to the nearest integer
+ *
+ * @example
+ * bytesToMB(1024 * 1024) // 1
+ * bytesToMB(5 * 1024 * 1024) // 5
+ * bytesToMB(1536 * 1024) // 2 (1.5MB rounded)
+ */
+export function bytesToMB(bytes: number): number {
+	return Math.round(bytes / 1024 / 1024);
+}
+
+/**
  * Replaces the file extension of a filename with a new extension
  * @param filename - The original filename
  * @param newExtension - The new extension (with or without leading dot)

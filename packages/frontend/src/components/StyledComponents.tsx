@@ -2,6 +2,7 @@ import { forwardRef } from "react";
 import { Button } from "@base-ui/react/button";
 import { useLanguage } from "../hooks/useLanguage";
 import { config } from "../config/conversion";
+import { bytesToMB } from "../utils/fileUtils";
 
 export function Container({ children }: React.PropsWithChildren) {
 	return (
@@ -380,7 +381,7 @@ export function MemoryWarning({ fileSize }: { fileSize: number }) {
 	const { t } = useLanguage();
 	if (fileSize <= config.MAX_SAFE_FILE_SIZE) return null;
 
-	const sizeMB = Math.round(fileSize / 1024 / 1024);
+	const sizeMB = bytesToMB(fileSize);
 	return (
 		<WarningText>{t("conversion.memoryWarning", { size: sizeMB })}</WarningText>
 	);
