@@ -9,7 +9,7 @@ export function ThemeToggle() {
 			style={{
 				background: "none",
 				border: "none",
-				padding: "8px 8px",
+				padding: "8px",
 				color: "inherit",
 				cursor: "pointer",
 				opacity: 0.8,
