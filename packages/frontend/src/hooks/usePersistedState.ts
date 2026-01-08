@@ -1,34 +1,35 @@
 import { useEffect, useState } from "react";
 
+/**
+ * Reads a value from localStorage with validation and error handling
+ */
+function readFromLocalStorage<T extends string>(
+	key: string,
+	defaultValue: T,
+	validate: (value: string) => value is T,
+): T {
+	try {
+		const stored = localStorage.getItem(key);
+		if (stored !== null && validate(stored)) {
+			return stored as T;
+		}
+	} catch (error) {
+		console.error(`Error reading from localStorage key "${key}":`, error);
+	}
+	return defaultValue;
+}
+
 export function usePersistedState<T extends string>(
 	key: string,
 	defaultValue: T,
 	validate: (value: string) => value is T,
 ) {
-	const [state, setState] = useState<T>(() => {
-		try {
-			const stored = localStorage.getItem(key);
-			if (stored !== null && validate(stored)) {
-				return stored as T;
-			}
-		} catch (error) {
-			console.error(`Error reading from localStorage key "${key}":`, error);
-		}
-		return defaultValue;
-	});
+	const [state, setState] = useState<T>(() =>
+		readFromLocalStorage(key, defaultValue, validate),
+	);
 
 	useEffect(() => {
-		try {
-			const stored = localStorage.getItem(key);
-			if (stored !== null && validate(stored)) {
-				setState(stored as T);
-			} else {
-				setState(defaultValue);
-			}
-		} catch (error) {
-			console.error(`Error reading from localStorage key "${key}":`, error);
-			setState(defaultValue);
-		}
+		setState(readFromLocalStorage(key, defaultValue, validate));
 	}, [key, defaultValue, validate]);
 
 	useEffect(() => {
