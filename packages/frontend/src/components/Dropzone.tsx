@@ -1,6 +1,10 @@
 import { useCallback, useState, useMemo } from "react";
 import { useDropzone, type FileRejection } from "react-dropzone";
-import { DropzoneContainer, DropzoneText } from "./StyledComponents";
+import {
+	DropzoneContainer,
+	DropzoneText,
+	type DropzoneTextVariant,
+} from "./StyledComponents";
 import { readFileAsArrayBuffer, type LoadedFile } from "../utils/fileUtils";
 import { useLanguage } from "../hooks/useLanguage";
 import { config } from "../config/conversion";
@@ -65,17 +69,22 @@ export function Dropzone({ onUpload }: DropzoneProps) {
 		useFsAccessApi: true,
 	});
 
-	const message = useMemo(() => {
-		if (isLoading) return t("dropzone.processing");
-		if (error) return error;
-		if (isDragActive) return t("dropzone.dragActive");
-		return t("dropzone.default");
+	const { message, variant } = useMemo<{
+		message: string;
+		variant: DropzoneTextVariant;
+	}>(() => {
+		if (isLoading)
+			return { message: t("dropzone.processing"), variant: "loading" };
+		if (error) return { message: error, variant: "error" };
+		if (isDragActive)
+			return { message: t("dropzone.dragActive"), variant: "default" };
+		return { message: t("dropzone.default"), variant: "default" };
 	}, [isLoading, error, isDragActive, t]);
 
 	return (
 		<DropzoneContainer {...getRootProps()}>
 			<input {...getInputProps()} />
-			<DropzoneText>{message}</DropzoneText>
+			<DropzoneText variant={variant}>{message}</DropzoneText>
 		</DropzoneContainer>
 	);
 }

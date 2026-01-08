@@ -147,11 +147,18 @@ export function DropzoneContainer({
 	);
 }
 
-export function DropzoneText({ children }: React.PropsWithChildren) {
-	const text = children?.toString() || "";
-	const isError =
-		text.startsWith("Failed") || text.includes("Please upload GIF");
-	const isLoading = text === "Processing...";
+export type DropzoneTextVariant = "default" | "error" | "loading";
+
+export interface DropzoneTextProps extends React.PropsWithChildren {
+	variant?: DropzoneTextVariant;
+}
+
+export function DropzoneText({
+	children,
+	variant = "default",
+}: DropzoneTextProps) {
+	const isError = variant === "error";
+	const isLoading = variant === "loading";
 
 	return (
 		<p
