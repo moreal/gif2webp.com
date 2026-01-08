@@ -145,11 +145,17 @@ export function getTranslation(
 	values?: TranslationValues,
 ) {
 	const keys = key.split(".");
-	let translation: any = translations[lang]; // eslint-disable-line @typescript-eslint/no-explicit-any
+	let translation: unknown = translations[lang];
 
 	for (const k of keys) {
-		if (!translation[k]) return key;
-		translation = translation[k];
+		if (
+			typeof translation !== "object" ||
+			translation === null ||
+			!(k in translation)
+		) {
+			return key;
+		}
+		translation = (translation as Record<string, unknown>)[k];
 	}
 
 	if (typeof translation === "string" && values) {
