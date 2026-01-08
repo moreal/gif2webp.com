@@ -34,7 +34,7 @@ export async function convertImage(
 
 		onProgress?.("Encoding WebP");
 		const result = copied.writeToBuffer(
-			".webp[Q=" + quality + ",lossless=" + (lossless ? 1 : 0) + "]",
+			`.webp[Q=${quality},lossless=${lossless ? 1 : 0}]`,
 		);
 
 		// Cleanup
