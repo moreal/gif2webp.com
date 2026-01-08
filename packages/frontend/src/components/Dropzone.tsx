@@ -25,7 +25,11 @@ export function Dropzone({ onUpload }: DropzoneProps) {
 					(f) => f.file.size > config.MAX_FILE_SIZE,
 				);
 				setError(
-					sizeError ? t("dropzone.fileSizeError") : t("dropzone.fileTypeError"),
+					sizeError
+						? t("dropzone.fileSizeError", {
+								maxSize: config.MAX_FILE_SIZE / 1024 / 1024,
+							})
+						: t("dropzone.fileTypeError"),
 				);
 				return;
 			}
