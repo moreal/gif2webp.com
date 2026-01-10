@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
 import { Converter } from "./Converter";
 import type { LoadedFile } from "../utils/fileUtils";
 import {
@@ -22,22 +22,30 @@ export function ImagePreview({
 	file: loadedFile,
 	onDelete,
 }: ImagePreviewProps) {
-	const [blobUrl, setBlobUrl] = useState<string | null>(null);
-	const [error, setError] = useState<string | null>(null);
+	const [imageError, setImageError] = useState<string | null>(null);
 	const { file, data } = loadedFile;
 
-	useEffect(() => {
+	// Create blob URL using useMemo and track any creation errors
+	const { blobUrl, creationError } = useMemo(() => {
 		try {
 			const blob = new Blob([data], { type: file.type });
 			const url = URL.createObjectURL(blob);
-			setBlobUrl(url);
-			return () => {
-				URL.revokeObjectURL(url);
-			};
+			return { blobUrl: url, creationError: null };
 		} catch {
-			setError(IMAGE_PREVIEW_ERROR);
+			return { blobUrl: null, creationError: IMAGE_PREVIEW_ERROR };
 		}
 	}, [data, file.type]);
+
+	// Clean up blob URL on unmount or when it changes
+	useEffect(() => {
+		if (!blobUrl) return;
+		return () => {
+			URL.revokeObjectURL(blobUrl);
+		};
+	}, [blobUrl]);
+
+	// Determine the final error state
+	const error = creationError || imageError;
 
 	const filename =
 		file.name.length > MAX_FILENAME_DISPLAY_LENGTH
@@ -45,7 +53,7 @@ export function ImagePreview({
 			: file.name;
 
 	const handleImageError = useCallback(() => {
-		setError(IMAGE_PREVIEW_ERROR);
+		setImageError(IMAGE_PREVIEW_ERROR);
 	}, []);
 
 	if (error) {

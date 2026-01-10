@@ -20,6 +20,20 @@ export function useImageConversion(fileData: Uint8Array) {
 	});
 
 	const workerRef = useRef<Worker | null>(null);
+	const hasStartedRef = useRef(false);
+
+	const convert = useCallback(() => {
+		if (!workerRef.current) return;
+
+		setState((prev) => ({
+			...prev,
+			status: "converting",
+			error: null,
+			progress: "Converting...",
+		}));
+
+		workerRef.current.postMessage(fileData);
+	}, [fileData]);
 
 	useEffect(() => {
 		// Create worker instance
@@ -49,29 +63,19 @@ export function useImageConversion(fileData: Uint8Array) {
 			}
 		};
 
+		// Start conversion automatically once worker is ready
+		if (!hasStartedRef.current) {
+			hasStartedRef.current = true;
+			// Delay the call to avoid setState in effect
+			queueMicrotask(() => {
+				convert();
+			});
+		}
+
 		return () => {
 			workerRef.current?.terminate();
 		};
-	}, []);
-
-	const convert = useCallback(() => {
-		if (!workerRef.current) return;
-
-		setState((prev) => ({
-			...prev,
-			status: "converting",
-			error: null,
-			progress: "Converting...",
-		}));
-
-		workerRef.current.postMessage(fileData);
-	}, [fileData]);
-
-	useEffect(() => {
-		if (state.status === "idle") {
-			convert();
-		}
-	}, [state.status, convert]);
+	}, [convert]);
 
 	const retry = useCallback(() => {
 		setState((prev) => ({
