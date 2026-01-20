@@ -77,7 +77,15 @@ export function ProgressIndicator({
 						}}
 					/>
 				) : (
-					<span>✓</span>
+					<span
+						style={{
+							display: "inline-block",
+							animation:
+								"pop var(--animation-duration-normal) var(--ease-out-quart)",
+						}}
+					>
+						✓
+					</span>
 				)}
 				<span
 					style={{

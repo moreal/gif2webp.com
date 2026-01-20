@@ -1,12 +1,26 @@
+import { useState, useEffect } from "react";
 import { useTheme } from "../hooks/useTheme";
 import { ui } from "../config/ui";
 
 export function ThemeToggle() {
 	const { theme, themeSource, nextTheme, toggleTheme } = useTheme();
+	const [isAnimating, setIsAnimating] = useState(false);
+
+	const handleClick = () => {
+		setIsAnimating(true);
+		toggleTheme();
+	};
+
+	useEffect(() => {
+		if (isAnimating) {
+			const timer = setTimeout(() => setIsAnimating(false), 300);
+			return () => clearTimeout(timer);
+		}
+	}, [isAnimating]);
 
 	return (
 		<button
-			onClick={toggleTheme}
+			onClick={handleClick}
 			style={{
 				background: "none",
 				border: "none",
@@ -14,7 +28,8 @@ export function ThemeToggle() {
 				color: "inherit",
 				cursor: "pointer",
 				opacity: ui.INTERACTIVE_ELEMENT_OPACITY,
-				transition: "opacity 0.2s",
+				transition:
+					"opacity var(--animation-duration-normal) var(--ease-out-quart)",
 				display: "flex",
 				alignItems: "center",
 				justifyContent: "center",
@@ -26,7 +41,16 @@ export function ThemeToggle() {
 			}}
 			aria-label={`Switch to ${nextTheme} theme`}
 		>
-			{theme === "dark" ? "🌙" : "☀️"}
+			<span
+				style={{
+					display: "inline-block",
+					transition:
+						"transform var(--animation-duration-normal) var(--ease-out-quart)",
+					transform: isAnimating ? "rotate(180deg)" : "rotate(0deg)",
+				}}
+			>
+				{theme === "dark" ? "🌙" : "☀️"}
+			</span>
 			{themeSource === "system" && " (System)"}
 		</button>
 	);

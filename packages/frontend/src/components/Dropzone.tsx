@@ -86,7 +86,7 @@ export function Dropzone({ onUpload }: DropzoneProps) {
 	}, [isLoading, error, isDragActive, t]);
 
 	return (
-		<DropzoneContainer {...getRootProps()}>
+		<DropzoneContainer {...getRootProps()} isDragActive={isDragActive}>
 			<input {...getInputProps()} />
 			<DropzoneText variant={variant}>{message}</DropzoneText>
 		</DropzoneContainer>

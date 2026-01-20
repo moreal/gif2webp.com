@@ -40,6 +40,8 @@ export function PreviewContainer({ children }: React.PropsWithChildren) {
 				borderRadius: "4px",
 				backgroundColor: "var(--bg-secondary)",
 				maxWidth: "100%",
+				animation:
+					"fadeScaleIn var(--animation-duration-normal) var(--ease-out-quart)",
 			}}
 		>
 			{children}
@@ -55,6 +57,7 @@ export const DeleteButton = forwardRef<
 		ref={ref}
 		onClick={onClick}
 		aria-label="Delete image"
+		className="delete-button"
 		style={{
 			position: "absolute",
 			top: "-10px",
@@ -125,10 +128,15 @@ export function FileName({ children }: React.PropsWithChildren) {
 	);
 }
 
+export interface DropzoneContainerProps extends React.PropsWithChildren {
+	isDragActive?: boolean;
+}
+
 export function DropzoneContainer({
 	children,
+	isDragActive,
 	...props
-}: React.PropsWithChildren) {
+}: DropzoneContainerProps) {
 	return (
 		<div
 			{...props}
@@ -147,6 +155,10 @@ export function DropzoneContainer({
 				justifyContent: "center",
 				minHeight: "5vh",
 				cursor: "pointer",
+				transition:
+					"transform var(--animation-duration-fast) var(--ease-out-quart), border-color var(--animation-duration-fast) var(--ease-out-quart), box-shadow var(--animation-duration-fast) var(--ease-out-quart)",
+				transform: isDragActive ? "scale(1.01)" : "scale(1)",
+				boxShadow: isDragActive ? "0 0 20px rgba(100, 100, 255, 0.3)" : "none",
 			}}
 		>
 			{children}
@@ -291,6 +303,7 @@ export const ConversionButton = forwardRef<
 		disabled={disabled}
 		onClick={onClick}
 		aria-busy={disabled}
+		className={disabled ? undefined : "conversion-button"}
 		style={{
 			padding: "12px 16px",
 			borderRadius: "4px",
@@ -299,7 +312,6 @@ export const ConversionButton = forwardRef<
 			color: "var(--text-primary)",
 			cursor: disabled ? "default" : "pointer",
 			opacity: disabled ? 0.7 : 1,
-			transition: "all 0.2s ease",
 			fontSize: "16px",
 			fontWeight: "500",
 			minWidth: "120px",
@@ -349,6 +361,7 @@ export function ConversionErrorContainer({
 				flexDirection: "column",
 				gap: "8px",
 				width: "100%",
+				animation: "shake 0.4s var(--ease-out-quart)",
 			}}
 		>
 			{children}

@@ -10,6 +10,11 @@
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+
+	/* Animation variables */
+	--ease-out-quart: cubic-bezier(0.165, 0.84, 0.44, 1);
+	--animation-duration-fast: 150ms;
+	--animation-duration-normal: 200ms;
 }
 
 :root[data-theme="dark"] {
@@ -92,5 +97,102 @@ button {
 	}
 	to {
 		transform: rotate(360deg);
+	}
+}
+
+@keyframes fadeScaleIn {
+	from {
+		opacity: 0;
+		transform: scale(0.95);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+@keyframes pop {
+	0% {
+		transform: scale(0);
+	}
+	70% {
+		transform: scale(1.1);
+	}
+	100% {
+		transform: scale(1);
+	}
+}
+
+@keyframes shake {
+	0%,
+	100% {
+		transform: translateX(0);
+	}
+	20%,
+	60% {
+		transform: translateX(-4px);
+	}
+	40%,
+	80% {
+		transform: translateX(4px);
+	}
+}
+
+@keyframes slideIn {
+	from {
+		opacity: 0;
+		transform: translateY(-8px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes iconRotate {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+/* Button animations */
+.delete-button {
+	transition: transform var(--animation-duration-fast) var(--ease-out-quart);
+}
+
+.delete-button:hover {
+	transform: scale(1.1);
+}
+
+.delete-button:active {
+	transform: scale(0.95);
+}
+
+.conversion-button {
+	transition:
+		opacity var(--animation-duration-normal) var(--ease-out-quart),
+		transform var(--animation-duration-fast) var(--ease-out-quart);
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.conversion-button:hover {
+		transform: scale(1.02);
+	}
+}
+
+.conversion-button:active {
+	transform: scale(0.97);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
 	}
 }

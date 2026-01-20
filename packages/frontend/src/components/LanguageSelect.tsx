@@ -60,6 +60,8 @@ export function LanguageSelect() {
 							borderRadius: "4px",
 							boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
 							padding: "4px 0",
+							animation:
+								"slideIn var(--animation-duration-normal) var(--ease-out-quart)",
 						}}
 					>
 						{Object.entries(SUPPORTED_LANGUAGES).map(([code, name]) => (
