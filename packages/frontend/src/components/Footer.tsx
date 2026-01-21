@@ -134,7 +134,8 @@ export function Footer() {
 					cursor: "pointer",
 					opacity: ui.INTERACTIVE_ELEMENT_OPACITY,
 					fontSize: "inherit",
-					transition: "opacity 0.2s",
+					transition:
+						"opacity var(--animation-duration-normal) var(--ease-out-quart)",
 					touchAction: "manipulation",
 				}}
 				onMouseOver={handleMouseOver}
@@ -150,7 +151,8 @@ export function Footer() {
 					color: "inherit",
 					textDecoration: "none",
 					opacity: ui.INTERACTIVE_ELEMENT_OPACITY,
-					transition: "opacity 0.2s",
+					transition:
+						"opacity var(--animation-duration-normal) var(--ease-out-quart)",
 					padding: "8px",
 					fontWeight: "400",
 				}}
