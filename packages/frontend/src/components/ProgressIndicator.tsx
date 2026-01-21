@@ -102,6 +102,7 @@ export function ProgressIndicator({
 					fontSize: "12px",
 					opacity: 0.7,
 					textAlign: "center",
+					fontVariantNumeric: "tabular-nums",
 				}}
 			>
 				{sizeDisplay}
