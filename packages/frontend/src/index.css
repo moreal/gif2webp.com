@@ -238,6 +238,17 @@ button {
 	inset: -4px; /* 36px + 8px = 44px touch target */
 }
 
+/* Focus-visible styles for keyboard accessibility */
+:focus-visible {
+	outline: 2px solid var(--link-color);
+	outline-offset: 2px;
+}
+
+/* Remove default outline for mouse users */
+:focus:not(:focus-visible) {
+	outline: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
 	*,
 	*::before,
