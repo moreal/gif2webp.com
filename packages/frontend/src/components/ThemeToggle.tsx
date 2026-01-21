@@ -35,7 +35,7 @@ export function ThemeToggle() {
 				justifyContent: "center",
 				gap: "4px",
 				minWidth: "44px",
-				minHeight: "32px",
+				minHeight: "44px",
 				touchAction: "manipulation",
 				fontSize: "inherit",
 			}}
