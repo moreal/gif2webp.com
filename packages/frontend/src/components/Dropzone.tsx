@@ -59,7 +59,7 @@ export function Dropzone({ onUpload }: DropzoneProps) {
 		[onUpload, t],
 	);
 
-	const { getRootProps, getInputProps, isDragActive } = useDropzone({
+	const { getRootProps, getInputProps, isDragActive, isFocused } = useDropzone({
 		onDrop,
 		accept: {
 			"image/gif": [".gif"],
@@ -86,7 +86,11 @@ export function Dropzone({ onUpload }: DropzoneProps) {
 	}, [isLoading, error, isDragActive, t]);
 
 	return (
-		<DropzoneContainer {...getRootProps()} isDragActive={isDragActive}>
+		<DropzoneContainer
+			{...getRootProps()}
+			isDragActive={isDragActive}
+			isFocused={isFocused}
+		>
 			<input {...getInputProps()} />
 			<DropzoneText variant={variant}>{message}</DropzoneText>
 		</DropzoneContainer>
