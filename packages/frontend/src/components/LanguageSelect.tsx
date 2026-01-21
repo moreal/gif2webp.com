@@ -37,7 +37,15 @@ export function LanguageSelect() {
 				<Select.Value>
 					{(language: Language) => SUPPORTED_LANGUAGES[language]}
 				</Select.Value>
-				<Select.Icon>
+				<Select.Icon
+					style={(state) => ({
+						display: "flex",
+						alignItems: "center",
+						transform: state.open ? "rotate(180deg)" : "rotate(0deg)",
+						transition:
+							"transform var(--animation-duration-normal) var(--ease-out-quart)",
+					})}
+				>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="12"
