@@ -179,7 +179,14 @@ button {
 
 /* Button animations */
 .delete-button {
+	position: relative;
 	transition: transform var(--animation-duration-fast) var(--ease-out-quart);
+}
+
+.delete-button::before {
+	content: "";
+	position: absolute;
+	inset: -4px; /* 36px + 8px = 44px touch target */
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -218,6 +225,17 @@ button {
 	.footer-link:hover {
 		opacity: 1;
 	}
+}
+
+/* Modal close button with extended touch target */
+.modal-close-button {
+	position: relative;
+}
+
+.modal-close-button::before {
+	content: "";
+	position: absolute;
+	inset: -4px; /* 36px + 8px = 44px touch target */
 }
 
 @media (prefers-reduced-motion: reduce) {

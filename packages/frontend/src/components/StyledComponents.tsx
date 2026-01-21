@@ -60,13 +60,13 @@ export const DeleteButton = forwardRef<
 		className="delete-button"
 		style={{
 			position: "absolute",
-			top: "-10px",
-			right: "-10px",
+			top: "-6px",
+			right: "-6px",
 			display: "flex",
 			alignItems: "center",
 			justifyContent: "center",
-			height: "44px",
-			width: "44px",
+			height: "36px",
+			width: "36px",
 			borderRadius: "50%",
 			border: "black solid 2px",
 			backgroundColor: "white",

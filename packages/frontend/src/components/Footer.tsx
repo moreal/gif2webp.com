@@ -49,17 +49,18 @@ function AboutModal({ isOpen, onClose }: AboutModalProps) {
 				>
 					<Dialog.Close
 						aria-label={t("common.close")}
+						className="modal-close-button"
 						style={{
 							position: "absolute",
-							top: "10px",
-							right: "10px",
+							top: "14px",
+							right: "14px",
 							background: "none",
 							border: "none",
 							color: "var(--text-primary)",
 							fontSize: "24px",
 							cursor: "pointer",
-							width: "44px",
-							height: "44px",
+							width: "36px",
+							height: "36px",
 							display: "flex",
 							alignItems: "center",
 							justifyContent: "center",
