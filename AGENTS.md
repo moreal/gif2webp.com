@@ -1,7 +1,7 @@
 # AGENTS.md
 
 ## Commands
-- **Build**: `yarn workspace @gif2webp/image-converter build && yarn workspace @gif2webp/frontend build`
+- **Build**: `yarn workspace @gif2webp/image-converter build && yarn workspace @gif2webp/frontend build:prod`
 - **Lint**: `yarn workspace @gif2webp/frontend lint`
 - **Format**: `yarn fmt`
 - **Dev**: `yarn workspace @gif2webp/frontend dev`
