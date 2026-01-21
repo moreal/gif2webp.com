@@ -65,6 +65,10 @@ body {
 	background-color: var(--bg-primary);
 	color: var(--text-primary);
 	min-width: 320px;
+}
+
+/* Disable transitions during theme switch to prevent animation flash */
+body:not(.theme-switching) {
 	transition:
 		background-color var(--animation-duration-normal) var(--ease-out-quart),
 		color var(--animation-duration-normal) var(--ease-out-quart);
@@ -121,10 +125,10 @@ button {
 
 @keyframes pop {
 	0% {
-		transform: scale(0);
+		transform: scale(0.8);
 	}
 	70% {
-		transform: scale(1.1);
+		transform: scale(1.05);
 	}
 	100% {
 		transform: scale(1);
@@ -221,6 +225,7 @@ button {
 .delete-button {
 	position: relative;
 	transition: transform var(--animation-duration-fast) var(--ease-out-quart);
+	will-change: transform;
 }
 
 .delete-button::before {
@@ -243,6 +248,7 @@ button {
 	transition:
 		opacity var(--animation-duration-normal) var(--ease-out-quart),
 		transform var(--animation-duration-fast) var(--ease-out-quart);
+	will-change: transform;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -280,7 +286,7 @@ button {
 
 /* Focus-visible styles for keyboard accessibility */
 :focus-visible {
-	outline: 2px solid var(--link-color);
+	outline: 2px solid currentColor;
 	outline-offset: 2px;
 }
 

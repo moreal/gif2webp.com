@@ -25,7 +25,17 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 	const theme = rawTheme === "system" ? systemTheme : rawTheme;
 
 	const nextTheme = getOppositeTheme(theme);
-	const toggleTheme = () => setRawTheme(nextTheme);
+	const toggleTheme = () => {
+		// Disable transitions during theme switch to prevent animation flash
+		document.body.classList.add("theme-switching");
+		setRawTheme(nextTheme);
+		// Re-enable transitions after theme is applied
+		requestAnimationFrame(() => {
+			requestAnimationFrame(() => {
+				document.body.classList.remove("theme-switching");
+			});
+		});
+	};
 
 	useEffect(() => {
 		document.documentElement.setAttribute("data-theme", theme);

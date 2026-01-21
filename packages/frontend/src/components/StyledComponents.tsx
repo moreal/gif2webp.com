@@ -228,6 +228,7 @@ export function HeaderSubtitle({ children }: React.PropsWithChildren) {
 				padding: "0 10px",
 				wordBreak: "keep-all",
 				lineHeight: 1.4,
+				textWrap: "balance",
 			}}
 		>
 			{children}
