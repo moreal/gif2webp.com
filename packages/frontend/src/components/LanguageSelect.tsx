@@ -85,6 +85,9 @@ export function LanguageSelect() {
 											? "var(--text-primary)"
 											: "var(--text-secondary)",
 									fontSize: "inherit",
+									minHeight: "44px",
+									display: "flex",
+									alignItems: "center",
 								})}
 							>
 								<Select.ItemText>{name}</Select.ItemText>
