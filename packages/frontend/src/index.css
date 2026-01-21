@@ -189,6 +189,18 @@ button {
 	transform: scale(0.97);
 }
 
+/* Footer link animations */
+.footer-link {
+	opacity: 0.8;
+	transition: opacity var(--animation-duration-normal) var(--ease-out-quart);
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.footer-link:hover {
+		opacity: 1;
+	}
+}
+
 @media (prefers-reduced-motion: reduce) {
 	*,
 	*::before,

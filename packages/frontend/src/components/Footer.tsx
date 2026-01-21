@@ -3,20 +3,11 @@ import { Dialog } from "@base-ui/react/dialog";
 import { ThemeToggle } from "./ThemeToggle";
 import { LanguageSelect } from "./LanguageSelect";
 import { useLanguage } from "../hooks/useLanguage";
-import { ui } from "../config/ui";
 
 interface AboutModalProps {
 	isOpen: boolean;
 	onClose: () => void;
 }
-
-const handleMouseOver = (e: React.MouseEvent<HTMLElement>) => {
-	e.currentTarget.style.opacity = "1";
-};
-
-const handleMouseOut = (e: React.MouseEvent<HTMLElement>) => {
-	e.currentTarget.style.opacity = ui.INTERACTIVE_ELEMENT_OPACITY.toString();
-};
 
 function AboutModal({ isOpen, onClose }: AboutModalProps) {
 	const { t } = useLanguage();
@@ -126,20 +117,16 @@ export function Footer() {
 		>
 			<button
 				onClick={() => setIsAboutOpen(true)}
+				className="footer-link"
 				style={{
 					background: "none",
 					border: "none",
 					padding: "8px",
 					color: "inherit",
 					cursor: "pointer",
-					opacity: ui.INTERACTIVE_ELEMENT_OPACITY,
 					fontSize: "inherit",
-					transition:
-						"opacity var(--animation-duration-normal) var(--ease-out-quart)",
 					touchAction: "manipulation",
 				}}
-				onMouseOver={handleMouseOver}
-				onMouseOut={handleMouseOut}
 			>
 				{t("footer.about")}
 			</button>
@@ -147,17 +134,13 @@ export function Footer() {
 				href="https://github.com/moreal/gif2webp.com"
 				target="_blank"
 				rel="noopener noreferrer"
+				className="footer-link"
 				style={{
 					color: "inherit",
 					textDecoration: "none",
-					opacity: ui.INTERACTIVE_ELEMENT_OPACITY,
-					transition:
-						"opacity var(--animation-duration-normal) var(--ease-out-quart)",
 					padding: "8px",
 					fontWeight: "400",
 				}}
-				onMouseOver={handleMouseOver}
-				onMouseOut={handleMouseOut}
 			>
 				{t("footer.sourceCode")}
 			</a>
