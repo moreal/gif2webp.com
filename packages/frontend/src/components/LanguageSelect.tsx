@@ -51,7 +51,7 @@ export function LanguageSelect() {
 			<Select.Portal>
 				<Select.Positioner
 					style={{
-						zIndex: 1000,
+						zIndex: "var(--z-index-dropdown)",
 					}}
 				>
 					<Select.Popup

@@ -15,6 +15,11 @@
 	--ease-out-quart: cubic-bezier(0.165, 0.84, 0.44, 1);
 	--animation-duration-fast: 150ms;
 	--animation-duration-normal: 200ms;
+
+	/* Z-index scale */
+	--z-index-dropdown: 1000;
+	--z-index-backdrop: 1000;
+	--z-index-modal: 1001;
 }
 
 :root[data-theme="dark"] {

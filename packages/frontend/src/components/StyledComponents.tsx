@@ -205,6 +205,7 @@ export function HeaderTitle({ children }: React.PropsWithChildren) {
 				textAlign: "center",
 				lineHeight: 1.2,
 				wordBreak: "keep-all",
+				textWrap: "balance",
 			}}
 		>
 			{children}

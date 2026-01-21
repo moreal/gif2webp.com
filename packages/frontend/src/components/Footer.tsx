@@ -24,7 +24,7 @@ function AboutModal({ isOpen, onClose }: AboutModalProps) {
 						right: 0,
 						bottom: 0,
 						backgroundColor: "rgba(0, 0, 0, 0.7)",
-						zIndex: 1000,
+						zIndex: "var(--z-index-backdrop)",
 					}}
 				/>
 				<Dialog.Popup
@@ -41,8 +41,10 @@ function AboutModal({ isOpen, onClose }: AboutModalProps) {
 						width: "600px",
 						maxHeight: "90vh",
 						overflow: "auto",
-						zIndex: 1001,
+						zIndex: "var(--z-index-modal)",
 						margin: "10px",
+						animation:
+							"fadeScaleIn var(--animation-duration-normal) var(--ease-out-quart)",
 					}}
 				>
 					<Dialog.Close
