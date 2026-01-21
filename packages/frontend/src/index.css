@@ -163,8 +163,10 @@ button {
 	transition: transform var(--animation-duration-fast) var(--ease-out-quart);
 }
 
-.delete-button:hover {
-	transform: scale(1.1);
+@media (hover: hover) and (pointer: fine) {
+	.delete-button:hover {
+		transform: scale(1.1);
+	}
 }
 
 .delete-button:active {
