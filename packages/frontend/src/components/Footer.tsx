@@ -44,7 +44,7 @@ function AboutModal({ isOpen, onClose }: AboutModalProps) {
 						zIndex: "var(--z-index-modal)",
 						margin: "10px",
 						animation:
-							"fadeScaleIn var(--animation-duration-normal) var(--ease-out-quart)",
+							"modalFadeIn var(--animation-duration-normal) var(--ease-out-quart)",
 					}}
 				>
 					<Dialog.Close
