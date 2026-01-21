@@ -15,8 +15,9 @@ function AboutModal({ isOpen, onClose }: AboutModalProps) {
 
 	return (
 		<Dialog.Root open={isOpen} onOpenChange={(open) => !open && onClose()}>
-			<Dialog.Portal>
+			<Dialog.Portal keepMounted>
 				<Dialog.Backdrop
+					className="modal-backdrop"
 					style={{
 						position: "fixed",
 						top: 0,
@@ -28,6 +29,7 @@ function AboutModal({ isOpen, onClose }: AboutModalProps) {
 					}}
 				/>
 				<Dialog.Popup
+					className="modal-popup"
 					style={{
 						position: "fixed",
 						top: "50%",
@@ -43,8 +45,6 @@ function AboutModal({ isOpen, onClose }: AboutModalProps) {
 						overflow: "auto",
 						zIndex: "var(--z-index-modal)",
 						margin: "10px",
-						animation:
-							"modalFadeIn var(--animation-duration-normal) var(--ease-out-quart)",
 					}}
 				>
 					<Dialog.Close

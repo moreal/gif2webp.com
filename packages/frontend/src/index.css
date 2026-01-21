@@ -168,6 +168,35 @@ button {
 	}
 }
 
+@keyframes modalFadeOut {
+	from {
+		opacity: 1;
+		transform: translate(-50%, -50%) scale(1);
+	}
+	to {
+		opacity: 0;
+		transform: translate(-50%, -50%) scale(0.95);
+	}
+}
+
+@keyframes backdropFadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes backdropFadeOut {
+	from {
+		opacity: 1;
+	}
+	to {
+		opacity: 0;
+	}
+}
+
 @keyframes iconRotate {
 	from {
 		transform: rotate(0deg);
@@ -247,6 +276,25 @@ button {
 /* Remove default outline for mouse users */
 :focus:not(:focus-visible) {
 	outline: none;
+}
+
+/* Modal and backdrop animations using base-ui data attributes */
+.modal-backdrop {
+	animation: backdropFadeIn var(--animation-duration-normal)
+		var(--ease-out-quart);
+}
+
+.modal-backdrop[data-ending-style] {
+	animation: backdropFadeOut var(--animation-duration-normal)
+		var(--ease-out-quart);
+}
+
+.modal-popup {
+	animation: modalFadeIn var(--animation-duration-normal) var(--ease-out-quart);
+}
+
+.modal-popup[data-ending-style] {
+	animation: modalFadeOut var(--animation-duration-normal) var(--ease-out-quart);
 }
 
 @media (prefers-reduced-motion: reduce) {
