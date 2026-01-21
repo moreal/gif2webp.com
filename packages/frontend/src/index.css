@@ -157,6 +157,17 @@ button {
 	}
 }
 
+@keyframes slideOut {
+	from {
+		opacity: 1;
+		transform: translateY(0);
+	}
+	to {
+		opacity: 0;
+		transform: translateY(-8px);
+	}
+}
+
 @keyframes modalFadeIn {
 	from {
 		opacity: 0;
@@ -295,6 +306,15 @@ button {
 
 .modal-popup[data-ending-style] {
 	animation: modalFadeOut var(--animation-duration-normal) var(--ease-out-quart);
+}
+
+/* Dropdown animations using base-ui data attributes */
+.dropdown-popup {
+	animation: slideIn var(--animation-duration-normal) var(--ease-out-quart);
+}
+
+.dropdown-popup[data-ending-style] {
+	animation: slideOut var(--animation-duration-normal) var(--ease-out-quart);
 }
 
 @media (prefers-reduced-motion: reduce) {
