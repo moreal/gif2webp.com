@@ -4,7 +4,7 @@ import {
 	DropzoneContainer,
 	DropzoneText,
 	type DropzoneTextVariant,
-} from "./StyledComponents";
+} from "./ui";
 import { readFileAsArrayBuffer, type LoadedFile } from "../utils/fileUtils";
 import { useLanguage } from "../hooks/useLanguage";
 import { config } from "../config/conversion";

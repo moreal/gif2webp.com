@@ -3,7 +3,7 @@ import {
 	HeaderSubtitle,
 	HeaderContainer,
 	EmphasisText,
-} from "./StyledComponents";
+} from "./ui";
 import { useLanguage } from "../hooks/useLanguage";
 
 export const Header = () => {

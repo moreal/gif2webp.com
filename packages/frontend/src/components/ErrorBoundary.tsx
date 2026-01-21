@@ -1,6 +1,6 @@
 import type React from "react";
 import { Component, type ErrorInfo } from "react";
-import { ErrorText } from "./StyledComponents";
+import { ErrorText } from "./ui";
 import { type Language } from "../config/i18n";
 import { getTranslation } from "../config/translations";
 

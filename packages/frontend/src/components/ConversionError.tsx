@@ -1,9 +1,5 @@
 import { useLanguage } from "../hooks/useLanguage";
-import {
-	ConversionButton,
-	ConversionErrorContainer,
-	ErrorText,
-} from "./StyledComponents";
+import { ConversionButton, ConversionErrorContainer, ErrorText } from "./ui";
 
 export interface ConversionErrorProps {
 	error: string | null;

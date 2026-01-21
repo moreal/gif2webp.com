@@ -1,6 +1,6 @@
 import type { LoadedFile } from "../utils/fileUtils";
 import { ImagePreview } from "./ImagePreview";
-import { FileListContainer } from "./StyledComponents";
+import { FileListContainer } from "./ui";
 
 interface FileListProps {
 	files: LoadedFile[];

@@ -7,7 +7,7 @@ import {
 	PreviewImage,
 	FileName,
 	ErrorText,
-} from "./StyledComponents";
+} from "./ui";
 
 const IMAGE_PREVIEW_ERROR = "Failed to load image preview";
 const MAX_FILENAME_DISPLAY_LENGTH = 16;
