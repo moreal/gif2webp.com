@@ -129,6 +129,11 @@ export function Footer() {
 					cursor: "pointer",
 					fontSize: "inherit",
 					touchAction: "manipulation",
+					minHeight: "44px",
+					minWidth: "44px",
+					display: "flex",
+					alignItems: "center",
+					justifyContent: "center",
 				}}
 			>
 				{t("footer.about")}
@@ -143,6 +148,9 @@ export function Footer() {
 					textDecoration: "none",
 					padding: "8px",
 					fontWeight: "400",
+					minHeight: "44px",
+					display: "flex",
+					alignItems: "center",
 				}}
 			>
 				{t("footer.sourceCode")}
