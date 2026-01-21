@@ -65,6 +65,9 @@ body {
 	background-color: var(--bg-primary);
 	color: var(--text-primary);
 	min-width: 320px;
+	transition:
+		background-color var(--animation-duration-normal) var(--ease-out-quart),
+		color var(--animation-duration-normal) var(--ease-out-quart);
 }
 
 #root {
