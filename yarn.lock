@@ -1174,7 +1174,7 @@ __metadata:
     eslint-plugin-react-hooks: "npm:^5.1.0-rc.0"
     eslint-plugin-react-refresh: "npm:^0.4.26"
     globals: "npm:^17.0.0"
-    happy-dom: "npm:^20.1.0"
+    happy-dom: "npm:^20.2.0"
     react: "npm:^19.2.3"
     react-dom: "npm:^19.2.3"
     react-dropzone: "npm:^14.2.9"
@@ -3661,16 +3661,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"happy-dom@npm:^20.1.0":
-  version: 20.1.0
-  resolution: "happy-dom@npm:20.1.0"
+"happy-dom@npm:^20.2.0":
+  version: 20.2.0
+  resolution: "happy-dom@npm:20.2.0"
   dependencies:
     "@types/node": "npm:^20.0.0"
     "@types/whatwg-mimetype": "npm:^3.0.2"
     "@types/ws": "npm:^8.18.1"
     whatwg-mimetype: "npm:^3.0.0"
     ws: "npm:^8.18.3"
-  checksum: 10c0/a55b5fe6de845124644bc51184c8e761e75936de50ba5f4093ff844802d2b13f700c71a5e8236cb78c2b23c1368125b98f38e3c99e472b6d6becec7ddb720c58
+  checksum: 10c0/3d9ff411575249dce6d83fdfad78c500e4291126d40e4b164f9ee78d143e95ce9f09534ac8a8cb9e1e442580ddbdf498890fccfdd81af6d8312b068e24d51d1e
   languageName: node
   linkType: hard
 
