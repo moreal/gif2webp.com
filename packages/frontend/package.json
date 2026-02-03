@@ -21,7 +21,7 @@
         "@gif2webp/image-converter": "workspace:^",
         "react": "^19.2.3",
         "react-dom": "^19.2.3",
-        "react-dropzone": "^14.2.9"
+        "react-dropzone": "^14.3.8"
     },
     "devDependencies": {
         "@eslint/js": "^9.39.2",
