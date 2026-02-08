@@ -1,10 +1,8 @@
 import { useCallback, useState, useMemo } from "react";
 import { useDropzone, type FileRejection } from "react-dropzone";
-import {
-	DropzoneContainer,
-	DropzoneText,
-	type DropzoneTextVariant,
-} from "./ui";
+import { DropzoneContainer } from "./ui/DropzoneContainer";
+import { DropzoneText } from "./ui/DropzoneText";
+import type { DropzoneTextVariant } from "./ui/DropzoneText";
 import { readFileAsArrayBuffer, type LoadedFile } from "../utils/fileUtils";
 import { useLanguage } from "../hooks/useLanguage";
 import { config } from "../config/conversion";

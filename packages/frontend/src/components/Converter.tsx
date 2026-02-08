@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import type { LoadedFile } from "../utils/fileUtils";
 import { replaceExtension } from "../utils/fileUtils";
 import { downloadWebP } from "../utils/downloadUtils";
-import { ConverterContainer } from "./ui";
+import { ConverterContainer } from "./ui/ConverterContainer";
 import { ConversionControls } from "./ConversionControls";
 import { CompletedConversion } from "./CompletedConversion";
 import { ConversionError } from "./ConversionError";

@@ -1,13 +1,11 @@
 import { useEffect, useState, useCallback } from "react";
 import { Converter } from "./Converter";
 import type { LoadedFile } from "../utils/fileUtils";
-import {
-	PreviewContainer,
-	DeleteButton,
-	PreviewImage,
-	FileName,
-	ErrorText,
-} from "./ui";
+import { PreviewContainer } from "./ui/PreviewContainer";
+import { DeleteButton } from "./ui/DeleteButton";
+import { PreviewImage } from "./ui/PreviewImage";
+import { FileName } from "./ui/FileName";
+import { ErrorText } from "./ui/ErrorText";
 
 const IMAGE_PREVIEW_ERROR = "Failed to load image preview";
 const MAX_FILENAME_DISPLAY_LENGTH = 16;

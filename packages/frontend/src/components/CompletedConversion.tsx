@@ -1,5 +1,5 @@
 import { useLanguage } from "../hooks/useLanguage";
-import { ConversionButton } from "./ui";
+import { ConversionButton } from "./ui/ConversionButton";
 import { ProgressIndicator } from "./ProgressIndicator";
 
 export interface CompletedConversionProps {

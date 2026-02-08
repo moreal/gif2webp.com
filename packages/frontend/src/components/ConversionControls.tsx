@@ -1,6 +1,8 @@
 import type { ConversionStatus } from "../hooks/useImageConversion";
 import { useLanguage } from "../hooks/useLanguage";
-import { ConversionButton, OptionsContainer, MemoryWarning } from "./ui";
+import { ConversionButton } from "./ui/ConversionButton";
+import { OptionsContainer } from "./ui/OptionsContainer";
+import { MemoryWarning } from "./ui/MemoryWarning";
 import { ProgressIndicator } from "./ProgressIndicator";
 
 export interface ConversionControlsProps {
