@@ -21,15 +21,13 @@ export function useImageConversion(fileData: Uint8Array) {
 
 	const workerRef = useRef<Worker | null>(null);
 
-	useEffect(() => {
-		// Create worker instance
-		workerRef.current = new Worker(
+	const ensureWorker = useCallback(() => {
+		if (workerRef.current) return workerRef.current;
+		const worker = new Worker(
 			new URL("../workers/conversion.worker.ts", import.meta.url),
 			{ type: "module" },
 		);
-
-		// Set up worker message handling
-		workerRef.current.onmessage = (event) => {
+		worker.onmessage = (event) => {
 			const { type, data, error } = event.data;
 
 			if (type === "success") {
@@ -48,14 +46,18 @@ export function useImageConversion(fileData: Uint8Array) {
 				}));
 			}
 		};
+		workerRef.current = worker;
+		return worker;
+	}, []);
 
+	useEffect(() => {
 		return () => {
 			workerRef.current?.terminate();
 		};
 	}, []);
 
 	const convert = useCallback(() => {
-		if (!workerRef.current) return;
+		const worker = ensureWorker();
 
 		setState((prev) => ({
 			...prev,
@@ -64,8 +66,8 @@ export function useImageConversion(fileData: Uint8Array) {
 			progress: "Converting...",
 		}));
 
-		workerRef.current.postMessage(fileData);
-	}, [fileData]);
+		worker.postMessage(fileData);
+	}, [fileData, ensureWorker]);
 
 	useEffect(() => {
 		if (state.status === "idle") {
