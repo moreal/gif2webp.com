@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useCallback, useMemo } from "react";
 import {
 	type Language,
 	DEFAULT_LANGUAGE,
@@ -31,11 +31,19 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 		document.documentElement.lang = language;
 	}, [language]);
 
-	const t = (key: string, values?: TranslationValues) =>
-		getTranslation(language, key, values);
+	const t = useCallback(
+		(key: string, values?: TranslationValues) =>
+			getTranslation(language, key, values),
+		[language],
+	);
+
+	const contextValue = useMemo(
+		() => ({ language, setLanguage, t }),
+		[language, setLanguage, t],
+	);
 
 	return (
-		<LanguageContext.Provider value={{ language, setLanguage, t }}>
+		<LanguageContext.Provider value={contextValue}>
 			{children}
 		</LanguageContext.Provider>
 	);
