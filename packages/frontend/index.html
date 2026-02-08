@@ -56,6 +56,18 @@
 </head>
 
 <body>
+  <script>
+    try {
+      var stored = localStorage.getItem("gif2webp-theme");
+      var theme = stored;
+      if (!theme || theme === "system") {
+        theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      }
+      if (theme === "dark" || theme === "light") {
+        document.documentElement.setAttribute("data-theme", theme);
+      }
+    } catch (e) {}
+  </script>
   <div id="root"></div>
   <script type="module" src="/src/main.tsx"></script>
 </body>
