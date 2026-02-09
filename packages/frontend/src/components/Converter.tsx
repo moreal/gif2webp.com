@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import type { LoadedFile } from "../utils/fileUtils";
 import { replaceExtension } from "../utils/fileUtils";
 import { downloadWebP } from "../utils/downloadUtils";
@@ -17,6 +17,7 @@ export function Converter({
 	file: { file, data, size },
 	onDownload,
 }: ConverterProps) {
+	const uint8Data = useMemo(() => new Uint8Array(data), [data]);
 	const {
 		status,
 		error,
@@ -24,7 +25,7 @@ export function Converter({
 		convertedSize,
 		retry,
 		startConversion,
-	} = useImageConversion(new Uint8Array(data));
+	} = useImageConversion(uint8Data);
 
 	const handleDownload = useCallback(() => {
 		if (convertedData) {
