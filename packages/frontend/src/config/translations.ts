@@ -139,11 +139,19 @@ export const translations: Record<Language, TranslationSet> = {
 export type TranslationKey = keyof typeof translations.en;
 export type TranslationValues = { [key: string]: string | number };
 
+const translationCache = new Map<string, string>();
+
 export function getTranslation(
 	lang: Language,
 	key: string,
 	values?: TranslationValues,
 ) {
+	const cacheKey = values ? null : `${lang}:${key}`;
+	if (cacheKey) {
+		const cached = translationCache.get(cacheKey);
+		if (cached !== undefined) return cached;
+	}
+
 	const keys = key.split(".");
 	let translation: any = translations[lang]; // eslint-disable-line @typescript-eslint/no-explicit-any
 
@@ -158,6 +166,10 @@ export function getTranslation(
 				text.replace(`{${placeholder}}`, value.toString()),
 			translation,
 		);
+	}
+
+	if (cacheKey) {
+		translationCache.set(cacheKey, translation);
 	}
 
 	return translation;
