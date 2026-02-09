@@ -23,8 +23,10 @@ export const createMockFile = async (
 export const createMockLoadedFile = async (
 	name: string,
 ): Promise<LoadedFile> => {
-	const data = await loadRealGifData(catsGifUrl);
-	const file = await createMockFile(name);
+	const [data, file] = await Promise.all([
+		loadRealGifData(catsGifUrl),
+		createMockFile(name),
+	]);
 
 	return {
 		file,
