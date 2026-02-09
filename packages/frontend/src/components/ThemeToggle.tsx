@@ -51,7 +51,7 @@ export function ThemeToggle() {
 			>
 				{theme === "dark" ? "🌙" : "☀️"}
 			</span>
-			{themeSource === "system" && " (System)"}
+			{themeSource === "system" ? " (System)" : null}
 		</button>
 	);
 }
