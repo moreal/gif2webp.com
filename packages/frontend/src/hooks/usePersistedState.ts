@@ -19,6 +19,45 @@ function readFromLocalStorage<T extends string>(
 	return defaultValue;
 }
 
+type StorageCallback = (e: StorageEvent) => void;
+const storageListeners = new Map<string, Set<StorageCallback>>();
+let globalListenerAttached = false;
+
+function handleGlobalStorageEvent(e: StorageEvent) {
+	if (e.key === null) return;
+	const callbacks = storageListeners.get(e.key);
+	if (callbacks) {
+		for (const cb of callbacks) {
+			cb(e);
+		}
+	}
+}
+
+function subscribeStorage(key: string, callback: StorageCallback) {
+	let keyListeners = storageListeners.get(key);
+	if (!keyListeners) {
+		keyListeners = new Set();
+		storageListeners.set(key, keyListeners);
+	}
+	keyListeners.add(callback);
+
+	if (!globalListenerAttached) {
+		window.addEventListener("storage", handleGlobalStorageEvent);
+		globalListenerAttached = true;
+	}
+
+	return () => {
+		keyListeners.delete(callback);
+		if (keyListeners.size === 0) {
+			storageListeners.delete(key);
+		}
+		if (storageListeners.size === 0 && globalListenerAttached) {
+			window.removeEventListener("storage", handleGlobalStorageEvent);
+			globalListenerAttached = false;
+		}
+	};
+}
+
 export function usePersistedState<T extends string>(
 	key: string,
 	defaultValue: T,
@@ -46,17 +85,16 @@ export function usePersistedState<T extends string>(
 
 	useEffect(() => {
 		const handleStorageChange = (e: StorageEvent) => {
-			if (e.key === key && e.newValue !== null) {
+			if (e.newValue !== null) {
 				if (validate(e.newValue)) {
 					setState(e.newValue as T);
 				}
-			} else if (e.key === key && e.newValue === null) {
+			} else {
 				setState(defaultValue);
 			}
 		};
 
-		window.addEventListener("storage", handleStorageChange);
-		return () => window.removeEventListener("storage", handleStorageChange);
+		return subscribeStorage(key, handleStorageChange);
 	}, [key, defaultValue, validate]);
 
 	return [state, setState] as const;
