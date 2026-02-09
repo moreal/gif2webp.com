@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, startTransition } from "react";
 import { useTheme } from "../hooks/useTheme";
 import { ui } from "../config/ui";
 
@@ -13,7 +13,10 @@ export function ThemeToggle() {
 
 	useEffect(() => {
 		if (isAnimating) {
-			const timer = setTimeout(() => setIsAnimating(false), 300);
+			const timer = setTimeout(
+				() => startTransition(() => setIsAnimating(false)),
+				300,
+			);
 			return () => clearTimeout(timer);
 		}
 	}, [isAnimating]);
