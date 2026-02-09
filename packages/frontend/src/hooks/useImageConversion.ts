@@ -21,8 +21,8 @@ export function useImageConversion(fileData: Uint8Array) {
 
 	const workerRef = useRef<Worker | null>(null);
 
-	const ensureWorker = useCallback(() => {
-		if (workerRef.current) return workerRef.current;
+	// Create worker inside useEffect so cleanup properly handles StrictMode double-mount
+	useEffect(() => {
 		const worker = new Worker(
 			new URL("../workers/conversion.worker.ts", import.meta.url),
 			{ type: "module" },
@@ -44,20 +44,28 @@ export function useImageConversion(fileData: Uint8Array) {
 					error: error,
 					status: "error",
 				}));
+			} else if (type === "progress") {
+				setState((prev) => ({ ...prev, progress: data }));
 			}
 		};
+		worker.onerror = (error) => {
+			console.error("[Conversion] Worker error:", error);
+			setState((prev) => ({
+				...prev,
+				error: "Worker failed to load",
+				status: "error",
+			}));
+		};
 		workerRef.current = worker;
-		return worker;
-	}, []);
 
-	useEffect(() => {
 		return () => {
-			workerRef.current?.terminate();
+			worker.terminate();
+			workerRef.current = null;
 		};
 	}, []);
 
 	const convert = useCallback(() => {
-		const worker = ensureWorker();
+		if (!workerRef.current) return;
 
 		setState((prev) => ({
 			...prev,
@@ -66,8 +74,8 @@ export function useImageConversion(fileData: Uint8Array) {
 			progress: "Converting...",
 		}));
 
-		worker.postMessage(fileData);
-	}, [fileData, ensureWorker]);
+		workerRef.current.postMessage(fileData);
+	}, [fileData]);
 
 	useEffect(() => {
 		if (state.status === "idle") {
@@ -85,8 +93,8 @@ export function useImageConversion(fileData: Uint8Array) {
 	}, []);
 
 	const startConversion = useCallback(() => {
-		setState((prev) => ({ ...prev, status: "converting" }));
-	}, []);
+		convert();
+	}, [convert]);
 
 	return {
 		...state,

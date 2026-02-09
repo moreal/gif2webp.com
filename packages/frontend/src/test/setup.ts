@@ -12,11 +12,13 @@ global.URL.createObjectURL = vi.fn(() => "mock-object-url");
 global.URL.revokeObjectURL = vi.fn();
 
 // Mock Worker constructor
-global.Worker = vi.fn().mockImplementation(() => ({
-	postMessage: vi.fn(),
-	addEventListener: vi.fn(),
-	removeEventListener: vi.fn(),
-	terminate: vi.fn(),
-	onmessage: null,
-	onerror: null,
-})) as unknown as typeof Worker;
+global.Worker = vi.fn().mockImplementation(function () {
+	return {
+		postMessage: vi.fn(),
+		addEventListener: vi.fn(),
+		removeEventListener: vi.fn(),
+		terminate: vi.fn(),
+		onmessage: null,
+		onerror: null,
+	};
+}) as unknown as typeof Worker;
