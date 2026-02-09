@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import type { LoadedFile } from "../utils/fileUtils";
 import { ImagePreview } from "./ImagePreview";
 import { FileListContainer } from "./ui/FileListContainer";
@@ -11,12 +12,26 @@ export function FileList({ files, onDelete }: FileListProps) {
 	return (
 		<FileListContainer>
 			{files.map((file, index) => (
-				<ImagePreview
+				<FileListItem
 					key={`${file.file.name}-${index}`}
 					file={file}
-					onDelete={() => onDelete(index)}
+					index={index}
+					onDelete={onDelete}
 				/>
 			))}
 		</FileListContainer>
 	);
+}
+
+function FileListItem({
+	file,
+	index,
+	onDelete,
+}: {
+	file: LoadedFile;
+	index: number;
+	onDelete: (index: number) => void;
+}) {
+	const handleDelete = useCallback(() => onDelete(index), [onDelete, index]);
+	return <ImagePreview file={file} onDelete={handleDelete} />;
 }
