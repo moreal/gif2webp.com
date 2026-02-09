@@ -80,6 +80,9 @@ export function formatFileSize(bytes: number): string {
 	return `${Math.round(size * 10) / 10} ${units[unitIndex]}`;
 }
 
+const HIDDEN_FILE_EXT_RE = /\.\w+\.\w+/;
+const FILE_EXT_RE = /\.[^/.]+$/;
+
 /**
  * Replaces the file extension of a filename with a new extension
  * @param filename - The original filename
@@ -102,10 +105,10 @@ export function replaceExtension(
 	// For hidden files (starting with .), check if there's a second dot for extension
 	// For regular files, check if there's any dot for extension
 	const hasExtension = filename.startsWith(".")
-		? /\.\w+\.\w+/.test(filename) // Hidden file needs two dots
-		: /\.[^/.]+$/.test(filename); // Regular file needs one dot
+		? HIDDEN_FILE_EXT_RE.test(filename)
+		: FILE_EXT_RE.test(filename);
 
 	return hasExtension
-		? filename.replace(/\.[^/.]+$/, extension)
+		? filename.replace(FILE_EXT_RE, extension)
 		: filename + extension;
 }
