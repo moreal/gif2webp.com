@@ -3,6 +3,17 @@ import { useLanguage } from "../hooks/useLanguage";
 import { type Language, SUPPORTED_LANGUAGES } from "../config/i18n";
 import { ui } from "../config/ui";
 
+const dropdownArrow = (
+	<svg
+		xmlns="http://www.w3.org/2000/svg"
+		width="12"
+		height="6"
+		viewBox="0 0 12 6"
+	>
+		<path d="M0,0 L12,0 L6,6 Z" fill="#888" />
+	</svg>
+);
+
 export function LanguageSelect() {
 	const { language, setLanguage } = useLanguage();
 
@@ -46,14 +57,7 @@ export function LanguageSelect() {
 							"transform var(--animation-duration-normal) var(--ease-out-quart)",
 					})}
 				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						width="12"
-						height="6"
-						viewBox="0 0 12 6"
-					>
-						<path d="M0,0 L12,0 L6,6 Z" fill="#888" />
-					</svg>
+					{dropdownArrow}
 				</Select.Icon>
 			</Select.Trigger>
 			<Select.Portal>
