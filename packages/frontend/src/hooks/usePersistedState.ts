@@ -63,9 +63,10 @@ export function usePersistedState<T extends string>(
 	defaultValue: T,
 	validate: (value: string) => value is T,
 ) {
-	const [state, setState] = useState<T>(() =>
-		readFromLocalStorage(key, defaultValue, validate),
-	);
+	// The first render must not read localStorage: it is unavailable during
+	// build-time prerendering, and the first client render has to match the
+	// prerendered HTML. The stored value is applied by the effect below.
+	const [state, setState] = useState<T>(defaultValue);
 
 	useEffect(() => {
 		setState(readFromLocalStorage(key, defaultValue, validate));

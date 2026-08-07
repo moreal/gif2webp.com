@@ -12,14 +12,17 @@ function getThemeFromMediaQuery(matches: boolean): Theme {
  * Hook to detect system theme preference
  */
 export function useSystemTheme(): Theme {
-	const [systemTheme, setSystemTheme] = useState<Theme>(() =>
-		getThemeFromMediaQuery(
-			window.matchMedia("(prefers-color-scheme: dark)").matches,
-		),
-	);
+	// The first render must not touch matchMedia: it is unavailable during
+	// build-time prerendering, and the first client render has to match the
+	// prerendered HTML. The real preference is applied by the effect below;
+	// the page colors never flash because the inline script in index.html
+	// sets data-theme before paint.
+	const [systemTheme, setSystemTheme] = useState<Theme>("light");
 
 	useEffect(() => {
 		const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+		setSystemTheme(getThemeFromMediaQuery(mediaQuery.matches));
+
 		const handler = (e: MediaQueryListEvent) =>
 			setSystemTheme(getThemeFromMediaQuery(e.matches));
 

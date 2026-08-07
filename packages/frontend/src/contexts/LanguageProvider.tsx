@@ -13,7 +13,7 @@ const LANGUAGE_STORAGE_KEY = "gif2webp-language";
 const isLanguage = (value: string): value is Language =>
 	value in SUPPORTED_LANGUAGES;
 
-const getInitialLanguage = (): Language => {
+const getBrowserLanguage = (): Language => {
 	const browserLang = navigator.language.split("-")[0];
 	return browserLang in SUPPORTED_LANGUAGES
 		? (browserLang as Language)
@@ -21,11 +21,24 @@ const getInitialLanguage = (): Language => {
 };
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
+	// The first render always uses the default language: navigator is
+	// unavailable during build-time prerendering, and the first client render
+	// has to match the prerendered HTML. Detection runs in the effect below.
 	const [language, setLanguage] = usePersistedState<Language>(
 		LANGUAGE_STORAGE_KEY,
-		getInitialLanguage(),
+		DEFAULT_LANGUAGE,
 		isLanguage,
 	);
+
+	useEffect(() => {
+		try {
+			const stored = localStorage.getItem(LANGUAGE_STORAGE_KEY);
+			if (stored !== null && isLanguage(stored)) return;
+		} catch {
+			// fall through to browser-language detection
+		}
+		setLanguage(getBrowserLanguage());
+	}, [setLanguage]);
 
 	useEffect(() => {
 		document.documentElement.lang = language;
