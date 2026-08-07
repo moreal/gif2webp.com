@@ -3,6 +3,19 @@
 
 <head>
   <meta charset="UTF-8" />
+  <script>
+    // Client-side only: honor a saved language choice (or, on first visit,
+    // the browser language) by moving from / to /ko/ before paint. Never
+    // redirects away from an explicit language URL, and crawlers fetching
+    // the static page are unaffected.
+    try {
+      if (!location.pathname.startsWith("/ko")) {
+        var storedLang = localStorage.getItem("gif2webp-language");
+        var preferredLang = storedLang || (navigator.language || "").split("-")[0];
+        if (preferredLang === "ko") location.replace("/ko/");
+      }
+    } catch (e) { }
+  </script>
   <link rel="icon" type="image/svg+xml" href="/gif2webp.svg" />
   <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -29,6 +42,9 @@
   <meta name="twitter:image" content="https://gif2webp.com/og-screenshot.png" />
 
   <link rel="canonical" href="https://gif2webp.com/" />
+  <link rel="alternate" hreflang="en" href="https://gif2webp.com/" />
+  <link rel="alternate" hreflang="ko" href="https://gif2webp.com/ko/" />
+  <link rel="alternate" hreflang="x-default" href="https://gif2webp.com/" />
 
   <script type="application/ld+json">
     {
@@ -84,11 +100,10 @@
     } catch (e) {}
   </script>
   <noscript>
-    <h1>gif2webp.com — Convert GIF to Animated WebP in Your Browser</h1>
     <p>
-      gif2webp.com is a free, open-source GIF to WebP converter that runs entirely in your
-      browser using WebAssembly. Your files are never uploaded to a server. JavaScript is
-      required for the converter to work — please enable it, or review and self-host the
+      JavaScript is required for the converter to work — it is what keeps your files on your
+      device, converting GIF to WebP locally via WebAssembly instead of uploading them.
+      Please enable JavaScript, or review and self-host the
       <a href="https://github.com/moreal/gif2webp.com">source code on GitHub</a>.
     </p>
   </noscript>
