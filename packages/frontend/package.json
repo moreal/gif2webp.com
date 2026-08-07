@@ -6,8 +6,8 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "build": "tsc --project tsconfig.app.dev.json && vite build && cp _headers dist",
-        "build:prod": "tsc --project tsconfig.app.prod.json && vite build && cp _headers dist",
+        "build": "tsc --project tsconfig.app.dev.json && vite build && node scripts/prerender.mjs && cp _headers dist",
+        "build:prod": "tsc --project tsconfig.app.prod.json && vite build && node scripts/prerender.mjs && cp _headers dist",
         "lint": "eslint .",
         "preview": "vite preview",
         "test": "vitest",
