@@ -45,8 +45,8 @@ export type TranslationSet = {
 export const translations: Record<Language, TranslationSet> = {
 	en: {
 		header: {
-			title: "Convert your GIF to WebP in ",
-			titleEmphasis: "on your browser",
+			title: "Convert your GIF to WebP",
+			titleEmphasis: "in your browser",
 			subtitle: "Don't sacrifice your copyright for convenience.",
 		},
 		dropzone: {

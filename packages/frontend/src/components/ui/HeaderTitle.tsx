@@ -1,9 +1,10 @@
 export function HeaderTitle({ children }: React.PropsWithChildren) {
 	return (
-		<p
+		<h1
 			style={{
 				fontWeight: 300,
 				fontSize: "clamp(28px, 7vw, 48px)",
+				marginTop: "1em",
 				marginBottom: 0,
 				textUnderlineOffset: "6px",
 				textAlign: "center",
@@ -13,6 +14,6 @@ export function HeaderTitle({ children }: React.PropsWithChildren) {
 			}}
 		>
 			{children}
-		</p>
+		</h1>
 	);
 }
