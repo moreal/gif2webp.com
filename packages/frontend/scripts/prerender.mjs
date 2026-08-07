@@ -22,7 +22,7 @@ try {
 	const { render } = await import(
 		pathToFileURL(path.join(ssrOutDir, "entry-prerender.js")).href
 	);
-	const appHtml = render();
+	const appHtml = await render();
 	if (!appHtml) {
 		throw new Error("Prerender produced empty markup");
 	}
