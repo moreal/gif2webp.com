@@ -25,7 +25,10 @@ beforeEach(() => {
 		};
 		workerInstances.push(instance);
 		return instance;
-	} as unknown as ConstructorParameters<typeof Worker>[0]);
+	} as unknown as new (
+		scriptURL: string | URL,
+		options?: WorkerOptions,
+	) => Worker);
 });
 
 describe("useImageConversion", () => {
