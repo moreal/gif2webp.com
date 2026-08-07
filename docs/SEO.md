@@ -12,9 +12,12 @@ Legend: ✅ satisfied · 🔧 fixed in this pass · 📋 future work
 - ✅ Single-URL app, so no crawlable-link or soft-404 concerns.
 - 🔧 `robots.txt` should state its rules explicitly (`User-agent` /
   `Allow`) instead of relying on the empty-file default.
-- 📋 The app is fully client-side rendered. Googlebot renders JavaScript,
-  but pre-rendering the static shell with the default (English) content
-  would remove the dependency on the rendering queue entirely.
+- 🔧 The app was fully client-side rendered. The static shell is now
+  prerendered at build time (`scripts/prerender.mjs` + hydration in
+  `main.tsx`), so the default (English) content is present in the HTML
+  itself and indexing does not depend on Googlebot's rendering queue.
+  This is build-time only — the deployed artifact remains fully static
+  and conversion still runs entirely in the browser.
 
 ## 2. Sitemap
 
