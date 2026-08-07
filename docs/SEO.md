@@ -76,11 +76,16 @@ Legend: ✅ satisfied · 🔧 fixed in this pass · 📋 future work
 ## 8. Internationalization
 
 - ✅ `<html lang>` is kept in sync with the selected language.
-- 📋 Content is locale-adaptive on a single URL (client-side language
-  switch). Google recommends dedicated URLs per language
-  (e.g. `/ko/`) with `hreflang` annotations; `hreflang` cannot be used
-  meaningfully while both languages share one URL. Revisit if Korean
-  organic traffic matters.
+- 🔧 Each language now has a dedicated URL — English at `/` and Korean
+  at `/ko/`, both prerendered with a localized `<head>` — annotated
+  bidirectionally with self-referencing `hreflang` tags and
+  `x-default` pointing at the English root. Canonicals are
+  self-referencing, the language switcher is real crawlable anchors
+  (intercepted for an in-app pushState switch), both URLs are in the
+  sitemap, and there is no server-side redirect: a saved `ko`
+  preference (or a Korean browser on first visit) is honored by a
+  client-side, pre-paint move from `/` to `/ko/` only, which crawlers
+  fetching the static pages never trigger.
 
 ## 9. Favicon
 
