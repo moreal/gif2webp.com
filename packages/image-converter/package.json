@@ -19,7 +19,7 @@
     "devDependencies": {
         "@rollup/plugin-node-resolve": "^16.0.3",
         "@rollup/plugin-typescript": "^12.3.0",
-        "rollup": "^4.57.1",
+        "rollup": "^4.62.4",
         "typescript": "^5.9.3"
     }
 }
