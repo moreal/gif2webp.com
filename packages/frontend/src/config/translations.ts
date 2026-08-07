@@ -1,6 +1,13 @@
 import type { Language } from "./i18n";
 
 export type TranslationSet = {
+	// Document metadata for this language's page. The English values must match
+	// index.html exactly: scripts/prerender.mjs looks the English strings up in
+	// the built HTML to swap them out when generating the /ko/ page.
+	meta: {
+		title: string;
+		description: string;
+	};
 	header: {
 		title: string;
 		titleEmphasis: string;
@@ -44,6 +51,11 @@ export type TranslationSet = {
 
 export const translations: Record<Language, TranslationSet> = {
 	en: {
+		meta: {
+			title: "gif2webp.com — Convert GIF to Animated WebP in Your Browser",
+			description:
+				"Free online GIF to WebP converter that runs entirely in your browser. Convert animated GIFs to WebP without uploading — your files never leave your device. Open source.",
+		},
 		header: {
 			title: "Convert your GIF to WebP",
 			titleEmphasis: "in your browser",
@@ -89,6 +101,11 @@ export const translations: Record<Language, TranslationSet> = {
 		},
 	},
 	ko: {
+		meta: {
+			title: "gif2webp.com — 브라우저에서 GIF를 애니메이션 WebP로 변환",
+			description:
+				"브라우저에서 완전히 동작하는 무료 온라인 GIF → WebP 변환기입니다. 업로드 없이 GIF를 애니메이션 WebP로 변환하세요 — 파일이 기기 밖으로 나가지 않습니다. 오픈 소스.",
+		},
 		header: {
 			title: "GIF를 WebP로 변환하세요, ",
 			titleEmphasis: "당신의 브라우저에서",

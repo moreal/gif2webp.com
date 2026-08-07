@@ -1,104 +1,71 @@
-import { Select } from "@base-ui/react/select";
+import { Fragment } from "react";
 import { useLanguage } from "../hooks/useLanguage";
-import { type Language, SUPPORTED_LANGUAGES } from "../config/i18n";
-import { ui } from "../config/ui";
+import {
+	type Language,
+	SUPPORTED_LANGUAGES,
+	languagePath,
+} from "../config/i18n";
 
-const dropdownArrow = (
-	<svg
-		xmlns="http://www.w3.org/2000/svg"
-		width="12"
-		height="6"
-		viewBox="0 0 12 6"
-	>
-		<path d="M0,0 L12,0 L6,6 Z" fill="#888" />
-	</svg>
-);
-
+// Each language version has its own URL, and these must be real anchors so
+// crawlers can discover them; clicking is intercepted to switch in-app
+// (pushState) so state like the uploaded file list survives.
 export function LanguageSelect() {
 	const { language, setLanguage } = useLanguage();
 
 	return (
-		<Select.Root
-			value={language}
-			onValueChange={(value) => {
-				if (value !== null) setLanguage(value);
+		<nav
+			aria-label="Language"
+			style={{
+				display: "flex",
+				alignItems: "center",
+				gap: "4px",
+				minHeight: "44px",
 			}}
 		>
-			<Select.Trigger
-				aria-label="Select language"
-				style={{
-					background: "none",
-					border: "none",
-					padding: "8px 4px",
-					color: "inherit",
-					cursor: "pointer",
-					opacity: ui.INTERACTIVE_ELEMENT_OPACITY,
-					fontSize: "inherit",
-					transition:
-						"opacity var(--animation-duration-normal) var(--ease-out-quart)",
-					minHeight: "44px",
-					minWidth: "75px",
-					touchAction: "manipulation",
-					display: "flex",
-					alignItems: "center",
-					justifyContent: "center",
-					gap: "4px",
-				}}
-			>
-				<Select.Value>
-					{(language: Language) => SUPPORTED_LANGUAGES[language]}
-				</Select.Value>
-				<Select.Icon
-					style={(state) => ({
-						display: "flex",
-						alignItems: "center",
-						transform: state.open ? "rotate(180deg)" : "rotate(0deg)",
-						transition:
-							"transform var(--animation-duration-normal) var(--ease-out-quart)",
-					})}
-				>
-					{dropdownArrow}
-				</Select.Icon>
-			</Select.Trigger>
-			<Select.Portal>
-				<Select.Positioner
-					style={{
-						zIndex: "var(--z-index-dropdown)",
-					}}
-				>
-					<Select.Popup
-						className="dropdown-popup"
-						style={{
-							backgroundColor: "var(--bg-primary)",
-							border: "1px solid var(--border-color)",
-							borderRadius: "4px",
-							boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
-							padding: "4px 0",
-						}}
-					>
-						{Object.entries(SUPPORTED_LANGUAGES).map(([code, name]) => (
-							<Select.Item
-								key={code}
-								value={code}
-								style={(style) => ({
-									padding: "8px 16px",
-									cursor: "pointer",
-									color:
-										style.selected || style.highlighted
-											? "var(--text-primary)"
-											: "var(--text-secondary)",
-									fontSize: "inherit",
-									minHeight: "44px",
-									display: "flex",
-									alignItems: "center",
-								})}
-							>
-								<Select.ItemText>{name}</Select.ItemText>
-							</Select.Item>
-						))}
-					</Select.Popup>
-				</Select.Positioner>
-			</Select.Portal>
-		</Select.Root>
+			{(
+				Object.entries(SUPPORTED_LANGUAGES) as [
+					Language,
+					(typeof SUPPORTED_LANGUAGES)[Language],
+				][]
+			).map(([code, name], index) => (
+				<Fragment key={code}>
+					{index > 0 && (
+						<span aria-hidden="true" style={{ opacity: 0.4 }}>
+							·
+						</span>
+					)}
+					{code === language ? (
+						<span
+							aria-current="page"
+							style={{
+								padding: "8px 4px",
+								fontWeight: 600,
+							}}
+						>
+							{name}
+						</span>
+					) : (
+						<a
+							href={languagePath(code)}
+							hrefLang={code}
+							lang={code}
+							className="footer-link"
+							style={{
+								padding: "8px 4px",
+								color: "inherit",
+								textDecoration: "none",
+								touchAction: "manipulation",
+							}}
+							onClick={(event) => {
+								event.preventDefault();
+								setLanguage(code);
+							}}
+						>
+							{name}
+						</a>
+					)}
+				</Fragment>
+			))}
+		</nav>
 	);
 }
