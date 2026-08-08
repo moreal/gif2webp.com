@@ -10,7 +10,10 @@ export const Header = () => {
 	return (
 		<HeaderContainer>
 			<HeaderTitle>
-				{`${t("header.title")} `}
+				{/* titleJoiner is a real word-space for en/ko/de, but empty for
+				    ja/zh — those languages don't put ASCII spaces between CJK text
+				    and the Latin "GIF"/"WebP" that starts titleEmphasis. */}
+				{`${t("header.title")}${t("header.titleJoiner")}`}
 				<EmphasisText>{t("header.titleEmphasis")}</EmphasisText>
 			</HeaderTitle>
 			<HeaderSubtitle>{t("header.subtitle")}</HeaderSubtitle>

@@ -57,7 +57,7 @@ interface MockLanguageProviderProps {
 /**
  * MockLanguageProvider - Story별로 특정 언어를 제공
  *
- * @param language - 'en' | 'ko'
+ * @param language - Language
  * @param children - React children
  */
 export function MockLanguageProvider({
@@ -91,7 +91,7 @@ interface MockProvidersProps {
  *
  * @param theme - 'light' | 'dark'
  * @param themeSource - 'user' | 'system'
- * @param language - 'en' | 'ko'
+ * @param language - Language
  * @param children - React children
  */
 export function MockProviders({

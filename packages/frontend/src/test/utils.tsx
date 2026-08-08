@@ -1,12 +1,13 @@
 import { render, type RenderOptions } from "@testing-library/react";
 import type { ReactElement } from "react";
+import type { Language } from "../config/i18n";
 import {
 	MockLanguageProvider,
 	MockThemeProvider,
 } from "../__mocks__/mockContexts";
 
 interface CustomRenderOptions extends Omit<RenderOptions, "wrapper"> {
-	language?: "en" | "ko";
+	language?: Language;
 	theme?: "light" | "dark";
 }
 

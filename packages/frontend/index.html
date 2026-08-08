@@ -4,32 +4,44 @@
 <head>
   <meta charset="UTF-8" />
   <script>
-    // Client-side only: honor a saved language choice (or, on first visit,
-    // the browser language) by moving from / to /ko/ before paint. Never
-    // redirects away from an explicit language URL, and crawlers fetching
-    // the static page are unaffected.
+    // Client-side only: on the default (English) URL, honor a saved language
+    // choice — or, on a first visit, the browser's language preferences — by
+    // moving to that language's URL before paint. Never redirects away from
+    // an explicit language URL, and crawlers fetching the static pages never
+    // run it. LANGS lists the non-default languages (the ones with a
+    // /<code>/ URL); scripts/prerender.mjs fails the build if this list
+    // drifts from SUPPORTED_LANGUAGES in src/config/i18n.ts.
     try {
-      if (!location.pathname.startsWith("/ko")) {
-        var storedLang = localStorage.getItem("gif2webp-language");
-        var preferredLang = storedLang || (navigator.language || "").split("-")[0];
-        if (preferredLang === "ko") location.replace("/ko/");
+      var LANGS = "ko ja de zh";
+      var list = LANGS.split(" ");
+      if (list.indexOf(location.pathname.split("/")[1]) < 0) {
+        var prefs = [localStorage.getItem("gif2webp-language")]
+          .concat(navigator.languages || [navigator.language || ""]);
+        for (var i = 0; i < prefs.length; i++) {
+          var p = (prefs[i] || "").toLowerCase().split("-")[0];
+          if (p === "en") break;
+          if (list.indexOf(p) >= 0) { location.replace("/" + p + "/"); break; }
+        }
       }
     } catch (e) { }
   </script>
   <link rel="icon" type="image/svg+xml" href="/gif2webp.svg" />
   <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description"
-    content="Free online GIF to WebP converter that runs entirely in your browser. Convert animated GIFs to WebP without uploading — your files never leave your device. Open source." />
+
+  <!-- i18n:head:start -->
+  <meta name="description" content="Free online GIF to WebP converter that runs entirely in your browser. Convert animated GIFs to WebP without uploading — your files never leave your device. Open source." />
 
   <meta property="og:title" content="gif2webp.com — Convert GIF to Animated WebP in Your Browser" />
-  <meta property="og:description"
-    content="Free online GIF to WebP converter that runs entirely in your browser. Convert animated GIFs to WebP without uploading — your files never leave your device. Open source." />
+  <meta property="og:description" content="Free online GIF to WebP converter that runs entirely in your browser. Convert animated GIFs to WebP without uploading — your files never leave your device. Open source." />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="gif2webp.com" />
   <meta property="og:url" content="https://gif2webp.com/" />
   <meta property="og:locale" content="en_US" />
   <meta property="og:locale:alternate" content="ko_KR" />
+  <meta property="og:locale:alternate" content="ja_JP" />
+  <meta property="og:locale:alternate" content="de_DE" />
+  <meta property="og:locale:alternate" content="zh_CN" />
   <meta property="og:image" content="https://gif2webp.com/og-screenshot.png" />
   <meta property="og:image:width" content="2162" />
   <meta property="og:image:height" content="1296" />
@@ -37,13 +49,15 @@
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="gif2webp.com — Convert GIF to Animated WebP in Your Browser" />
-  <meta name="twitter:description"
-    content="Free online GIF to WebP converter that runs entirely in your browser. No upload — your files never leave your device." />
+  <meta name="twitter:description" content="Free online GIF to WebP converter that runs entirely in your browser. No upload — your files never leave your device." />
   <meta name="twitter:image" content="https://gif2webp.com/og-screenshot.png" />
 
   <link rel="canonical" href="https://gif2webp.com/" />
   <link rel="alternate" hreflang="en" href="https://gif2webp.com/" />
   <link rel="alternate" hreflang="ko" href="https://gif2webp.com/ko/" />
+  <link rel="alternate" hreflang="ja" href="https://gif2webp.com/ja/" />
+  <link rel="alternate" hreflang="de" href="https://gif2webp.com/de/" />
+  <link rel="alternate" hreflang="zh" href="https://gif2webp.com/zh/" />
   <link rel="alternate" hreflang="x-default" href="https://gif2webp.com/" />
 
   <script type="application/ld+json">
@@ -67,7 +81,13 @@
         "Batch conversion of multiple files",
         "Free and open source"
       ],
-      "inLanguage": ["en", "ko"],
+      "inLanguage": [
+        "en",
+        "ko",
+        "ja",
+        "de",
+        "zh"
+      ],
       "screenshot": "https://gif2webp.com/og-screenshot.png",
       "sameAs": [
         "https://github.com/moreal/gif2webp.com"
@@ -84,6 +104,7 @@
   </script>
 
   <title>gif2webp.com — Convert GIF to Animated WebP in Your Browser</title>
+  <!-- i18n:head:end -->
 </head>
 
 <body>
@@ -99,14 +120,13 @@
       }
     } catch (e) {}
   </script>
+  <!-- i18n:noscript:start -->
   <noscript>
     <p>
-      JavaScript is required for the converter to work — it is what keeps your files on your
-      device, converting GIF to WebP locally via WebAssembly instead of uploading them.
-      Please enable JavaScript, or review and self-host the
-      <a href="https://github.com/moreal/gif2webp.com">source code on GitHub</a>.
+      JavaScript is required for the converter to work — it is what keeps your files on your device, converting GIF to WebP locally via WebAssembly instead of uploading them. Please enable JavaScript, or review and self-host the <a href="https://github.com/moreal/gif2webp.com">source code on GitHub</a>.
     </p>
   </noscript>
+  <!-- i18n:noscript:end -->
   <div id="root"></div>
   <script type="module" src="/src/main.tsx"></script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-21LCHYZR60"></script>

@@ -1,7 +1,7 @@
 import type React from "react";
 import { Component, type ErrorInfo } from "react";
 import { ErrorText } from "./ui/ErrorText";
-import { type Language } from "../config/i18n";
+import { DEFAULT_LANGUAGE, type Language } from "../config/i18n";
 import { getTranslation } from "../config/translations";
 
 interface State {
@@ -30,7 +30,7 @@ export class ErrorBoundary extends Component<Props, State> {
 	render() {
 		if (this.state.hasError) {
 			// Using getTranslation directly since we can't use hooks in class components
-			const lang = this.props.language || "en";
+			const lang = this.props.language || DEFAULT_LANGUAGE;
 			return (
 				<div style={{ padding: "20px", textAlign: "center" }}>
 					<ErrorText>{getTranslation(lang, "errors.general")}</ErrorText>

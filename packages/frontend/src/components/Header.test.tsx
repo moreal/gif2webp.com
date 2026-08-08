@@ -2,6 +2,8 @@ import { describe, it, expect } from "vitest";
 import { renderToString } from "react-dom/server";
 import { Header } from "./Header";
 import { MockLanguageProvider } from "../__mocks__/mockContexts";
+import { LANGUAGE_CODES } from "../config/i18n";
+import { translations } from "../config/translations";
 
 // Regression test for a bug where the space between the plain title and the
 // emphasized segment (`<EmphasisText>`) was contributed by a bare `{" "}`
@@ -35,6 +37,25 @@ describe("Header", () => {
 		);
 
 		expect(html).toContain("변환하세요, <ins");
+		expect(html).not.toContain("<!-- -->");
+	});
+
+	// Same invariant for every language, so a sixth language can't silently
+	// skip it. Kept alongside the two literal assertions above, which
+	// document exactly where the emphasis boundary falls. Uses each
+	// language's actual titleJoiner rather than assuming a space — ja/zh
+	// join title and titleEmphasis with no space at all (see Header.tsx).
+	it.each(
+		LANGUAGE_CODES,
+	)("joins title and titleEmphasis into one text node (%s)", (lang) => {
+		const html = renderToString(
+			<MockLanguageProvider language={lang}>
+				<Header />
+			</MockLanguageProvider>,
+		);
+		const { title, titleJoiner } = translations[lang].header;
+
+		expect(html).toContain(`${title}${titleJoiner}<ins`);
 		expect(html).not.toContain("<!-- -->");
 	});
 });
