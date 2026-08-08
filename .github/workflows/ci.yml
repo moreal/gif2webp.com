@@ -31,5 +31,8 @@ jobs:
       - name: Lint
         run: yarn workspace @gif2webp/frontend lint
 
+      - name: Test
+        run: yarn workspace @gif2webp/frontend test --run
+
       - name: Build
         run: yarn build:prod
