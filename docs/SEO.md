@@ -62,9 +62,9 @@ Legend: ✅ satisfied · 🔧 fixed in this pass · 📋 future work
 
 - ✅ Basic Open Graph tags (`og:title`, `og:description`, `og:type`,
   `og:url`, `og:image`) are present.
-- 🔧 Add `og:site_name`, `og:locale` (+ `og:locale:alternate` for ko),
-  `og:image:width/height/alt`, and Twitter Card tags so shared links
-  render a large preview everywhere.
+- 🔧 Add `og:site_name`, `og:locale` (+ one `og:locale:alternate` per other
+  language), `og:image:width/height/alt`, and Twitter Card tags so shared
+  links render a large preview everywhere.
 
 ## 7. Mobile friendliness & page experience
 
@@ -76,16 +76,52 @@ Legend: ✅ satisfied · 🔧 fixed in this pass · 📋 future work
 ## 8. Internationalization
 
 - ✅ `<html lang>` is kept in sync with the selected language.
-- 🔧 Each language now has a dedicated URL — English at `/` and Korean
-  at `/ko/`, both prerendered with a localized `<head>` — annotated
-  bidirectionally with self-referencing `hreflang` tags and
-  `x-default` pointing at the English root. Canonicals are
-  self-referencing, the language switcher is real crawlable anchors
-  (intercepted for an in-app pushState switch), both URLs are in the
-  sitemap, and there is no server-side redirect: a saved `ko`
-  preference (or a Korean browser on first visit) is honored by a
-  client-side, pre-paint move from `/` to `/ko/` only, which crawlers
+- ✅ Five languages are supported — English (default, `/`), Korean
+  (`/ko/`), Japanese (`/ja/`), German (`/de/`) and Simplified Chinese
+  (`/zh/`) — each with a dedicated URL, prerendered with a localized
+  `<head>`. Every page is annotated bidirectionally with self-referencing
+  `hreflang` tags for all five languages plus `x-default` pointing at the
+  English root, and carries `og:locale` for itself and an
+  `og:locale:alternate` for each of the other four. Canonicals are
+  self-referencing, the language switcher renders real crawlable anchors
+  (inside a `<details>` disclosure so they stay in the HTML even while
+  collapsed — see `LanguageSelect.tsx`), all five URLs are in the sitemap,
+  and there is no server-side redirect: a saved language preference (or a
+  matching browser language on first visit) is honored by a client-side,
+  pre-paint move from `/` to that language's URL only, which crawlers
   fetching the static pages never trigger.
+- Fonts and line breaking are scoped per language via `:lang()` in
+  `index.css` rather than applied globally — Japanese and Simplified
+  Chinese share Han glyphs that each font family draws differently, and
+  Korean's `word-break: keep-all` convention would make an entire
+  paragraph unbreakable in languages without inter-word spaces.
+
+### Adding another language
+
+`src/config/i18n.ts`'s `SUPPORTED_LANGUAGES` is the single entry point —
+everything else derives from it:
+
+1. Add a row: `SUPPORTED_LANGUAGES.<code> = { name, ogLocale }`, and add
+   `<code>` to the `Language` union.
+2. Add a block to `translations.ts` (the compiler will require it — every
+   key from the English block) and, if the language is CJK, decide whether
+   `header.title`/`header.titleEmphasis` need to swap which half carries
+   the emphasis (see the comment on the `ja` block for why).
+3. Add a block to `DOCUMENT_STRINGS` in `documentMeta.ts`
+   (`twitterDescription`, `structuredDataDescription`, `noscriptHtml`).
+4. If the language needs its own font face or line-breaking rule, add a
+   `:lang(<code>)` block in `index.css`.
+5. Run `yarn workspace @gif2webp/frontend build:prod` — `scripts/prerender.mjs`
+   prerenders the new `/<code>/` page and regenerates `dist/sitemap.xml`
+   automatically. Bump `CONTENT_LAST_MODIFIED` in `documentMeta.ts`.
+
+index.html's `<!-- i18n:head:start/end -->` and `<!-- i18n:noscript:start/end
+-->` blocks, and the pre-paint redirect script's `var LANGS = "…";` line,
+carry the *default* language's content inline (so `vite dev` serves a
+correct page without running the prerender script) — `prerender.mjs` fails
+the build if any of them drifts from what `documentMeta.ts` generates.
+Adding a non-default language doesn't touch these; only changing the
+default language's copy does.
 
 ## 9. Favicon
 
