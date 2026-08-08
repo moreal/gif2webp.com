@@ -107,7 +107,7 @@ export const translations: Record<Language, TranslationSet> = {
 				"브라우저에서 완전히 동작하는 무료 온라인 GIF → WebP 변환기입니다. 업로드 없이 GIF를 애니메이션 WebP로 변환하세요 — 파일이 기기 밖으로 나가지 않습니다. 오픈 소스.",
 		},
 		header: {
-			title: "GIF를 WebP로 변환하세요, ",
+			title: "GIF를 WebP로 변환하세요,",
 			titleEmphasis: "당신의 브라우저에서",
 			subtitle: "편의성을 위해 저작권을 희생하지 마세요.",
 		},

@@ -10,7 +10,7 @@ export const Header = () => {
 	return (
 		<HeaderContainer>
 			<HeaderTitle>
-				{t("header.title")}{" "}
+				{`${t("header.title")} `}
 				<EmphasisText>{t("header.titleEmphasis")}</EmphasisText>
 			</HeaderTitle>
 			<HeaderSubtitle>{t("header.subtitle")}</HeaderSubtitle>
