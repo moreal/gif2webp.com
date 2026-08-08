@@ -51,3 +51,54 @@ export const KoreanSelected: Story = {
 		},
 	},
 };
+
+export const JapaneseSelected: Story = {
+	decorators: [
+		(Story) => (
+			<MockLanguageProvider language="ja">
+				<Story />
+			</MockLanguageProvider>
+		),
+	],
+	parameters: {
+		docs: {
+			description: {
+				story: "Language selector with Japanese selected",
+			},
+		},
+	},
+};
+
+export const GermanSelected: Story = {
+	decorators: [
+		(Story) => (
+			<MockLanguageProvider language="de">
+				<Story />
+			</MockLanguageProvider>
+		),
+	],
+	parameters: {
+		docs: {
+			description: {
+				story: "Language selector with German selected",
+			},
+		},
+	},
+};
+
+export const ChineseSelected: Story = {
+	decorators: [
+		(Story) => (
+			<MockLanguageProvider language="zh">
+				<Story />
+			</MockLanguageProvider>
+		),
+	],
+	parameters: {
+		docs: {
+			description: {
+				story: "Language selector with Simplified Chinese selected",
+			},
+		},
+	},
+};

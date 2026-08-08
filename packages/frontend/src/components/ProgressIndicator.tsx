@@ -91,7 +91,6 @@ export function ProgressIndicator({
 					style={{
 						fontSize: "14px",
 						textAlign: "center",
-						wordBreak: "keep-all",
 					}}
 				>
 					{phase}

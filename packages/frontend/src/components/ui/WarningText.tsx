@@ -13,7 +13,6 @@ export function WarningText({ children }: React.PropsWithChildren) {
 				justifyContent: "center",
 				gap: "4px",
 				flexWrap: "wrap",
-				wordBreak: "keep-all",
 			}}
 		>
 			{children}

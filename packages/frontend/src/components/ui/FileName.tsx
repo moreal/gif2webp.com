@@ -6,7 +6,6 @@ export function FileName({ children }: React.PropsWithChildren) {
 				fontSize: "14px",
 				textAlign: "center",
 				color: "var(--text-secondary)",
-				wordBreak: "keep-all",
 				maxWidth: "100%",
 			}}
 		>

@@ -75,14 +75,17 @@ function AboutModal({ isOpen, onClose }: AboutModalProps) {
 					>
 						{t("footer.aboutTitle")}
 					</Dialog.Title>
-					<Dialog.Description>
+					{/* Renders as a div: it defaults to a <p>, but the content below
+					    is itself one <p> per paragraph, and <p> cannot contain <p>
+					    (the nested tag would auto-close the outer one, corrupting
+					    hydration). */}
+					<Dialog.Description render={<div />}>
 						{aboutContent.map((paragraph, index) => (
 							<p
 								key={index}
 								style={{
 									lineHeight: 1.6,
 									color: "var(--text-primary)",
-									wordBreak: "keep-all",
 									fontSize: "clamp(14px, 4vw, 16px)",
 								}}
 							>

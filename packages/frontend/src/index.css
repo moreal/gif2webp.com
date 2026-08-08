@@ -1,5 +1,7 @@
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:ital,wght@0,100..900;1,100..900&display=swap");
+/* One request for all four CJK-covering families: @import is render-blocking
+   and multiple @import statements are fetched serially. Weights are 300..700
+   roman only (no italic) — the app only ever uses 300/400/500/600/700. */
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300..700&family=Noto+Sans+KR:wght@300..700&family=Noto+Sans+JP:wght@300..700&family=Noto+Sans+SC:wght@300..700&display=swap");
 
 :root {
 	font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -79,9 +81,37 @@ body:not(.theme-switching) {
 	margin: 0 auto;
 	padding: 1rem;
 	text-align: center;
-	font-family: "Noto Sans", "Noto Sans KR", sans-serif;
+	font-family: "Noto Sans", sans-serif;
 	box-sizing: border-box;
 	isolation: isolate;
+}
+
+/* CJK fonts are scoped per language rather than stacked together: Japanese
+   and Simplified Chinese share Han characters (国, 直, 骨, …) that each
+   family draws with different glyph shapes, so the first font in a shared
+   stack would win for every codepoint the other language also uses.
+   :lang() matches <html lang>, which LanguageProvider and
+   scripts/prerender.mjs both keep in sync with the page's language, and each
+   language switcher option carries its own lang= so it renders in its own
+   face even before it's selected. */
+:lang(ko) {
+	font-family: "Noto Sans", "Noto Sans KR", sans-serif;
+	/* Korean convention: don't break in the middle of an eojeol (word). */
+	word-break: keep-all;
+}
+
+:lang(ja) {
+	font-family: "Noto Sans", "Noto Sans JP", sans-serif;
+	/* Japanese has no inter-word spaces, so keep-all would make an entire
+	   paragraph one unbreakable run that overflows its container. Proper
+	   kinsoku shori (no line-leading 。/、/closing brackets) is the correct
+	   CJK counterpart here. */
+	line-break: strict;
+}
+
+:lang(zh) {
+	font-family: "Noto Sans", "Noto Sans SC", sans-serif;
+	line-break: strict;
 }
 
 a {
@@ -314,13 +344,77 @@ button {
 	animation: modalFadeOut var(--animation-duration-normal) var(--ease-out-quart);
 }
 
-/* Dropdown animations using base-ui data attributes */
-.dropdown-popup {
+/* Language switcher: a <details> disclosure so every language <a> stays in
+   the prerendered HTML at all times (see LanguageSelect.tsx for why). */
+.language-select {
+	position: relative;
+}
+
+.language-select > summary {
+	/* Any display other than list-item removes the default marker; Safari
+	   also needs the -webkit pseudo-element below. */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 4px;
+	list-style: none;
+	min-height: 44px;
+	min-width: 44px;
+	padding: 8px;
+	cursor: pointer;
+	opacity: 0.8;
+	touch-action: manipulation;
+	transition: opacity var(--animation-duration-normal) var(--ease-out-quart);
+}
+
+.language-select > summary::-webkit-details-marker {
+	display: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.language-select > summary:hover {
+		opacity: 1;
+	}
+}
+
+.language-select-chevron {
+	transition: transform var(--animation-duration-normal) var(--ease-out-quart);
+}
+
+.language-select[open] .language-select-chevron {
+	transform: rotate(180deg);
+}
+
+/* Opens upward: the switcher sits in the footer at the bottom of the page.
+   #root already sets isolation: isolate, so the stacking context is local. */
+.language-select-menu {
+	position: absolute;
+	bottom: 100%;
+	right: 0;
+	z-index: var(--z-index-dropdown);
+	margin-bottom: 4px;
+	padding: 4px 0;
+	min-width: 100%;
+	background-color: var(--bg-primary);
+	border: 1px solid var(--border-color);
+	border-radius: 4px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 	animation: slideIn var(--animation-duration-normal) var(--ease-out-quart);
 }
 
-.dropdown-popup[data-ending-style] {
-	animation: slideOut var(--animation-duration-normal) var(--ease-out-quart);
+.language-select-menu > a {
+	display: flex;
+	align-items: center;
+	min-height: 44px;
+	padding: 0 16px;
+	color: var(--text-primary);
+	text-decoration: none;
+	white-space: nowrap;
+	touch-action: manipulation;
+}
+
+.language-select-menu > a[aria-current="page"] {
+	font-weight: 600;
 }
 
 @media (prefers-reduced-motion: reduce) {

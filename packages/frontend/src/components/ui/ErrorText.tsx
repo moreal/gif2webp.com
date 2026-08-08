@@ -9,7 +9,6 @@ export function ErrorText({ children }: React.PropsWithChildren) {
 				fontSize: "14px",
 				textAlign: "center",
 				padding: "8px",
-				wordBreak: "keep-all",
 			}}
 		>
 			{children}

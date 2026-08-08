@@ -9,7 +9,6 @@ export function HeaderTitle({ children }: React.PropsWithChildren) {
 				textUnderlineOffset: "6px",
 				textAlign: "center",
 				lineHeight: 1.2,
-				wordBreak: "keep-all",
 				textWrap: "balance",
 			}}
 		>
